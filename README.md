@@ -84,7 +84,7 @@ ORM - JPA/hibernate, Spring Data JPA <br/>
 
 ## ERD
 
-![1차 프로젝트 (커피 메뉴 관리)_ERD.png]()
+![1차 프로젝트 (커피 메뉴 관리)_ERD.png](https://github.com/user-attachments/assets/8c68f0b3-87c0-40b8-9134-955f40b540f2)
 
 ## 기능 요구 사항
 
