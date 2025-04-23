@@ -9,12 +9,12 @@ import lombok.Data;
 @Data
 public class CreateMenuRequestDto {
 
-    @NotBlank(message = "menuName은 string이여야 합니다")
+    @NotBlank(message = "menuName은 빈값이 아니여야합니다")
     private String menuName;
-    @NotBlank
+    @NotBlank(message = "category는 빈값이 아니여야합니다.")
     private String category;
-    @NotNull
-    @Min(0)
+    @NotNull(message = "price는 필 수 입니다.")
+    @Min(value = 0,message = "가격은 0이상이여야 합니다.")
     private Integer price;
     private Long thumnailId;
 
