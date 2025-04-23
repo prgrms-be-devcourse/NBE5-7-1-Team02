@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class File extends BaseDateEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +18,8 @@ public class File extends BaseDateEntity {
 
     private String url;
 
-
-
-    //양방향 x
+    public File(String mimetype, String url) {
+        this.mimetype = mimetype;
+        this.url = url;
+    }
 }
