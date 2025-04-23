@@ -1,5 +1,5 @@
 package easy.gc_coffee_api.usecase.common;
 
-public interface UseCase<Req, Res> {
-    Res execute(Req request);
+public interface UseCase {
+    Object execute(Object... args);
 }
