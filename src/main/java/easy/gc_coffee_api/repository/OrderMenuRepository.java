@@ -1,4 +1,7 @@
 package easy.gc_coffee_api.repository;
 
-public class OrderMenuRepository {
+import easy.gc_coffee_api.entity.OrderMenu;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderMenuRepository extends JpaRepository<OrderMenu,Long> {
 }
