@@ -1,16 +1,32 @@
 package easy.gc_coffee_api.usecase.menu;
 
+import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.Thumnail;
+import easy.gc_coffee_api.exception.ThumnailCreateException;
+import easy.gc_coffee_api.repository.FileRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@RequiredArgsConstructor
 public class ThumnailFatory {
 
     private static final Long DEFAULT_THUMNAIL_ID = 1L;
+    private final FileRepository fileRepository;
 
     public Thumnail create(Long thumnailId) {
-//        if(thumnailId == null) {
-//            return new Thumnail(DEFAULT_THUMNAIL_ID);
-//        }
-//        return new Thumnail(thumnailId);
-        return null;
+        try {
+            File file = getFile(thumnailId);
+            return new Thumnail(file.getId(),file.getMimetype());
+        }catch (IllegalArgumentException e){
+            throw new ThumnailCreateException("image type이 아닙니다.");
+        }
+    }
+
+    private File getFile(Long thumnailId) throws ThumnailCreateException {
+        if(thumnailId == null) {
+            return fileRepository.findById(DEFAULT_THUMNAIL_ID).get();
+        }
+        return fileRepository.findById(thumnailId).orElseThrow(()->new ThumnailCreateException(String.format("thumnail id로 파일을 찾을 수 없습니다.")));
     }
 }
