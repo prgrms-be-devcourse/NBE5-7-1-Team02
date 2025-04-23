@@ -2,11 +2,14 @@ package easy.gc_coffee_api.controller;
 
 import easy.gc_coffee_api.dto.CreateMenuRequestDto;
 import easy.gc_coffee_api.dto.CreateMenuResponseDto;
+import easy.gc_coffee_api.dto.MenusResponseDto;
 import easy.gc_coffee_api.exception.GCException;
 import easy.gc_coffee_api.exception.ThumnailCreateException;
 import easy.gc_coffee_api.usecase.menu.CreateMenuUsecase;
 import jakarta.persistence.EntityNotFoundException;
+import easy.gc_coffee_api.usecase.menu.GetMenusUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MenuController {
 
     private final CreateMenuUsecase createMenuUsecase;
+    private final GetMenusUseCase getMenusUseCase;
 
     @PostMapping("/menus")
     public ResponseEntity<CreateMenuResponseDto> create(@RequestBody @Validated CreateMenuRequestDto requestDto) {
@@ -33,5 +37,12 @@ public class MenuController {
         } catch (ThumnailCreateException | EntityNotFoundException e ) {
             throw new GCException(e.getMessage(), e, 400);
         }
+    }
+
+
+    @GetMapping("/menus")
+    public ResponseEntity<MenusResponseDto> getMenus() {
+        MenusResponseDto responseDto = getMenusUseCase.getMenus();
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }
