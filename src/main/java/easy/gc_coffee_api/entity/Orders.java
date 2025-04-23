@@ -7,7 +7,7 @@ import lombok.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order extends BaseDateEntity {
+public class Orders extends BaseDateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +18,7 @@ public class Order extends BaseDateEntity {
     private Integer totalPrice;
 
     @Builder
-    public Order(String email,Address address, Integer totalPrice) {
+    public Orders(String email, Address address, Integer totalPrice) {
         this.email = email;
         this.address = address;
         this.totalPrice = totalPrice;

@@ -26,7 +26,7 @@ public class OrderMenu extends BaseDateEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Orders orders;
 
     @Builder
     public OrderMenu(String name, Integer price, Integer quantity) {
