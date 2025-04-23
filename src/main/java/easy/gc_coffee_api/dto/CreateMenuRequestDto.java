@@ -1,6 +1,7 @@
 package easy.gc_coffee_api.dto;
 
 import easy.gc_coffee_api.entity.common.Category;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ public class CreateMenuRequestDto {
     private Integer price;
     private Long thumnailId;
 
-    public Category getCategory() {
+    public Category getCategory() throws EntityNotFoundException {
         return Category.findByName(category);
     }
 }

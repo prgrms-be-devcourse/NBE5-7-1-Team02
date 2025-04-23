@@ -5,6 +5,7 @@ import easy.gc_coffee_api.dto.CreateMenuResponseDto;
 import easy.gc_coffee_api.exception.GCException;
 import easy.gc_coffee_api.exception.ThumnailCreateException;
 import easy.gc_coffee_api.usecase.menu.CreateMenuUsecase;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,8 +29,8 @@ public class MenuController {
                     requestDto.getThumnailId()
             );
             return ResponseEntity.ok(new CreateMenuResponseDto(id));
-        } catch (ThumnailCreateException thumnailCreateException) {
-            throw new GCException(thumnailCreateException.getMessage(), thumnailCreateException, 400);
+        } catch (ThumnailCreateException | EntityNotFoundException e ) {
+            throw new GCException(e.getMessage(), e, 400);
         }
     }
 }

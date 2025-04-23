@@ -15,5 +15,6 @@ class ThumnailFatoryTest {
 
     @Test
     void null입력시_기본이미지_생성(){
+        //TODO 테스트 작성
     }
 }
