@@ -16,15 +16,15 @@ public class File extends BaseDateEntity {
 
     private String mimetype;
 
-    private String url;
+    @Column(name = "`key`")
+    private String key;
 
-    public File(String mimetype, String url) {
-        this(null, mimetype, url);
-    }
-
-    public File(Long id, String mimetype, String url) {
+    public File(Long id, String mimetype, String key) {
         this.id = id;
         this.mimetype = mimetype;
-        this.url = url;
+        this.key = key;
+    }
+    public File(String mimetype, String key) {
+        this(null,mimetype,key);
     }
 }

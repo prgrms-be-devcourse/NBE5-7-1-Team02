@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
     private final UploadFileUseCase uploadFileUseCase;
 
-    //TODO GlobalExceptionHandler에서 MultipartException, MissingServletRequestParameterException 처리
     @PostMapping
     public ResponseEntity<UploadFileResponseDto> uploadFile(@RequestParam("file") MultipartFile file) {
         try {

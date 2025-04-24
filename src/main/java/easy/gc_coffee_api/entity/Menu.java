@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Menu extends BaseDateEntity {
 
@@ -15,7 +16,9 @@ public class Menu extends BaseDateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private Long id;
+    @Getter
     private String name;
+    @Getter
     private Integer price;
 
     @Enumerated(EnumType.STRING)

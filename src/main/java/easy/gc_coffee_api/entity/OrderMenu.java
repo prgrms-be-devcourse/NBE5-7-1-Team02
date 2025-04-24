@@ -29,9 +29,15 @@ public class OrderMenu extends BaseDateEntity {
     private Orders orders;
 
     @Builder
-    public OrderMenu(String name, Integer price, Integer quantity) {
+    public OrderMenu(String name, Integer price, Integer quantity,Menu menu, Orders orders) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.menu = menu;
+        this.orders = orders;
+    }
+
+    public int calculatePrice() {
+        return price * quantity;
     }
 }

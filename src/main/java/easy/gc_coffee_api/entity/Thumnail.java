@@ -5,9 +5,13 @@ import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.*;
 
 @Embeddable
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @Getter
 public class Thumnail {
