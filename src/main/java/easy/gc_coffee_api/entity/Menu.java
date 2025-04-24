@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Menu extends BaseDateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private Long id;
     @Getter
     private String name;
@@ -37,6 +37,13 @@ public class Menu extends BaseDateEntity {
 
     public Menu(String name, Integer price, Category category, Thumnail thumbnail) {
         this(null, name, price, category, thumbnail);
+    }
+
+    public void update(String name, Integer price, Category category, Thumnail thumbnail) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.thumnail = thumbnail;
     }
 
 }
