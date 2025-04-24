@@ -14,6 +14,6 @@ public class OrderMenus {
 
 
     public Integer calcTotalPrice() {
-        return orderMenus.stream().mapToInt(OrderMenu::getPrice).sum();
+        return orderMenus.stream().mapToInt(OrderMenu::calculatePrice).sum();
     }
 }

@@ -51,7 +51,7 @@ class OrderMenuControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(dto)))
         .andDo(print())
-        .andExpect(status().isOk())
+        .andExpect(status().isCreated())
         .andExpect(content().string("42"));
   }
 
