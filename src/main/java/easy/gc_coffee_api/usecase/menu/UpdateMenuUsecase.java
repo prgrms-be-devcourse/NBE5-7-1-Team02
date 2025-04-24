@@ -34,6 +34,9 @@ public class UpdateMenuUsecase {
         if(requestDto.getCategory()==null){
             throw new InvalidMenuCategoryException("카테고리를 입력하지 않았습니다.",400);
         }
+        if(requestDto.getPrice()==null){
+            throw new InvalidMenuPriceException("가격을 입력하지 않았습니다.",400);
+        }
         if(requestDto.getPrice()<0){
             throw new InvalidMenuPriceException("가격은 음수일 수 없습니다.",400);
         }
