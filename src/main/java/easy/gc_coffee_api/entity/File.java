@@ -19,6 +19,11 @@ public class File extends BaseDateEntity {
     private String url;
 
     public File(String mimetype, String url) {
+        this(null, mimetype, url);
+    }
+
+    public File(Long id, String mimetype, String url) {
+        this.id = id;
         this.mimetype = mimetype;
         this.url = url;
     }
