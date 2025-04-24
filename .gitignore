@@ -39,3 +39,7 @@ out/
 ### VS Code ###
 .vscode/
 
+# 기본 이미지를 제외한 다른 이미지들은 ignore
+/storage-test
+/storage/*
+!/storage/default.jpg
