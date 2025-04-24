@@ -21,8 +21,8 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
-backend/.idea
+.idea/
+backend/.idea/
 *.iws
 *.iml
 *.ipr
