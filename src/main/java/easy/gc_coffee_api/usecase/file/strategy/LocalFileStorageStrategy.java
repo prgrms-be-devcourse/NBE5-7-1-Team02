@@ -2,7 +2,6 @@ package easy.gc_coffee_api.usecase.file.strategy;
 
 import easy.gc_coffee_api.usecase.file.vo.FileUrl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
