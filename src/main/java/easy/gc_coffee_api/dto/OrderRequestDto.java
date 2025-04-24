@@ -1,6 +1,7 @@
 package easy.gc_coffee_api.dto;
 
 
+import easy.gc_coffee_api.entity.Address;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -32,6 +33,7 @@ public class OrderRequestDto {
   @NotEmpty(message = "최소 하나 이상의 주문 항목이 필요합니다.")
   private List<OrderItemDto> items;
 
-
-
+  public Address getAddress(){
+    return addressdto.toAddress();
+  }
 }

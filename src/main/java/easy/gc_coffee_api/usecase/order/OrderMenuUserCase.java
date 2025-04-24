@@ -4,7 +4,6 @@ package easy.gc_coffee_api.usecase.order;
 
 import easy.gc_coffee_api.dto.OrderItemDto;
 import easy.gc_coffee_api.dto.OrderRequestDto;
-import easy.gc_coffee_api.entity.Address;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
 import easy.gc_coffee_api.entity.Orders;
@@ -26,39 +25,50 @@ public class OrderMenuUserCase {
   private final OrderMenuRepository orderMenuRepository;
 
   public Long execute(OrderRequestDto dto) {
-    Orders order = Orders.builder()
-        .email(dto.getEmail())
-        .address(new Address(
-            dto.getAddressdto().getAddress(),
-            dto.getAddressdto().getZipCode()
-        ))
-        .totalPrice(0)
-        .build();
-    Orders savedOrder = orderRepository.save(order);
-    int totalPrice = 0;
+    Orders savedOrder = saveOrders(dto);
 
-    for (OrderItemDto item : dto.getItems()) {
-      Menu menu = menuRepository.findById(item.getMenuId())
-          .orElseThrow(() -> new EntityNotFoundException(
-              "존재하지 않는 메뉴 ID: " + item.getMenuId()
-          ));
-
-      OrderMenu orderMenu = OrderMenu.builder()
-          .name(menu.getName())
-          .price(menu.getPrice())
-          .quantity(item.getQuantity())
-          .menu(menu)
-          .orders(savedOrder)
-          .build();
-
-      orderMenuRepository.save(orderMenu);
-      totalPrice += menu.getPrice() * item.getQuantity();
-    }
-
-
-    savedOrder.setTotalPrice(totalPrice);
-
+    OrderMenus orderMenus = saveOrderMenus(dto, savedOrder);
+    savedOrder.setTotalPrice(orderMenus.calcTotalPrice());
 
     return savedOrder.getId();
+  }
+
+  private Orders saveOrders(OrderRequestDto dto) {
+    Orders order = Orders.builder()
+        .email(dto.getEmail())
+        .address(dto.getAddress())
+        .totalPrice(0)
+        .build();
+    return orderRepository.save(order);
+  }
+
+  private OrderMenus saveOrderMenus(OrderRequestDto dto, Orders savedOrder) {
+
+    OrderMenus orderMenus = new OrderMenus();
+
+    for (OrderItemDto item : dto.getItems()) {
+      OrderMenu orderMenu = saveMenu(savedOrder, item);
+      orderMenus.add(orderMenu);
+    }
+
+    return orderMenus;
+  }
+
+  private OrderMenu saveMenu(Orders savedOrder, OrderItemDto item) {
+    Menu menu = menuRepository.findById(item.getMenuId())
+        .orElseThrow(() -> new EntityNotFoundException(
+            "존재하지 않는 메뉴 ID: " + item.getMenuId()
+        ));
+
+    OrderMenu orderMenu = OrderMenu.builder()
+        .name(menu.getName())
+        .price(menu.getPrice())
+        .quantity(item.getQuantity())
+        .menu(menu)
+        .orders(savedOrder)
+        .build();
+
+    orderMenuRepository.save(orderMenu);
+    return orderMenu;
   }
 }

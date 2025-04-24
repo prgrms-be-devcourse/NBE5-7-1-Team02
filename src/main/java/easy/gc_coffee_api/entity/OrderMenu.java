@@ -36,4 +36,8 @@ public class OrderMenu extends BaseDateEntity {
         this.menu = menu;
         this.orders = orders;
     }
+
+    public int calculatePrice() {
+        return price * quantity;
+    }
 }

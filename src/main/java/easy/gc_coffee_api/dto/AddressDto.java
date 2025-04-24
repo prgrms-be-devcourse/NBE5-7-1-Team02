@@ -1,5 +1,6 @@
 package easy.gc_coffee_api.dto;
 
+import easy.gc_coffee_api.entity.Address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -26,4 +27,7 @@ public class AddressDto {
   private String zipCode;
 
 
+  public Address toAddress() {
+    return new Address(address, zipCode);
+  }
 }
