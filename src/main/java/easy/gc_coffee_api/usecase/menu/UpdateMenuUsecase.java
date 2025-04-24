@@ -5,8 +5,10 @@ import easy.gc_coffee_api.dto.UpdateMenuRequestDto;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.Thumnail;
 import easy.gc_coffee_api.entity.common.Category;
+import easy.gc_coffee_api.exception.menu.InvalidMenuCategoryException;
+import easy.gc_coffee_api.exception.menu.InvalidMenuNameException;
+import easy.gc_coffee_api.exception.menu.InvalidMenuPriceException;
 import easy.gc_coffee_api.repository.MenuRepository;
-import easy.gc_coffee_api.usecase.file.SaveFileUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,17 +22,17 @@ public class UpdateMenuUsecase {
     private final MenuRepository menuRepository;
     private final ThumnailFatory thumnailFatory;
 
-    public void execute(Long menuId, UpdateMenuRequestDto requestDto) {
-        Menu menu = menuRepository.findById(menuId).orElseThrow(()-> new ResponseStatusException(NOT_FOUND, "메뉴없어"));
+    public void execute(Long menuId, UpdateMenuRequestDto requestDto) throws ResponseStatusException,IllegalArgumentException {
+        Menu menu = menuRepository.findById(menuId).orElseThrow(()-> new ResponseStatusException(NOT_FOUND, "메뉴가 없습니다."));
 
         if(requestDto.getName()==null){
-            throw new IllegalArgumentException("Name cannot be null");
+            throw new InvalidMenuNameException("이름을 입력하지 않았습니다.",1001);
         }
         if(requestDto.getCategory()==null){
-            throw new IllegalArgumentException("Category cannot be null.");
+            throw new InvalidMenuCategoryException("카테고리를 입력하지 않았습니다.",1002);
         }
         if(requestDto.getPrice()<0){
-            throw new IllegalArgumentException("Price cannot be negative.");
+            throw new InvalidMenuPriceException("가격은 음수일 수 없습니다.",1003);
         }
 
         Category category = Category.valueOf(requestDto.getCategory().toUpperCase());
