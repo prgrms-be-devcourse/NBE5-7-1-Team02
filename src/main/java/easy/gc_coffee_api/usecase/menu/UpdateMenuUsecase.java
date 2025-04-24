@@ -9,6 +9,7 @@ import easy.gc_coffee_api.exception.menu.InvalidMenuCategoryException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuNameException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuPriceException;
 import easy.gc_coffee_api.repository.MenuRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,6 +23,7 @@ public class UpdateMenuUsecase {
     private final MenuRepository menuRepository;
     private final ThumnailFatory thumnailFatory;
 
+    @Transactional
     public void execute(Long menuId, UpdateMenuRequestDto requestDto) throws ResponseStatusException,IllegalArgumentException {
         Menu menu = menuRepository.findById(menuId).orElseThrow(()-> new ResponseStatusException(NOT_FOUND, "메뉴가 없습니다."));
 
