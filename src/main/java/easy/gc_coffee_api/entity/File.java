@@ -19,8 +19,12 @@ public class File extends BaseDateEntity {
     @Column(name = "`key`")
     private String key;
 
-    public File(String mimetype, String key) {
+    public File(Long id, String mimetype, String key) {
+        this.id = id;
         this.mimetype = mimetype;
         this.key = key;
+    }
+    public File(String mimetype, String key) {
+        this(null,mimetype,key);
     }
 }
