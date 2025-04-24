@@ -95,6 +95,17 @@ public class UpdateMenuUsecaseTest {
     }
 
     @Test
+    void 가격_null이면_예외(){
+        Long menuId=1L;
+        Menu menu = new Menu("라떼", 5500, Category.COFFEE_BEAN,mock(Thumnail.class));
+        Thumnail thumnail = new Thumnail(10L,"image/jpeg");
+
+        when(repository.findById(eq(menuId))).thenReturn(Optional.of(menu));
+        UpdateMenuRequestDto request = new UpdateMenuRequestDto("커피", null, "COFFEE_BEAN",10L);
+        assertThatThrownBy(()->usecase.execute(menuId,request)).isInstanceOf(InvalidMenuPriceException.class);
+    }
+
+    @Test
     void 가격_음수면_예외(){
         Long menuId=1L;
         Menu menu = new Menu("라떼", 5500, Category.COFFEE_BEAN,mock(Thumnail.class));
