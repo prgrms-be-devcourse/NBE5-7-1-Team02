@@ -11,9 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Qualifier("localStorage")
 @RequiredArgsConstructor
-@Component
+@Component("localStorage")
 public class LocalFileStorageStrategy implements StorageStrategy {
     private static final String BASE_PATH = System.getProperty("user.dir");
     private static final String DIR = "/storage/";
