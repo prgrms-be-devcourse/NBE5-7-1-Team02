@@ -16,7 +16,7 @@ public class CreateMenuUsecase{
     private final ThumnailFatory thumnailFatory;
 
     @Transactional
-    public Long excute(String menuName, Category category, int price, Long fileId) throws ThumnailCreateException {
+    public Long execute(String menuName, Category category, int price, Long fileId) throws ThumnailCreateException {
         Thumnail thumnail = thumnailFatory.create(fileId);
         Menu menu = menuSaver.save(menuName, category, price, thumnail);
         return menu.getId();

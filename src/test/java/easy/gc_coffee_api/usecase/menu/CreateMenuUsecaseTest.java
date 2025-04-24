@@ -40,7 +40,7 @@ public class CreateMenuUsecaseTest {
         when(thumnailFatory.create(eq(fileId))).thenReturn(thumnail);
         when(menuSaver.save(eq(menuName),eq(category),eq(price),eq(thumnail))).thenReturn(new Menu(entityId, menuName, price, category,thumnail));
 
-        Long id = createMenuUsecase.excute(menuName, category, price, fileId);
+        Long id = createMenuUsecase.execute(menuName, category, price, fileId);
 
         assertThat(id).isEqualTo(entityId);
     }

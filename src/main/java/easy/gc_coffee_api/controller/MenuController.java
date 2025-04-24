@@ -22,7 +22,7 @@ public class MenuController {
     @PostMapping("/menus")
     public ResponseEntity<CreateMenuResponseDto> create(@RequestBody @Validated CreateMenuRequestDto requestDto) {
         try {
-            Long id = createMenuUsecase.excute(
+            Long id = createMenuUsecase.execute(
                     requestDto.getMenuName(),
                     requestDto.getCategory(),
                     requestDto.getPrice(),
