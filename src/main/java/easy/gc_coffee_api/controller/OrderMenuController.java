@@ -4,6 +4,7 @@ import easy.gc_coffee_api.dto.OrderRequestDto;
 import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,6 @@ public class OrderMenuController {
 
   @PostMapping("/orders")
   public ResponseEntity<Long> post(@Valid @RequestBody OrderRequestDto order) {
-    return ResponseEntity.ok(orderMenuUserCase.execute(order));
+    return new ResponseEntity<>(orderMenuUserCase.execute(order), HttpStatus.CREATED);
   }
 }
