@@ -104,6 +104,6 @@ public class UploadFileUseCaseTest {
         verify(multipartFile, times(1)).transferTo(any(java.io.File.class));
 
         assertThat(responseDto.getId()).isEqualTo(1L);
-        assertThat(responseDto.getUrl()).isEqualTo(url);
+        assertThat(responseDto.getKey()).isEqualTo(url);
     }
 }

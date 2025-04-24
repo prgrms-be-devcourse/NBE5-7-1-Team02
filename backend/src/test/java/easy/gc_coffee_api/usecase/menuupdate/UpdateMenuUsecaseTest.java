@@ -49,7 +49,7 @@ public class UpdateMenuUsecaseTest {
         Long menuId = 1L;
         Menu menu = new Menu("라떼",5500, Category.COFFEE_BEAN,mock(Thumnail.class));
         Thumnail thumnail = new Thumnail(10L,"image/jpeg");
-        when(repository.findById(eq(menuId))).thenReturn(Optional.of(menu));
+        when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(menu));
         when(thumnailFatory.create(eq(10L))).thenReturn(thumnail);
 
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("아메리카노", 4000, "COFFEE_BEAN",10L);
@@ -64,7 +64,7 @@ public class UpdateMenuUsecaseTest {
     @Test
     void 메뉴_존재하지않으면_예외(){
         Long menuId=1L;
-        when(repository.findById(eq(menuId))).thenReturn(Optional.empty());
+        when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.empty());
 
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("아메리카노", 4000, "COFFEE_BEAN",10L);
         assertThatThrownBy(()->usecase.execute(menuId,request)).isInstanceOf(MenuNotFoundException.class);
@@ -77,7 +77,7 @@ public class UpdateMenuUsecaseTest {
         Thumnail thumnail = new Thumnail(10L,"image/jpeg");
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("아메리카노", 4000, null,10L);
 
-        when(repository.findById(eq(menuId))).thenReturn(Optional.of(menu));
+        when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(menu));
         assertThatThrownBy(()->usecase.execute(menuId,request)).isInstanceOf(InvalidMenuCategoryException.class);
     }
 
@@ -88,7 +88,7 @@ public class UpdateMenuUsecaseTest {
         Long menuId=1L;
         Menu menu = new Menu("라떼", 5500, Category.COFFEE_BEAN,mock(Thumnail.class));
         Thumnail thumnail = new Thumnail(10L,"image/jpeg");
-        when(repository.findById(eq(menuId))).thenReturn(Optional.of(menu));
+        when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(menu));
 
         UpdateMenuRequestDto request = new UpdateMenuRequestDto(null, 4000, "COFFEE_BEAN",10L);
         assertThatThrownBy(()->usecase.execute(menuId,request)).isInstanceOf(InvalidMenuNameException.class);
@@ -101,7 +101,7 @@ public class UpdateMenuUsecaseTest {
         Menu menu = new Menu("라떼", 5500, Category.COFFEE_BEAN,mock(Thumnail.class));
         Thumnail thumnail = new Thumnail(10L,"image/jpeg");
 
-        when(repository.findById(eq(menuId))).thenReturn(Optional.of(menu));
+        when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(menu));
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("커피", null, "COFFEE_BEAN",10L);
         assertThatThrownBy(()->usecase.execute(menuId,request)).isInstanceOf(InvalidMenuPriceException.class);
     }
@@ -112,7 +112,7 @@ public class UpdateMenuUsecaseTest {
         Menu menu = new Menu("라떼", 5500, Category.COFFEE_BEAN,mock(Thumnail.class));
         Thumnail thumnail = new Thumnail(10L,"image/jpeg");
 
-        when(repository.findById(eq(menuId))).thenReturn(Optional.of(menu));
+        when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(menu));
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("커피", -4000, "COFFEE_BEAN",10L);
         assertThatThrownBy(()->usecase.execute(menuId,request)).isInstanceOf(InvalidMenuPriceException.class);
     }
@@ -134,7 +134,7 @@ public class UpdateMenuUsecaseTest {
         Menu menu = new Menu("라떼", 5500, Category.COFFEE_BEAN,mock(Thumnail.class));
         Thumnail thumnail = new Thumnail(1L,"image/jpeg");
 
-        when(repository.findById(eq(menuId))).thenReturn(Optional.of(menu));
+        when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(menu));
         when(thumnailFatory.create(null)).thenReturn(thumnail);
 
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("커피", 4000, "COFFEE_BEAN",null);

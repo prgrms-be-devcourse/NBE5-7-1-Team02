@@ -16,4 +16,5 @@ class ThumnailTest {
     void 이미지_정상_생성(){
         assertDoesNotThrow(() -> new Thumnail(1L,"image/png"));
     }
+
 }

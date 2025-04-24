@@ -30,4 +30,8 @@ public class Thumnail {
             throw new IllegalArgumentException("Invalid type");
         }
     }
+
+    public boolean hasId(){
+        return this.fileId != null;
+    }
 }

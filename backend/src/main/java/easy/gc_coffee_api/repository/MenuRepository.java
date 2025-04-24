@@ -6,9 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MenuRepository extends JpaRepository<Menu,Long> {
 
-    @Query("SELECT new easy.gc_coffee_api.dto.MenuResponseDto(m.name, m.price, m.category,case when f is null then null when f is not null then f.key end) FROM Menu m LEFT JOIN File f ON m.thumnail.fileId = f.id")
-    List<MenuResponseDto> findAllByMenuResponseDto();
+    @Query("SELECT new easy.gc_coffee_api.dto.MenuResponseDto(m.name, m.price, m.category," +
+            " CASE WHEN f IS NULL THEN NULL WHEN f IS NOT NULL THEN f.key END)" +
+            " FROM Menu m LEFT JOIN File f ON m.thumnail.fileId = f.id" +
+            " WHERE m.deletedAt IS NULL")
+    List<MenuResponseDto> findAllNotDeleted();
+
+    Optional<Menu> findByIdAndDeletedAtIsNull(Long menuId);
 }

@@ -45,4 +45,17 @@ public class Menu extends BaseDateEntity {
         this.thumnail = thumbnail;
     }
 
+    public boolean hasThumbNail(){
+        if(thumnail == null || !thumnail.hasId()){
+            return false;
+        }
+        return true;
+    }
+
+    public Long getThumnailId(){
+        if(hasThumbNail()){
+            return thumnail.getFileId();
+        }
+        return null;
+    }
 }
