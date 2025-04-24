@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ThumnailFatory {
 
-    private static final Long DEFAULT_THUMNAIL_ID = 1L;
     private final FileRepository fileRepository;
 
     public Thumnail create(Long thumnailId) {
