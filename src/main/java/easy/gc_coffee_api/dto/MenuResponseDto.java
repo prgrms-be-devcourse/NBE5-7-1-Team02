@@ -1,6 +1,5 @@
 package easy.gc_coffee_api.dto;
 
-import easy.gc_coffee_api.entity.Thumnail;
 import easy.gc_coffee_api.entity.common.Category;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,10 +12,10 @@ public class MenuResponseDto {
     private String name;
     private int price;
     private Category category;
-    private Thumnail thumnail;
+    private Long thumnail;
 
     @Builder
-    public MenuResponseDto(String name, int price, Category category, Thumnail thumnail) {
+    public MenuResponseDto(String name, int price, Category category, Long thumnail) {
         this.name = name;
         this.price = price;
         this.category = category;
