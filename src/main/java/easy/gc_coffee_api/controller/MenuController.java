@@ -42,7 +42,7 @@ public class MenuController {
 
     @GetMapping("/menus")
     public ResponseEntity<MenusResponseDto> getMenus() {
-        MenusResponseDto responseDto = getMenusUseCase.getMenus();
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        MenusResponseDto responseDto = getMenusUseCase.execute();
+        return ResponseEntity.ok(responseDto);
     }
 }
