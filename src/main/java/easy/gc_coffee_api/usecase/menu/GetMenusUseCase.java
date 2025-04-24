@@ -24,6 +24,7 @@ public class GetMenusUseCase {
                     .name(menu.getName())
                     .price(menu.getPrice())
                     .category(menu.getCategory())
+                    .thumnail(menu.getThumnail())
                     .build();
             menus.add(dto);
         }
