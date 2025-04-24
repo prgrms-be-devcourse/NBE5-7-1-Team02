@@ -39,7 +39,7 @@ public class MenuController {
     }
 
     @PutMapping("/menus/{menuId}")
-    public ResponseEntity<String> updateMenu(@PathVariable Long menuId,@RequestBody UpdateMenuRequestDto requestDto ) {
+    public ResponseEntity<String> updateMenu(@PathVariable Long menuId,@RequestBody @Validated UpdateMenuRequestDto requestDto ) {
         updateMenuUsecase.execute(menuId, requestDto);
         return ResponseEntity.ok("수정 완료");
     }
