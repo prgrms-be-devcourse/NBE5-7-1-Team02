@@ -47,7 +47,7 @@ class OrderMenuControllerTest {
         .items(List.of(new OrderItemDto(1L, 2)))
         .build();
 
-    mockMvc.perform(post("/post")
+    mockMvc.perform(post("/order")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(dto)))
         .andDo(print())
@@ -68,7 +68,7 @@ class OrderMenuControllerTest {
           .items(List.of(new OrderItemDto(1L, 1)))
           .build();
 
-      mockMvc.perform(post("/post")
+      mockMvc.perform(post("/order")
               .contentType(MediaType.APPLICATION_JSON)
               .content(objectMapper.writeValueAsString(dto)))
           .andDo(print())
@@ -87,7 +87,7 @@ class OrderMenuControllerTest {
           .items(List.of(new OrderItemDto(1L, 1)))
           .build();
 
-      mockMvc.perform(post("/post")
+      mockMvc.perform(post("/order")
               .contentType(MediaType.APPLICATION_JSON)
               .content(objectMapper.writeValueAsString(dto)))
           .andDo(print())
@@ -106,7 +106,7 @@ class OrderMenuControllerTest {
           .items(List.of())
           .build();
 
-      mockMvc.perform(post("/post")
+      mockMvc.perform(post("/order")
               .contentType(MediaType.APPLICATION_JSON)
               .content(objectMapper.writeValueAsString(dto)))
           .andDo(print())
@@ -129,7 +129,7 @@ class OrderMenuControllerTest {
         .items(List.of(new OrderItemDto(9999L, 1)))
         .build();
 
-    mockMvc.perform(post("/post")
+    mockMvc.perform(post("/order")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(dto)))
         .andDo(print())
