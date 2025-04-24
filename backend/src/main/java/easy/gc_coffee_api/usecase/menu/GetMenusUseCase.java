@@ -13,7 +13,7 @@ import java.util.List;
 public class GetMenusUseCase {
     private final MenuRepository menuRepository;
 
-    public MenusResponseDto getMenus() {
+    public MenusResponseDto execute() {
         List<MenuResponseDto> menus = menuRepository.findAllByMenuResponseDto();
 
         return new MenusResponseDto(menus);
