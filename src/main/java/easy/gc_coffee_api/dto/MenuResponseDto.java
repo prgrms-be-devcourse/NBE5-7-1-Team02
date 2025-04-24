@@ -12,13 +12,13 @@ public class MenuResponseDto {
     private String name;
     private int price;
     private Category category;
-    private Long thumnail;
+    private String thumbnailUrl;
 
     @Builder
-    public MenuResponseDto(String name, int price, Category category, Long thumnail) {
+    public MenuResponseDto(String name, int price, Category category, String thumbnailUrl) {
         this.name = name;
         this.price = price;
         this.category = category;
-        this.thumnail = thumnail;
+        this.thumbnailUrl = thumbnailUrl;
     }
 }
