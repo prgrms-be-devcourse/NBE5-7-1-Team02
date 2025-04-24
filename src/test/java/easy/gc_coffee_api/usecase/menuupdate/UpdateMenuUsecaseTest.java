@@ -7,6 +7,7 @@ import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.exception.menu.InvalidMenuCategoryException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuNameException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuPriceException;
+import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
 import easy.gc_coffee_api.usecase.menu.ThumnailFatory;
 import easy.gc_coffee_api.usecase.menu.UpdateMenuUsecase;
@@ -66,7 +67,7 @@ public class UpdateMenuUsecaseTest {
         when(repository.findById(eq(menuId))).thenReturn(Optional.empty());
 
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("아메리카노", 4000, "COFFEE_BEAN",10L);
-        assertThatThrownBy(()->usecase.execute(menuId,request)).isInstanceOf(ResponseStatusException.class);
+        assertThatThrownBy(()->usecase.execute(menuId,request)).isInstanceOf(MenuNotFoundException.class);
     }
 
     @Test
