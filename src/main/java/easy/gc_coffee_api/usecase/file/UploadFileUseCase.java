@@ -35,7 +35,6 @@ public class UploadFileUseCase {
             String extension = getExtension(originalFilename); // 확장자
 
             if(extension.isEmpty()) {
-                System.out.println("ㅋㅋ");
                 throw new IllegalArgumentException("확장자가 없는 파일로 요청했습니다.");
             }
 
