@@ -94,7 +94,7 @@ class OrderMenuUserCaseTest {
     System.out.println("▶ Request JSON:\n" + reqJson);
 
     // When
-    Long savedOrderId = orderMenuUserCase.process(requestDto);
+    Long savedOrderId = orderMenuUserCase.execute(requestDto);
 
 
     Orders savedOrder = orderRepository.findById(savedOrderId)

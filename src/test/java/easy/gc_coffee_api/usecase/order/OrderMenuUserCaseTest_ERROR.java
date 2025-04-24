@@ -187,7 +187,7 @@ class OrderMenuUserCaseTest_ERROR {
 
     IllegalArgumentException ex = assertThrows(
         IllegalArgumentException.class,
-        () -> service.process(dto)
+        () -> service.execute(dto)
     );
 
     System.out.println("▶ 발생한 예외 메시지: " + ex.getMessage());

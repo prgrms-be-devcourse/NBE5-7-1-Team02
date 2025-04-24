@@ -15,8 +15,8 @@ public class OrderMenuController {
 
   private final OrderMenuUserCase orderMenuUserCase;
 
-  @PostMapping("/order")
+  @PostMapping("/orders")
   public ResponseEntity<Long> post(@Valid @RequestBody OrderRequestDto order) {
-    return ResponseEntity.ok(orderMenuUserCase.process(order));
+    return ResponseEntity.ok(orderMenuUserCase.execute(order));
   }
 }

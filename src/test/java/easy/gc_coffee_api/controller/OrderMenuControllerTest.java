@@ -39,7 +39,7 @@ class OrderMenuControllerTest {
   @Test
   @DisplayName("POST /post - 성공: 200 OK, ID 반환")
   void postOrderSuccess() throws Exception {
-    given(orderMenuUserCase.process(any(OrderRequestDto.class))).willReturn(42L);
+    given(orderMenuUserCase.execute(any(OrderRequestDto.class))).willReturn(42L);
 
     OrderRequestDto dto = OrderRequestDto.builder()
         .email("user@example.com")
@@ -47,7 +47,7 @@ class OrderMenuControllerTest {
         .items(List.of(new OrderItemDto(1L, 2)))
         .build();
 
-    mockMvc.perform(post("/order")
+    mockMvc.perform(post("/orders")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(dto)))
         .andDo(print())
@@ -68,7 +68,7 @@ class OrderMenuControllerTest {
           .items(List.of(new OrderItemDto(1L, 1)))
           .build();
 
-      mockMvc.perform(post("/order")
+      mockMvc.perform(post("/orders")
               .contentType(MediaType.APPLICATION_JSON)
               .content(objectMapper.writeValueAsString(dto)))
           .andDo(print())
@@ -87,7 +87,7 @@ class OrderMenuControllerTest {
           .items(List.of(new OrderItemDto(1L, 1)))
           .build();
 
-      mockMvc.perform(post("/order")
+      mockMvc.perform(post("/orders")
               .contentType(MediaType.APPLICATION_JSON)
               .content(objectMapper.writeValueAsString(dto)))
           .andDo(print())
@@ -106,7 +106,7 @@ class OrderMenuControllerTest {
           .items(List.of())
           .build();
 
-      mockMvc.perform(post("/order")
+      mockMvc.perform(post("/orders")
               .contentType(MediaType.APPLICATION_JSON)
               .content(objectMapper.writeValueAsString(dto)))
           .andDo(print())
@@ -120,7 +120,7 @@ class OrderMenuControllerTest {
   @Test
   @DisplayName("존재하지 않는 메뉴 ID: 404 Not Found")
   void menuNotFound() throws Exception {
-    given(orderMenuUserCase.process(any()))
+    given(orderMenuUserCase.execute(any()))
         .willThrow(new GCException("존재하지 않는 메뉴 ID: 9999", 404));
 
     OrderRequestDto dto = OrderRequestDto.builder()
@@ -129,7 +129,7 @@ class OrderMenuControllerTest {
         .items(List.of(new OrderItemDto(9999L, 1)))
         .build();
 
-    mockMvc.perform(post("/order")
+    mockMvc.perform(post("/orders")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(dto)))
         .andDo(print())

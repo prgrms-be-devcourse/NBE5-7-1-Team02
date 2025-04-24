@@ -11,6 +11,7 @@ import easy.gc_coffee_api.entity.Orders;
 import easy.gc_coffee_api.repository.MenuRepository;
 import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class OrderMenuUserCase {
   private final MenuRepository menuRepository;
   private final OrderMenuRepository orderMenuRepository;
 
-  public Long process(OrderRequestDto dto) {
+  public Long execute(OrderRequestDto dto) {
     Orders order = Orders.builder()
         .email(dto.getEmail())
         .address(new Address(
@@ -38,7 +39,7 @@ public class OrderMenuUserCase {
 
     for (OrderItemDto item : dto.getItems()) {
       Menu menu = menuRepository.findById(item.getMenuId())
-          .orElseThrow(() -> new IllegalArgumentException(
+          .orElseThrow(() -> new EntityNotFoundException(
               "존재하지 않는 메뉴 ID: " + item.getMenuId()
           ));
 
