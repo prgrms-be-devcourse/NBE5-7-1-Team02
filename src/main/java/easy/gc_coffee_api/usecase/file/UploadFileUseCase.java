@@ -4,7 +4,6 @@ import easy.gc_coffee_api.dto.file.UploadFileResponseDto;
 import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.repository.FileRepository;
 import easy.gc_coffee_api.usecase.file.strategy.StorageStrategy;
-import easy.gc_coffee_api.usecase.file.vo.FileUrl;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,11 +44,11 @@ public class UploadFileUseCase {
         }
 
         // 스토리지에 저장
-        FileUrl fileUrl = storageStrategy.upload(file, newFileName);
+        storageStrategy.upload(file, newFileName);
 
         // DB에 저장
         File savedFile = fileRepository.save(
-            new File(mimeType, fileUrl.toString())
+            new File(mimeType, newFileName)
         );
 
         return new UploadFileResponseDto(savedFile.getId(), savedFile.getKey());
