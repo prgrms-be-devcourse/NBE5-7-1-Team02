@@ -36,4 +36,11 @@ public class Menu extends BaseDateEntity {
         this(null, name, price, category, thumbnail);
     }
 
+    public void update(String name, Integer price, Category category, Thumnail thumbnail) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.thumnail = thumbnail;
+    }
+
 }
