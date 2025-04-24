@@ -26,13 +26,13 @@ public class UpdateMenuUsecase {
         Menu menu = menuRepository.findById(menuId).orElseThrow(()-> new ResponseStatusException(NOT_FOUND, "메뉴가 없습니다."));
 
         if(requestDto.getName()==null){
-            throw new InvalidMenuNameException("이름을 입력하지 않았습니다.",1001);
+            throw new InvalidMenuNameException("이름을 입력하지 않았습니다.",400);
         }
         if(requestDto.getCategory()==null){
-            throw new InvalidMenuCategoryException("카테고리를 입력하지 않았습니다.",1002);
+            throw new InvalidMenuCategoryException("카테고리를 입력하지 않았습니다.",400);
         }
         if(requestDto.getPrice()<0){
-            throw new InvalidMenuPriceException("가격은 음수일 수 없습니다.",1003);
+            throw new InvalidMenuPriceException("가격은 음수일 수 없습니다.",400);
         }
 
         Category category = Category.valueOf(requestDto.getCategory().toUpperCase());
