@@ -16,7 +16,9 @@ public class Menu extends BaseDateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private Long id;
+    @Getter
     private String name;
+    @Getter
     private Integer price;
 
     @Enumerated(EnumType.STRING)
