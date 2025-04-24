@@ -55,7 +55,7 @@ public class UploadFileUseCase {
 
             return new UploadFileResponseDto(savedFile.getId(), savedFile.getUrl());
         } catch (IllegalArgumentException e) {
-            throw new GCException(e.getMessage(), e, 400);
+            throw new IllegalArgumentException(e.getMessage());
         } catch (Exception e) {
             throw new GCException("파일 저장 실패", e, 500);
         }
