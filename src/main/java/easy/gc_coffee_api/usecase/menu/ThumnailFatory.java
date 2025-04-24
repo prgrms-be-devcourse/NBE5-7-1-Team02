@@ -11,10 +11,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ThumnailFatory {
 
-    private static final Long DEFAULT_THUMNAIL_ID = 1L;
     private final FileRepository fileRepository;
 
     public Thumnail create(Long thumnailId) {
+        if(thumnailId == null){
+            return new Thumnail();
+        }
         try {
             File file = getFile(thumnailId);
             return new Thumnail(file.getId(),file.getMimetype());
@@ -24,9 +26,6 @@ public class ThumnailFatory {
     }
 
     private File getFile(Long thumnailId) throws ThumnailCreateException {
-        if(thumnailId == null) {
-            return fileRepository.findById(DEFAULT_THUMNAIL_ID).get();
-        }
-        return fileRepository.findById(thumnailId).orElseThrow(()->new ThumnailCreateException(String.format("thumnail id로 파일을 찾을 수 없습니다.")));
+        return fileRepository.findById(thumnailId).orElseThrow(()->new ThumnailCreateException("thumnail id로 파일을 찾을 수 없습니다."));
     }
 }

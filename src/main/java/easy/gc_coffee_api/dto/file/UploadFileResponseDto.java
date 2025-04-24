@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class UploadFileResponseDto {
     private Long id;
-    private String url;
+    private String key;
 }

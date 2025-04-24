@@ -2,17 +2,19 @@ package easy.gc_coffee_api.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.*;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
+@Getter
 public class Thumnail {
-//    @ManyToOne
-//    @JoinColumn(name = "file_id")
-//    private File thumbnail;
 
     @Column(name = "file_id")
     private Long fileId;
