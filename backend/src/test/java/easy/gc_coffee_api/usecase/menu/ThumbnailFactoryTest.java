@@ -3,6 +3,7 @@ package easy.gc_coffee_api.usecase.menu;
 import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.repository.FileRepository;
+import easy.gc_coffee_api.usecase.menu.helper.ThumbnailFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

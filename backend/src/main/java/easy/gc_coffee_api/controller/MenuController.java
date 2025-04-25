@@ -1,6 +1,7 @@
 package easy.gc_coffee_api.controller;
 
 import easy.gc_coffee_api.dto.UpdateMenuRequestDto;
+import easy.gc_coffee_api.exception.ThumbnailCreateException;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.usecase.menu.DeleteMenuUseCase;
 import easy.gc_coffee_api.usecase.menu.UpdateMenuUsecase;
@@ -10,7 +11,6 @@ import easy.gc_coffee_api.dto.CreateMenuRequestDto;
 import easy.gc_coffee_api.dto.CreateMenuResponseDto;
 import easy.gc_coffee_api.dto.MenusResponseDto;
 import easy.gc_coffee_api.exception.GCException;
-import easy.gc_coffee_api.exception.ThumbnailCreateException;
 import easy.gc_coffee_api.usecase.menu.CreateMenuUsecase;
 import jakarta.persistence.EntityNotFoundException;
 import easy.gc_coffee_api.usecase.menu.GetMenusUseCase;
@@ -55,7 +55,7 @@ public class MenuController {
 
     @GetMapping("/menus")
     public ResponseEntity<MenusResponseDto> getMenus() {
-        MenusResponseDto responseDto = getMenusUseCase.getMenus();
+        MenusResponseDto responseDto = getMenusUseCase.execute();
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 

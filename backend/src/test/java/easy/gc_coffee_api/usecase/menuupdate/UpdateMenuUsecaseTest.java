@@ -9,8 +9,8 @@ import easy.gc_coffee_api.exception.menu.InvalidMenuNameException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuPriceException;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
-import easy.gc_coffee_api.usecase.menu.ThumbnailFactory;
 import easy.gc_coffee_api.usecase.menu.UpdateMenuUsecase;
+import easy.gc_coffee_api.usecase.menu.helper.ThumbnailFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,11 +34,11 @@ public class UpdateMenuUsecaseTest {
     private MenuRepository repository;
 
     @Mock
-    private ThumbnailFactory thumbnailFactory;
+    private ThumbnailFactory thumnailFatory;
 
     @BeforeEach
     public void setUp(){
-        usecase = new UpdateMenuUsecase(repository, thumbnailFactory);
+        usecase = new UpdateMenuUsecase(repository,thumnailFatory);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class UpdateMenuUsecaseTest {
         Menu menu = new Menu("라떼",5500, Category.COFFEE_BEAN,mock(Thumbnail.class));
         Thumbnail thumbnail = new Thumbnail(10L,"image/jpeg");
         when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(menu));
-        when(thumbnailFactory.create(eq(10L))).thenReturn(thumbnail);
+        when(thumnailFatory.create(eq(10L))).thenReturn(thumbnail);
 
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("아메리카노", 4000, "COFFEE_BEAN",10L);
         usecase.execute(menuId,request);
@@ -117,8 +117,8 @@ public class UpdateMenuUsecaseTest {
 //    @Test
 //    void 썸네일_생성_실패시_예외(){
 //        Long menuId=1L;
-//        Menu menu = new Menu("라떼", 5500, Category.COFFEE_BEAN,mock(Thumbnail.class));
-//        Thumbnail thumbnail = new Thumbnail(10L,"image/jpeg");
+//        Menu menu = new Menu("라떼", 5500, Category.COFFEE_BEAN,mock(Thumnail.class));
+//        Thumnail thumnail = new Thumnail(10L,"image/jpeg");
 //
 //        when(repository.findById(eq(menuId))).thenReturn(Optional.of(menu));
 //
@@ -132,7 +132,7 @@ public class UpdateMenuUsecaseTest {
         Thumbnail thumbnail = new Thumbnail(1L,"image/jpeg");
 
         when(repository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(menu));
-        when(thumbnailFactory.create(null)).thenReturn(thumbnail);
+        when(thumnailFatory.create(null)).thenReturn(thumbnail);
 
         UpdateMenuRequestDto request = new UpdateMenuRequestDto("커피", 4000, "COFFEE_BEAN",null);
         usecase.execute(menuId,request);

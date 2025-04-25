@@ -3,6 +3,8 @@ package easy.gc_coffee_api.usecase.menu;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
+import easy.gc_coffee_api.usecase.menu.helper.MenuSaver;
+import easy.gc_coffee_api.usecase.menu.helper.ThumbnailFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

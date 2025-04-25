@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.usecase.menu;
+package easy.gc_coffee_api.usecase.menu.helper;
 
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.Thumbnail;
