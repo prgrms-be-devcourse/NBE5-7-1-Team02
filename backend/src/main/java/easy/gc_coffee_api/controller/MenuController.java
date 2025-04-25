@@ -52,7 +52,7 @@ public class MenuController {
     @GetMapping
     public ResponseEntity<MenusResponseDto> getMenus() {
         MenusResponseDto responseDto = getMenusUseCase.execute();
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/{menuId}")
@@ -62,10 +62,10 @@ public class MenuController {
     }
 
     @DeleteMapping("/{menuId}")
-    public ResponseEntity<String> deleteMenu(@PathVariable Long menuId) {
+    public ResponseEntity<Void> deleteMenu(@PathVariable Long menuId) {
         try {
             deleteMenuUseCase.execute(menuId);
-            return ResponseEntity.ok("삭제 완료");
+            return ResponseEntity.noContent().build();
         } catch (MenuNotFoundException e) {
             throw new GCException(e.getMessage(), e, 400);
         }
