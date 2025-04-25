@@ -4,6 +4,7 @@ import easy.gc_coffee_api.dto.file.UploadFileResponseDto;
 import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.repository.FileRepository;
 import easy.gc_coffee_api.usecase.file.strategy.StorageStrategy;
+import easy.gc_coffee_api.util.TypeChecker;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +40,7 @@ public class UploadFileUseCase {
         String newFileName = UUID.randomUUID() + "." + extension; // 파일명
         String mimeType = file.getContentType();
 
-        if (!isImage(mimeType)) {
+        if (!TypeChecker.isImage(mimeType)) {
             throw new IllegalArgumentException("이미지 파일만 업로드 가능합니다.");
         }
 
@@ -52,11 +53,6 @@ public class UploadFileUseCase {
         );
 
         return new UploadFileResponseDto(savedFile.getId(), savedFile.getKey());
-    }
-
-    // mimetype 유효성 검사
-    private static boolean isImage(String mimeType) {
-        return mimeType != null && mimeType.startsWith("image");
     }
 
     // 확장자 얻기

@@ -17,7 +17,7 @@ public class CreateMenuRequestDto {
     @NotNull(message = "price는 필 수 입니다.")
     @Min(value = 0,message = "가격은 0이상이여야 합니다.")
     private Integer price;
-    private Long thumnailId;
+    private Long thumbnailId;
 
     public Category getCategory() throws EntityNotFoundException {
         return Category.findByName(category);

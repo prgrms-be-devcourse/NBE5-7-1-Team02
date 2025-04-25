@@ -4,7 +4,7 @@ import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.usecase.menu.helper.MenuSaver;
-import easy.gc_coffee_api.usecase.menu.helper.ThumnailFatory;
+import easy.gc_coffee_api.usecase.menu.helper.ThumbnailFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,13 +21,13 @@ public class CreateMenuUsecaseTest {
     @Mock
     private MenuSaver menuSaver;
     @Mock
-    private ThumnailFatory thumnailFatory;
+    private ThumbnailFactory thumbnailFactory;
 
     private CreateMenuUsecase createMenuUsecase;
 
     @BeforeEach
     void setUp() {
-        createMenuUsecase =  new CreateMenuUsecase(menuSaver, thumnailFatory);
+        createMenuUsecase =  new CreateMenuUsecase(menuSaver, thumbnailFactory);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class CreateMenuUsecaseTest {
         Long fileId = 2L;
 
         Thumbnail thumbnail = new Thumbnail(2L, "image/jpeg");
-        when(thumnailFatory.create(eq(fileId))).thenReturn(thumbnail);
+        when(thumbnailFactory.create(eq(fileId))).thenReturn(thumbnail);
         when(menuSaver.save(eq(menuName),eq(category),eq(price),eq(thumbnail))).thenReturn(new Menu(entityId, menuName, price, category, thumbnail));
 
         Long id = createMenuUsecase.execute(menuName, category, price, fileId);

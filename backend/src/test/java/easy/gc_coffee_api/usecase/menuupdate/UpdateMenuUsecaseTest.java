@@ -9,8 +9,8 @@ import easy.gc_coffee_api.exception.menu.InvalidMenuNameException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuPriceException;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
-import easy.gc_coffee_api.usecase.menu.helper.ThumnailFatory;
 import easy.gc_coffee_api.usecase.menu.UpdateMenuUsecase;
+import easy.gc_coffee_api.usecase.menu.helper.ThumbnailFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ public class UpdateMenuUsecaseTest {
     private MenuRepository repository;
 
     @Mock
-    private ThumnailFatory thumnailFatory;
+    private ThumbnailFactory thumnailFatory;
 
     @BeforeEach
     public void setUp(){

@@ -10,7 +10,7 @@ import easy.gc_coffee_api.exception.menu.InvalidMenuNameException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuPriceException;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
-import easy.gc_coffee_api.usecase.menu.helper.ThumnailFatory;
+import easy.gc_coffee_api.usecase.menu.helper.ThumbnailFactory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UpdateMenuUsecase {
 
     private final MenuRepository menuRepository;
-    private final ThumnailFatory thumnailFatory;
+    private final ThumbnailFactory thumbnailFactory;
 
     @Transactional
     public void execute(Long menuId, UpdateMenuRequestDto requestDto) throws ResponseStatusException, IllegalArgumentException {
@@ -43,7 +43,7 @@ public class UpdateMenuUsecase {
         }
 
         Category category = Category.valueOf(requestDto.getCategory().toUpperCase());
-        Thumbnail thumbnail = thumnailFatory.create(requestDto.getImageId());
+        Thumbnail thumbnail = thumbnailFactory.create(requestDto.getImageId());
 
 
         menu.update(requestDto.getName(),
