@@ -1,19 +1,25 @@
 package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.dto.MenuResponseDto;
-import easy.gc_coffee_api.entity.Menu;
-import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
-import easy.gc_coffee_api.repository.MenuRepository;
+import easy.gc_coffee_api.usecase.menu.dto.MenuData;
+import easy.gc_coffee_api.usecase.menu.helper.MenuReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class GetMenuUseCase {
-    private final MenuRepository menuRepository;
+    private final MenuReader menuReader;
 
     public MenuResponseDto execute(Long menuId) {
-        return menuRepository.findOneNotDeleted(menuId).
-                orElseThrow(() -> new MenuNotFoundException("이미 삭제된 메뉴이거나 존재하지 않는 메뉴입니다.", 400));
+        MenuData menuData = menuReader.findOneNotDeleted(menuId);
+        return new MenuResponseDto(
+                menuData.getId(),
+                menuData.getName(),
+                menuData.getPrice(),
+                menuData.getCategory(),
+                menuData.getFullPathUrl(),
+                menuData.getFileId()
+        );
     }
 }

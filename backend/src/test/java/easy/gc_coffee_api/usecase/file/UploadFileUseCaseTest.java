@@ -29,7 +29,7 @@ public class UploadFileUseCaseTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        uploadFileUseCase = new UploadFileUseCase(fileRepository, new LocalFileStorageStrategy());
+        uploadFileUseCase = new UploadFileUseCase(fileRepository, new LocalFileStorageStrategy(new FileUrlTranslator("/")));
     }
 
     @Test

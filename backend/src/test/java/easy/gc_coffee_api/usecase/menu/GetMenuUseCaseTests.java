@@ -4,7 +4,8 @@ import easy.gc_coffee_api.dto.MenuResponseDto;
 import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
-import easy.gc_coffee_api.repository.MenuRepository;
+import easy.gc_coffee_api.usecase.menu.dto.MenuData;
+import easy.gc_coffee_api.usecase.menu.helper.MenuReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,28 +13,24 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
 class GetMenuUseCaseTests {
 
     @Mock
-    private MenuRepository menuRepository;
+    private MenuReader menuReader;
 
     private GetMenuUseCase getMenuUseCase;
 
     @BeforeEach
     void setUp() {
-        getMenuUseCase = new GetMenuUseCase(menuRepository);
+        getMenuUseCase = new GetMenuUseCase(menuReader);
     }
-    
+
     @Test
     @DisplayName("메뉴 아이디로 삭제되지 않은 메뉴 조회")
     void getMenuSuccessTest() throws Exception {
@@ -41,9 +38,9 @@ class GetMenuUseCaseTests {
         Long menuId = 101L;
         String prefix = "http://localhost:8084/";
         File file = new File(1L, "image/jpeg", "storage/test.jpg");
-        MenuResponseDto findMenu = new MenuResponseDto(menuId, "Espresso", 2500, Category.COFFEE_BEAN, file);
+        MenuData findMenu = new MenuData(menuId, "Espresso", 2500, Category.COFFEE_BEAN, file.getId(), prefix + file.getKey(), prefix + file.getKey());
         //when
-        when(menuRepository.findOneNotDeleted(menuId)).thenReturn(Optional.of(findMenu));
+        when(menuReader.findOneNotDeleted(eq(menuId))).thenReturn(findMenu);
         //then
         MenuResponseDto result = getMenuUseCase.execute(menuId);
 
@@ -60,7 +57,7 @@ class GetMenuUseCaseTests {
     void getMenuFailTest() throws Exception {
         // given
         Long menuId = 99L;
-        when(menuRepository.findOneNotDeleted(eq(menuId))).thenReturn(Optional.empty());
+        when(menuReader.findOneNotDeleted(eq(menuId))).thenThrow(new MenuNotFoundException("이미 삭제된 메뉴이거나 존재하지 않는 메뉴입니다.", 400));
         // when / then
         assertThatThrownBy(() -> getMenuUseCase.execute(menuId)).isInstanceOf(MenuNotFoundException.class);
 

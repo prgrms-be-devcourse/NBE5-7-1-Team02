@@ -2,20 +2,29 @@ package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.dto.MenuResponseDto;
 import easy.gc_coffee_api.dto.MenusResponseDto;
-import easy.gc_coffee_api.repository.MenuRepository;
+import easy.gc_coffee_api.usecase.menu.dto.MenuDatas;
+import easy.gc_coffee_api.usecase.menu.helper.MenuReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class GetMenusUseCase {
-    private final MenuRepository menuRepository;
+    private final MenuReader menuReader;
 
     public MenusResponseDto execute() {
-        List<MenuResponseDto> menus = menuRepository.findAllNotDeleted();
-
-        return new MenusResponseDto(menus);
+        MenuDatas menus = menuReader.readAllNotDelete();
+        return new MenusResponseDto(menus
+                .transform((menu)->
+                        new MenuResponseDto(
+                                menu.getId(),
+                                menu.getName(),
+                                menu.getPrice(),
+                                menu.getCategory(),
+                                menu.getFullPathUrl(),
+                                menu.getFileId()
+                                )
+                        )
+        );
     }
 }

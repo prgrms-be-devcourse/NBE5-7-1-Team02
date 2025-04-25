@@ -4,6 +4,8 @@ import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.exception.ThumnailCreateException;
+import easy.gc_coffee_api.usecase.menu.helper.MenuSaver;
+import easy.gc_coffee_api.usecase.menu.helper.ThumnailFatory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

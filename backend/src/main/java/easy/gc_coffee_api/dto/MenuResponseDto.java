@@ -1,7 +1,6 @@
 package easy.gc_coffee_api.dto;
 
 import easy.gc_coffee_api.entity.File;
-import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.common.Category;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -27,6 +26,7 @@ public class MenuResponseDto {
         this.fileId = fileId;
         this.thumbnailUrl = thumbnailUrl;
     }
+
     public MenuResponseDto(Long id, String name, int price, Category category, File file){
         this(id, name, price, category, getUrl(file), getFileId(file));
     }
