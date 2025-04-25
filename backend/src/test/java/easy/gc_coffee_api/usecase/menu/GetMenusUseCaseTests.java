@@ -2,9 +2,6 @@ package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.dto.MenuResponseDto;
 import easy.gc_coffee_api.dto.MenusResponseDto;
-import easy.gc_coffee_api.entity.File;
-import easy.gc_coffee_api.entity.Menu;
-import easy.gc_coffee_api.entity.Thumnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.repository.MenuRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +40,7 @@ class GetMenusUseCaseTests {
                 firstDto,secondDto
         );
 
-        when(menuRepository.findAllByMenuResponseDto()).thenReturn(fakeMenus);
+        when(menuRepository.findAllNotDeleted()).thenReturn(fakeMenus);
 
         // when
         MenusResponseDto result = getMenusUseCase.getMenus();

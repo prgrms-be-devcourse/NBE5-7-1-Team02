@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.Menu;
-import easy.gc_coffee_api.entity.Thumnail;
+import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.repository.FileRepository;
 import easy.gc_coffee_api.repository.MenuRepository;
@@ -61,8 +61,8 @@ class OrderMenuUserCaseTest_ERROR {
     realFile = fileRepo.save(realFile);
 
 
-    Thumnail th1 = new Thumnail(realFile.getId(), realFile.getMimetype());
-    Thumnail th2 = new Thumnail(realFile.getId(), realFile.getMimetype());
+    Thumbnail th1 = new Thumbnail(realFile.getId(), realFile.getMimetype());
+    Thumbnail th2 = new Thumbnail(realFile.getId(), realFile.getMimetype());
 
 
     Menu m1 = menuRepo.save(new Menu(null, "m1", 1000, Category.COFFEE_BEAN, th1));

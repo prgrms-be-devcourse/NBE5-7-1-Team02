@@ -1,7 +1,7 @@
 package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.entity.File;
-import easy.gc_coffee_api.entity.Thumnail;
+import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.exception.ThumnailCreateException;
 import easy.gc_coffee_api.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +13,13 @@ public class ThumnailFatory {
 
     private final FileRepository fileRepository;
 
-    public Thumnail create(Long thumnailId) {
+    public Thumbnail create(Long thumnailId) {
         if(thumnailId == null){
-            return new Thumnail();
+            return new Thumbnail();
         }
         try {
             File file = getFile(thumnailId);
-            return new Thumnail(file.getId(),file.getMimetype());
+            return new Thumbnail(file.getId(),file.getMimetype());
         }catch (IllegalArgumentException e){
             throw new ThumnailCreateException("image type이 아닙니다.");
         }

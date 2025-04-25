@@ -55,7 +55,7 @@ public class OrderMenuUserCase {
   }
 
   private OrderMenu saveMenu(Orders savedOrder, OrderItemDto item) {
-    Menu menu = menuRepository.findById(item.getMenuId())
+    Menu menu = menuRepository.findByIdAndDeletedAtIsNull(item.getMenuId())
         .orElseThrow(() -> new EntityNotFoundException(
             "존재하지 않는 메뉴 ID: " + item.getMenuId()
         ));

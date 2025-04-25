@@ -11,7 +11,7 @@ import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
 import easy.gc_coffee_api.entity.Orders;
-import easy.gc_coffee_api.entity.Thumnail;
+import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.repository.FileRepository;
 import easy.gc_coffee_api.repository.MenuRepository;
@@ -53,8 +53,8 @@ class OrderMenuUserCaseTest {
         realFile = fileRepository.save(realFile);
 
 
-        Thumnail thumbnail1 = new Thumnail(realFile.getId(), realFile.getMimetype());
-        Thumnail thumbnail2 = new Thumnail(realFile.getId(), realFile.getMimetype());
+        Thumbnail thumbnail1 = new Thumbnail(realFile.getId(), realFile.getMimetype());
+        Thumbnail thumbnail2 = new Thumbnail(realFile.getId(), realFile.getMimetype());
 
 
         Menu menuTest1 = new Menu(null, "test1", 20_000, Category.COFFEE_BEAN, thumbnail1);

@@ -1,7 +1,7 @@
 package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.entity.Menu;
-import easy.gc_coffee_api.entity.Thumnail;
+import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.exception.ThumnailCreateException;
 import jakarta.transaction.Transactional;
@@ -17,8 +17,8 @@ public class CreateMenuUsecase{
 
     @Transactional
     public Long execute(String menuName, Category category, int price, Long fileId) throws ThumnailCreateException {
-        Thumnail thumnail = thumnailFatory.create(fileId);
-        Menu menu = menuSaver.save(menuName, category, price, thumnail);
+        Thumbnail thumbnail = thumnailFatory.create(fileId);
+        Menu menu = menuSaver.save(menuName, category, price, thumbnail);
         return menu.getId();
     }
 }
