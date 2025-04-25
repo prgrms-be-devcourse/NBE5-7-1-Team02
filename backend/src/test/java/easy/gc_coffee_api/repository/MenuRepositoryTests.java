@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class MenuRepositoryTests {
@@ -15,14 +18,34 @@ class MenuRepositoryTests {
     private MenuRepository menuRepository;
 
     @Test
-    @DisplayName("JPQL 테스트")
-    void jpql_test() throws Exception {
-
+    @DisplayName("JPQL 전체 조회 테스트")
+    void jpqlTest() throws Exception {
         List<MenuResponseDto> items = menuRepository.findAllNotDeleted();
         for (MenuResponseDto item : items) {
+            System.out.println(item.getId());
             System.out.println(items.size());
             System.out.println(item.getName());
         }
-    
     }
+
+    @Test
+    @DisplayName("JPQL 싱글 조회 테스트(성공)")
+    void jpqlSingleSelectSuccessTest() throws Exception {
+        Long menuId = 103L; // 실제 DB에 존재하는 menu_id를 설정.
+        Optional<MenuResponseDto> item = menuRepository.findOneNotDeleted(menuId);
+        assertThat(item).isPresent();
+        item.ifPresent(menu -> {
+            System.out.println(menu.getId());
+            System.out.println(menu.getThumbnailUrl());
+        });
+    }
+
+    @Test
+    @DisplayName("JPQL 싱글 조회 테스트(실패)")
+    void jpqlSingleSelectFailTest() throws Exception {
+        Long menuId = 100L; // 실제 DB에 존재하지 않는 menu_id를 설정.
+        Optional<MenuResponseDto> item = menuRepository.findOneNotDeleted(menuId);
+        assertThat(item).isNotPresent();
+    }
+
 }

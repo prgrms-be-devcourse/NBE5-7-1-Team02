@@ -10,11 +10,15 @@ import java.util.Optional;
 
 public interface MenuRepository extends JpaRepository<Menu,Long> {
 
-    @Query("SELECT new easy.gc_coffee_api.dto.MenuResponseDto(m.name, m.price, m.category," +
-            " CASE WHEN f IS NULL THEN NULL WHEN f IS NOT NULL THEN f.key END)" +
+    @Query("SELECT new easy.gc_coffee_api.dto.MenuResponseDto(m.id, m.name, m.price, m.category, f)" +
             " FROM Menu m LEFT JOIN File f ON m.thumbnail.fileId = f.id" +
             " WHERE m.deletedAt IS NULL")
     List<MenuResponseDto> findAllNotDeleted();
+
+    @Query("SELECT new easy.gc_coffee_api.dto.MenuResponseDto(m.id, m.name, m.price, m.category, f)" +
+            " FROM Menu m LEFT JOIN File f ON m.thumbnail.fileId = f.id" +
+            " WHERE m.deletedAt IS NULL AND m.id = :menuId")
+    Optional<MenuResponseDto> findOneNotDeleted(Long menuId);
 
     Optional<Menu> findByIdAndDeletedAtIsNull(Long menuId);
 }

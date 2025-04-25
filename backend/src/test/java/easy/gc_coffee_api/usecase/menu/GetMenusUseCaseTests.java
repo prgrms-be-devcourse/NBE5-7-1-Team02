@@ -2,6 +2,8 @@ package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.dto.MenuResponseDto;
 import easy.gc_coffee_api.dto.MenusResponseDto;
+import easy.gc_coffee_api.entity.File;
+import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.repository.MenuRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,11 +33,12 @@ class GetMenusUseCaseTests {
 
     @Test
     @DisplayName("메뉴 리스트 조회")
-    void get_menus_test() {
-
+    void getMenusTest() {
+        File file1 = new File(1L, "image/jpeg", "/storage/111.jpg");
+        File file2 = new File(2L, "image/jpeg", "/storage/111.jpg");
         // given
-        MenuResponseDto firstDto =  new MenuResponseDto("Americano", 3000, Category.COFFEE_BEAN, "/storage/001.jpeg");
-        MenuResponseDto secondDto = new MenuResponseDto("CafeLatte", 4000, Category.COFFEE_BEAN, null);
+        MenuResponseDto firstDto =  new MenuResponseDto(1L,"Americano", 3000, Category.COFFEE_BEAN, file1);
+        MenuResponseDto secondDto = new MenuResponseDto(2L,"CafeLatte", 4000, Category.COFFEE_BEAN, file2);
         List<MenuResponseDto> fakeMenus = Arrays.asList(
                 firstDto,secondDto
         );
@@ -47,16 +50,20 @@ class GetMenusUseCaseTests {
 
         // then
         MenuResponseDto first = result.getMenus().getFirst();
+        assertThat(first.getId()).isEqualTo(firstDto.getId());
         assertThat(first.getName()).isEqualTo(firstDto.getName());
         assertThat(first.getPrice()).isEqualTo(firstDto.getPrice());
         assertThat(first.getCategory()).isEqualTo(firstDto.getCategory());
+        assertThat(first.getFileId()).isEqualTo(firstDto.getFileId());
         assertThat(first.getThumbnailUrl()).isEqualTo(firstDto.getThumbnailUrl());
 
         MenuResponseDto second = result.getMenus().get(1);
+        assertThat(second.getId()).isEqualTo(secondDto.getId());
         assertThat(second.getName()).isEqualTo(secondDto.getName());
         assertThat(second.getPrice()).isEqualTo(secondDto.getPrice());
         assertThat(second.getCategory()).isEqualTo(secondDto.getCategory());
-        assertThat(second.getThumbnailUrl()).isNull();
+        assertThat(second.getFileId()).isEqualTo(secondDto.getFileId());
+        assertThat(second.getThumbnailUrl()).isEqualTo(secondDto.getThumbnailUrl());
 
     }
 }
