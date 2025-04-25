@@ -40,7 +40,7 @@ class GetMenusUseCaseTests {
                 firstDto,secondDto
         );
 
-        when(menuRepository.findAllByMenuResponseDto()).thenReturn(fakeMenus);
+        when(menuRepository.findAllNotDeleted()).thenReturn(fakeMenus);
 
         // when
         MenusResponseDto result = getMenusUseCase.execute();

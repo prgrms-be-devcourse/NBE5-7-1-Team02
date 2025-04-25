@@ -2,6 +2,8 @@ package easy.gc_coffee_api.entity.common;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,9 +20,12 @@ public class BaseDateEntity {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @Setter
+    
+    @Getter
     private LocalDateTime deletedAt;
 
 
+    public void delete() {
+        this.deletedAt = LocalDateTime.now();
+    }
 }

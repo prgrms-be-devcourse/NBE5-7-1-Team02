@@ -1,7 +1,7 @@
 package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.entity.Menu;
-import easy.gc_coffee_api.entity.Thumnail;
+import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,9 +36,9 @@ public class CreateMenuUsecaseTest {
         Long entityId = 1L;
         Long fileId = 2L;
 
-        Thumnail thumnail = new Thumnail(2L, "image/jpeg");
-        when(thumnailFatory.create(eq(fileId))).thenReturn(thumnail);
-        when(menuSaver.save(eq(menuName),eq(category),eq(price),eq(thumnail))).thenReturn(new Menu(entityId, menuName, price, category,thumnail));
+        Thumbnail thumbnail = new Thumbnail(2L, "image/jpeg");
+        when(thumnailFatory.create(eq(fileId))).thenReturn(thumbnail);
+        when(menuSaver.save(eq(menuName),eq(category),eq(price),eq(thumbnail))).thenReturn(new Menu(entityId, menuName, price, category, thumbnail));
 
         Long id = createMenuUsecase.execute(menuName, category, price, fileId);
 

@@ -14,7 +14,7 @@ public class GetMenusUseCase {
     private final MenuRepository menuRepository;
 
     public MenusResponseDto execute() {
-        List<MenuResponseDto> menus = menuRepository.findAllByMenuResponseDto();
+        List<MenuResponseDto> menus = menuRepository.findAllNotDeleted();
 
         return new MenusResponseDto(menus);
     }
