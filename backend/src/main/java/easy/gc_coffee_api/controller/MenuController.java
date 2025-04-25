@@ -10,7 +10,7 @@ import easy.gc_coffee_api.dto.CreateMenuRequestDto;
 import easy.gc_coffee_api.dto.CreateMenuResponseDto;
 import easy.gc_coffee_api.dto.MenusResponseDto;
 import easy.gc_coffee_api.exception.GCException;
-import easy.gc_coffee_api.exception.ThumnailCreateException;
+import easy.gc_coffee_api.exception.ThumbnailCreateException;
 import easy.gc_coffee_api.usecase.menu.CreateMenuUsecase;
 import jakarta.persistence.EntityNotFoundException;
 import easy.gc_coffee_api.usecase.menu.GetMenusUseCase;
@@ -38,10 +38,10 @@ public class MenuController {
                     requestDto.getMenuName(),
                     requestDto.getCategory(),
                     requestDto.getPrice(),
-                    requestDto.getThumnailId()
+                    requestDto.getThumbnailId()
             );
             return ResponseEntity.ok(new CreateMenuResponseDto(id));
-        } catch (ThumnailCreateException | EntityNotFoundException e) {
+        } catch (ThumbnailCreateException | EntityNotFoundException e) {
             throw new GCException(e.getMessage(), e, 400);
         }
     }

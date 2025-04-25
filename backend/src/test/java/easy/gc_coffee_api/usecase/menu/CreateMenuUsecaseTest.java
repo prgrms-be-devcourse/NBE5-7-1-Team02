@@ -19,13 +19,13 @@ public class CreateMenuUsecaseTest {
     @Mock
     private MenuSaver menuSaver;
     @Mock
-    private ThumnailFatory thumnailFatory;
+    private ThumbnailFactory thumbnailFactory;
 
     private CreateMenuUsecase createMenuUsecase;
 
     @BeforeEach
     void setUp() {
-        createMenuUsecase =  new CreateMenuUsecase(menuSaver, thumnailFatory);
+        createMenuUsecase =  new CreateMenuUsecase(menuSaver, thumbnailFactory);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class CreateMenuUsecaseTest {
         Long fileId = 2L;
 
         Thumbnail thumbnail = new Thumbnail(2L, "image/jpeg");
-        when(thumnailFatory.create(eq(fileId))).thenReturn(thumbnail);
+        when(thumbnailFactory.create(eq(fileId))).thenReturn(thumbnail);
         when(menuSaver.save(eq(menuName),eq(category),eq(price),eq(thumbnail))).thenReturn(new Menu(entityId, menuName, price, category, thumbnail));
 
         Long id = createMenuUsecase.execute(menuName, category, price, fileId);

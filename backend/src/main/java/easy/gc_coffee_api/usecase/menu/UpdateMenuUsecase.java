@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UpdateMenuUsecase {
 
     private final MenuRepository menuRepository;
-    private final ThumnailFatory thumnailFatory;
+    private final ThumbnailFactory thumbnailFactory;
 
     @Transactional
     public void execute(Long menuId, UpdateMenuRequestDto requestDto) throws ResponseStatusException, IllegalArgumentException {
@@ -42,7 +42,7 @@ public class UpdateMenuUsecase {
         }
 
         Category category = Category.valueOf(requestDto.getCategory().toUpperCase());
-        Thumbnail thumbnail = thumnailFatory.create(requestDto.getImageId());
+        Thumbnail thumbnail = thumbnailFactory.create(requestDto.getImageId());
 
 
         menu.update(requestDto.getName(),

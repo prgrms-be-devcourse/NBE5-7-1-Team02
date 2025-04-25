@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class ThumbnailFatoryTest {
+class ThumbnailFactoryTest {
 
     @Mock
     private FileRepository fileRepository;
@@ -25,8 +25,8 @@ class ThumbnailFatoryTest {
     @Test
     void null입력시_기본이미지_생성(){
         //TODO 테스트 작성
-        ThumnailFatory thumnailFatory = new ThumnailFatory(fileRepository);
-        Thumbnail thumbnail = thumnailFatory.create(null);
+        ThumbnailFactory thumbnailFactory = new ThumbnailFactory(fileRepository);
+        Thumbnail thumbnail = thumbnailFactory.create(null);
 
         assertThat(thumbnail.getFileId()).isNull();
     }
@@ -35,9 +35,9 @@ class ThumbnailFatoryTest {
     void 아이디존재시_파일_찾아서_생성(){
         Long fileId = 1L;
         when(fileRepository.findById(eq(fileId))).thenReturn(Optional.of(new File(1L,"image/jpeg","/test/url")));
-        ThumnailFatory thumnailFatory = new ThumnailFatory(fileRepository);
+        ThumbnailFactory thumbnailFactory = new ThumbnailFactory(fileRepository);
 
-        Thumbnail thumbnail = thumnailFatory.create(fileId);
+        Thumbnail thumbnail = thumbnailFactory.create(fileId);
 
         assertThat(thumbnail.getFileId()).isEqualTo(fileId);
     }
