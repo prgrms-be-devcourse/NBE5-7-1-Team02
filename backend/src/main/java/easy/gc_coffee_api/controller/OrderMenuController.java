@@ -2,6 +2,7 @@ package easy.gc_coffee_api.controller;
 
 import easy.gc_coffee_api.dto.OrderRequestDto;
 import easy.gc_coffee_api.dto.OrderListResponseDto;
+import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
 import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.List;
 public class OrderMenuController {
 
   private final OrderMenuUserCase orderMenuUserCase;
+  private final GetOrderListUsecase getOrderListUsecase;
 
   @PostMapping("/orders")
   public ResponseEntity<Long> post(@Valid @RequestBody OrderRequestDto order) {
@@ -27,6 +29,6 @@ public class OrderMenuController {
 
   @GetMapping("/orders")
   public ResponseEntity<List<OrderListResponseDto>> getAllOrders() {
-    return ResponseEntity.ok(adminOrderListUsecase.execute());
+    return ResponseEntity.ok(getOrderListUsecase.execute());
   }
 }

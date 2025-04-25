@@ -23,10 +23,15 @@ public class Orders extends BaseDateEntity {
     @OneToMany(mappedBy = "orders", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderMenu> orderMenus = new ArrayList<>();
 
-    @Builder
-    public Orders(String email, Address address, Integer totalPrice) {
+    public Orders(Long id, String email, Address address, Integer totalPrice) {
+        this.id = id;
         this.email = email;
         this.address = address;
         this.totalPrice = totalPrice;
+    }
+
+    @Builder
+    public Orders(String email, Address address, Integer totalPrice) {
+        this(null, email, address, totalPrice);
     }
 }

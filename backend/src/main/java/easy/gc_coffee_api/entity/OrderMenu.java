@@ -37,6 +37,10 @@ public class OrderMenu extends BaseDateEntity {
         this.orders = orders;
     }
 
+    public Long orderId(){
+        return orders.getId();
+    }
+
     public int calculatePrice() {
         return price * quantity;
     }

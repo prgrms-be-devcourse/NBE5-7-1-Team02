@@ -11,4 +11,5 @@ public class OrderMenuResponseDto {
     private Integer price;
     private Integer quantity;
     private String thumbnailUrl;
+
 }
