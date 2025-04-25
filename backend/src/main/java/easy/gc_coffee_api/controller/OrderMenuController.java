@@ -4,7 +4,7 @@ import easy.gc_coffee_api.dto.OrderRequestDto;
 import easy.gc_coffee_api.dto.ShipOrdersDto;
 import easy.gc_coffee_api.exception.GCException;
 import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
-import easy.gc_coffee_api.usecase.order.OrderShippingUseCase;
+import easy.gc_coffee_api.usecase.order.ShipOrderUseCase;
 import easy.gc_coffee_api.usecase.order.ShipOrdersUseCase;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderMenuController {
 
     private final OrderMenuUserCase orderMenuUserCase;
-    private final OrderShippingUseCase orderShippingUseCase;
+    private final ShipOrderUseCase shipOrderUseCase;
     private final ShipOrdersUseCase shipOrdersUseCase;
 
     @PostMapping("/orders")
@@ -29,7 +29,7 @@ public class OrderMenuController {
     @PatchMapping("/orders/{orderId}/ship")
     public ResponseEntity<Void> ship(@PathVariable Long orderId) {
         try {
-            orderShippingUseCase.execute(orderId);
+            shipOrderUseCase.execute(orderId);
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {
             throw new GCException("order를 찾을 수 없습니다.", e, 400);

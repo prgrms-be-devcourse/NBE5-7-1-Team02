@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderShippingUseCaseTest {
+public class ShipOrderUseCaseTest {
 
     @Mock
     private OrderRepository orderRepository;
@@ -29,8 +29,8 @@ public class OrderShippingUseCaseTest {
         Orders orders = new Orders(orderId, "test@email.com", new Address("adress", "4000"), 3000);
         when(orderRepository.findById(eq(orderId))).thenReturn(Optional.of(orders));
 
-        OrderShippingUseCase orderShippingUseCase = new OrderShippingUseCase(orderRepository);
-        orderShippingUseCase.execute(orderId);
+        ShipOrderUseCase shipOrderUseCase = new ShipOrderUseCase(orderRepository);
+        shipOrderUseCase.execute(orderId);
 
         assertThat(orders.getShippingStatus()).isEqualTo(ShippingStatus.SHIPPING);
     }
@@ -39,7 +39,7 @@ public class OrderShippingUseCaseTest {
     void 없는_주문배송처리(){
         Long orderId = 1L;
 
-        OrderShippingUseCase orderShippingUseCase = new OrderShippingUseCase(orderRepository);
-        assertThatThrownBy(() -> orderShippingUseCase.execute(orderId)).isInstanceOf(EntityNotFoundException.class);
+        ShipOrderUseCase shipOrderUseCase = new ShipOrderUseCase(orderRepository);
+        assertThatThrownBy(() -> shipOrderUseCase.execute(orderId)).isInstanceOf(EntityNotFoundException.class);
     }
 }

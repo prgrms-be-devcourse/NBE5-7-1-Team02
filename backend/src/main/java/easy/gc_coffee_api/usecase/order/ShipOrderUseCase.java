@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class OrderShippingUseCase {
+public class ShipOrderUseCase {
 
     private final OrderRepository orderRepository;
 
