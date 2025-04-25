@@ -1,5 +1,6 @@
 package easy.gc_coffee_api.entity;
 
+import easy.gc_coffee_api.util.TypeChecker;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
@@ -23,8 +24,7 @@ public class Thumbnail {
     }
 
     private void validateType(String type) throws IllegalArgumentException {
-        String[] split = type.split("/");
-        if(split.length < 1 || !split[0].equalsIgnoreCase("image")){
+        if(!TypeChecker.isImage(type)) {
             throw new IllegalArgumentException("Invalid type");
         }
     }
