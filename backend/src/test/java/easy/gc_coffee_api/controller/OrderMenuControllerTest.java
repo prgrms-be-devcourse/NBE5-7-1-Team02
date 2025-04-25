@@ -10,8 +10,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import easy.gc_coffee_api.dto.AddressDto;
 import easy.gc_coffee_api.dto.OrderItemDto;
 import easy.gc_coffee_api.dto.OrderRequestDto;
+import easy.gc_coffee_api.dto.OrderResponseDto;
 import easy.gc_coffee_api.exception.GCException;
-import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
+import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -34,12 +35,19 @@ class OrderMenuControllerTest {
   private ObjectMapper objectMapper;
 
   @MockBean
-  private OrderMenuUserCase orderMenuUserCase;
+  private OrderMenuUseCase orderMenuUseCase;
+
+
 
   @Test
-  @DisplayName("POST /post - 성공: 200 OK, ID 반환")
+  @DisplayName("POST /orders - 성공: 201 Created, OrderResponseDto 반환")
   void postOrderSuccess() throws Exception {
-    given(orderMenuUserCase.execute(any(OrderRequestDto.class))).willReturn(42L);
+    // Long → OrderResponseDto 를 반환하도록 수정
+    given(orderMenuUseCase.execute(any(OrderRequestDto.class)))
+        .willReturn(OrderResponseDto.builder()
+            .orderId(42L)
+            .build()
+        );
 
     OrderRequestDto dto = OrderRequestDto.builder()
         .email("user@example.com")
@@ -52,7 +60,8 @@ class OrderMenuControllerTest {
             .content(objectMapper.writeValueAsString(dto)))
         .andDo(print())
         .andExpect(status().isCreated())
-        .andExpect(content().string("42"));
+        // content() 검증도 JSON 형태로 바꿔야 합니다
+        .andExpect(content().json("{\"orderId\":42}"));
   }
 
   @Nested
@@ -120,8 +129,15 @@ class OrderMenuControllerTest {
   @Test
   @DisplayName("존재하지 않는 메뉴 ID: 404 Not Found")
   void menuNotFound() throws Exception {
-    given(orderMenuUserCase.execute(any()))
-        .willThrow(new GCException("존재하지 않는 메뉴 ID: 9999", 404));
+    given(orderMenuUseCase.execute(any(OrderRequestDto.class)))
+        .willAnswer(invocation -> {
+          // GCException(String message, Throwable cause, Integer code) 생성자 사용
+          throw new GCException(
+              "존재하지 않는 메뉴 ID: 9999",
+              new RuntimeException("cause"),
+              404
+          );
+        });
 
     OrderRequestDto dto = OrderRequestDto.builder()
         .email("user@example.com")
