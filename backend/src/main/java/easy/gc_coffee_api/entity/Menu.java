@@ -24,37 +24,37 @@ public class Menu extends BaseDateEntity {
     private Category category;
 
     @Embedded
-    private Thumnail thumnail;
+    private Thumbnail thumbnail;
 
-    public Menu(Long id, String name, Integer price, Category category, Thumnail thumnail) {
+    public Menu(Long id, String name, Integer price, Category category, Thumbnail thumbnail) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
-        this.thumnail = thumnail;
+        this.thumbnail = thumbnail;
     }
 
-    public Menu(String name, Integer price, Category category, Thumnail thumbnail) {
+    public Menu(String name, Integer price, Category category, Thumbnail thumbnail) {
         this(null, name, price, category, thumbnail);
     }
 
-    public void update(String name, Integer price, Category category, Thumnail thumbnail) {
+    public void update(String name, Integer price, Category category, Thumbnail thumbnail) {
         this.name = name;
         this.price = price;
         this.category = category;
-        this.thumnail = thumbnail;
+        this.thumbnail = thumbnail;
     }
 
-    public boolean hasThumbNail(){
-        if(thumnail == null || !thumnail.hasId()){
+    public boolean hasThumbNail() {
+        if (thumbnail == null || !thumbnail.hasId()) {
             return false;
         }
         return true;
     }
 
-    public Long getThumnailId(){
-        if(hasThumbNail()){
-            return thumnail.getFileId();
+    public Long getThumbnailId() {
+        if (hasThumbNail()) {
+            return thumbnail.getFileId();
         }
         return null;
     }

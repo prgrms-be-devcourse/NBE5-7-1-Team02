@@ -3,7 +3,7 @@ package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.dto.UpdateMenuRequestDto;
 import easy.gc_coffee_api.entity.Menu;
-import easy.gc_coffee_api.entity.Thumnail;
+import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.exception.menu.InvalidMenuCategoryException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuNameException;
@@ -14,8 +14,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -44,13 +42,13 @@ public class UpdateMenuUsecase {
         }
 
         Category category = Category.valueOf(requestDto.getCategory().toUpperCase());
-        Thumnail thumnail = thumnailFatory.create(requestDto.getImageId());
+        Thumbnail thumbnail = thumnailFatory.create(requestDto.getImageId());
 
 
         menu.update(requestDto.getName(),
                 requestDto.getPrice(),
                 category,
-                thumnail);
+                thumbnail);
 
     }
 

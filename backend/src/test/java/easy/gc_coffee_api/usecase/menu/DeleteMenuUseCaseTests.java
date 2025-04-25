@@ -1,7 +1,7 @@
 package easy.gc_coffee_api.usecase.menu;
 
 import easy.gc_coffee_api.entity.Menu;
-import easy.gc_coffee_api.entity.Thumnail;
+import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
@@ -42,7 +42,7 @@ class DeleteMenuUseCaseTests {
     void deleteMenuTest() throws Exception {
         // given
         Long menuId = 2L;
-        Menu findMenu = new Menu(menuId, "Americano", 3000, Category.COFFEE_BEAN, new Thumnail(1L));
+        Menu findMenu = new Menu(menuId, "Americano", 3000, Category.COFFEE_BEAN, new Thumbnail(1L));
         when(menuRepository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(findMenu));
         // when
         // 2번 메뉴를 찾아옵니다.
@@ -69,7 +69,7 @@ class DeleteMenuUseCaseTests {
     void deleteMenuWhenFileNotExistTest() throws Exception {
         // given
         Long menuId = 2L;
-        Menu findMenu = new Menu(menuId, "Americano", 3000, Category.COFFEE_BEAN, new Thumnail(null));
+        Menu findMenu = new Menu(menuId, "Americano", 3000, Category.COFFEE_BEAN, new Thumbnail(null));
         when(menuRepository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.of(findMenu));
         // then
         deleteMenuUseCase.execute(menuId);

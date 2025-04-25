@@ -23,7 +23,7 @@ public class DeleteMenuUseCase {
         existMenu.delete();
 
         if (existMenu.hasThumbNail()) {
-            fileRemover.remove(existMenu.getThumnailId());
+            fileRemover.remove(existMenu.getThumbnailId());
         }
     }
 }

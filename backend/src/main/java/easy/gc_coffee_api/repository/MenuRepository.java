@@ -12,7 +12,7 @@ public interface MenuRepository extends JpaRepository<Menu,Long> {
 
     @Query("SELECT new easy.gc_coffee_api.dto.MenuResponseDto(m.name, m.price, m.category," +
             " CASE WHEN f IS NULL THEN NULL WHEN f IS NOT NULL THEN f.key END)" +
-            " FROM Menu m LEFT JOIN File f ON m.thumnail.fileId = f.id" +
+            " FROM Menu m LEFT JOIN File f ON m.thumbnail.fileId = f.id" +
             " WHERE m.deletedAt IS NULL")
     List<MenuResponseDto> findAllNotDeleted();
 

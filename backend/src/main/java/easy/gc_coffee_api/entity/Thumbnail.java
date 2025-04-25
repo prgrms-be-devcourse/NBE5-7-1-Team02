@@ -5,8 +5,6 @@ import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Embeddable
@@ -14,12 +12,12 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Getter
-public class Thumnail {
+public class Thumbnail {
 
     @Column(name = "file_id")
     private Long fileId;
 
-    public Thumnail(Long fileId,String type) throws IllegalArgumentException {
+    public Thumbnail(Long fileId, String type) throws IllegalArgumentException {
         validateType(type);
         this.fileId = fileId;
     }
