@@ -2,6 +2,8 @@ package easy.gc_coffee_api.controller;
 
 import easy.gc_coffee_api.dto.OrderRequestDto;
 import easy.gc_coffee_api.dto.OrderResponseDto;
+import easy.gc_coffee_api.exception.GCException;
+import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ public class OrderMenuController {
 
   @PostMapping("/orders")
   public ResponseEntity<OrderResponseDto> post(@Valid @RequestBody OrderRequestDto order) {
-    return new ResponseEntity<>(orderMenuUseCase.execute(order), HttpStatus.CREATED);
+      OrderResponseDto responseDto = orderMenuUseCase.execute(order);
+      return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
   }
 }
