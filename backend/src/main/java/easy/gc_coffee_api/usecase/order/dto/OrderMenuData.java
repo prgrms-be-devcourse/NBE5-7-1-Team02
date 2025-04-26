@@ -26,4 +26,8 @@ public class OrderMenuData {
         }
         return null;
     }
+
+    public boolean hasThumbnailUrl() {
+        return thumbnailUrl != null;
+    }
 }
