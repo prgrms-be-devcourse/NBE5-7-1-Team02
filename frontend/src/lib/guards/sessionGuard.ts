@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const BASE = import.meta.env.VITE_API_URL;
+
 export function useSessionGuard() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -8,7 +10,7 @@ export function useSessionGuard() {
     useEffect(() => {
         const check = async () => {
             try {
-                const res = await fetch("http://localhost:8080/me", {
+                const res = await fetch(`${BASE}/me`, {
                     credentials: "include",
                 });
 
