@@ -44,9 +44,7 @@ class OrderMenuControllerTest {
   void postOrderSuccess() throws Exception {
     // Long → OrderResponseDto 를 반환하도록 수정
     given(orderMenuUseCase.execute(any(OrderRequestDto.class)))
-        .willReturn(OrderResponseDto.builder()
-            .orderId(42L)
-            .build()
+        .willReturn(new OrderResponseDto(42L)
         );
 
     OrderRequestDto dto = OrderRequestDto.builder()
