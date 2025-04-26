@@ -1,6 +1,7 @@
 package easy.gc_coffee_api.controller;
 
 import easy.gc_coffee_api.dto.OrderRequestDto;
+import easy.gc_coffee_api.dto.OrderDateRangeDto;
 import easy.gc_coffee_api.dto.OrderResponseDto;
 import easy.gc_coffee_api.dto.OrderListResponseDto;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
@@ -29,7 +30,7 @@ public class OrderMenuController {
   }
 
   @GetMapping("/orders")
-  public ResponseEntity<List<OrderListResponseDto>> getAllOrders() {
+  public ResponseEntity<List<OrderDateRangeDto>> getAllOrders() {
     return ResponseEntity.ok(getOrderListUsecase.execute());
   }
 }

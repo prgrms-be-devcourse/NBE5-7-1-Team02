@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class OrderMenuResponseDto {
-    private String menuName;
+    private String name;
     private Integer price;
     private Integer quantity;
     private String thumbnailUrl;
