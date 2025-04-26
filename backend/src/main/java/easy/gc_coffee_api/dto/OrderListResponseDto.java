@@ -1,6 +1,6 @@
 package easy.gc_coffee_api.dto;
 
-import easy.gc_coffee_api.entity.OrderStatus;
+import easy.gc_coffee_api.entity.common.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
