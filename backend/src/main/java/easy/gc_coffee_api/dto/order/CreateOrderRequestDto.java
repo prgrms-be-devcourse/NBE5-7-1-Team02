@@ -1,6 +1,7 @@
-package easy.gc_coffee_api.dto;
+package easy.gc_coffee_api.dto.order;
 
 
+import easy.gc_coffee_api.dto.AddressDto;
 import easy.gc_coffee_api.entity.Address;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderRequestDto {
+public class CreateOrderRequestDto {
 
   @NotBlank(message = "이메일을 입력하세요.")
   @Pattern(

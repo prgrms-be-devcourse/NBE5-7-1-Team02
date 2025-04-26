@@ -3,18 +3,13 @@ package easy.gc_coffee_api.usecase.order;
 import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
 import easy.gc_coffee_api.usecase.file.FileUrlTranslator;
-import easy.gc_coffee_api.usecase.order.dto.OrderMenuData;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GetOrderListUsecaseTest {

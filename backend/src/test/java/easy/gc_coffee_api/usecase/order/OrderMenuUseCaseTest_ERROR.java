@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import easy.gc_coffee_api.dto.AddressDto;
-import easy.gc_coffee_api.dto.OrderItemDto;
-import easy.gc_coffee_api.dto.OrderRequestDto;
+import easy.gc_coffee_api.dto.order.OrderItemDto;
+import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -85,13 +85,13 @@ class OrderMenuUseCaseTest_ERROR {
   @Test
   @DisplayName("잘못된 이메일 형식이면 ConstraintViolation 발생 및 오류 출력")
   void invalidEmail() {
-    OrderRequestDto dto = OrderRequestDto.builder()
+    CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
         .email("wrong-format")
         .addressdto(validAddress)
         .items(validItems)
         .build();
 
-    Set<ConstraintViolation<OrderRequestDto>> errs = validator.validate(dto);
+    Set<ConstraintViolation<CreateOrderRequestDto>> errs = validator.validate(dto);
 
     // ↓↓ 실제 에러 출력 ↓↓
     errs.forEach(v -> {
@@ -137,13 +137,13 @@ class OrderMenuUseCaseTest_ERROR {
   @Test
   @DisplayName("빈 주문 항목 리스트면 ConstraintViolation 발생 및 오류 출력")
   void emptyItems() {
-    OrderRequestDto dto = OrderRequestDto.builder()
+    CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
         .email("a@b.com")
         .addressdto(validAddress)
         .items(List.of())
         .build();
 
-    Set<ConstraintViolation<OrderRequestDto>> errs = validator.validate(dto);
+    Set<ConstraintViolation<CreateOrderRequestDto>> errs = validator.validate(dto);
 
     errs.forEach(v -> {
       String field   = v.getPropertyPath().toString();
@@ -207,7 +207,7 @@ class OrderMenuUseCaseTest_ERROR {
   @DisplayName("존재하지 않는 메뉴 ID로 process 호출 시 예외 메시지 출력")
   void menuNotFound_printException() {
     // Given: 메뉴가 없는 ID를 담은 DTO
-    OrderRequestDto dto = OrderRequestDto.builder()
+    CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
         .email("ok@ok.com")
         .addressdto(validAddress)
         .items(List.of(new OrderItemDto(9999L, 1)))

@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import easy.gc_coffee_api.dto.AddressDto;
-import easy.gc_coffee_api.dto.OrderItemDto;
-import easy.gc_coffee_api.dto.OrderRequestDto;
-import easy.gc_coffee_api.dto.OrderResponseDto;
+import easy.gc_coffee_api.dto.order.OrderItemDto;
+import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
+import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
 import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
@@ -101,7 +101,7 @@ class OrderMenuUseCaseTest {
     @Transactional
     void test_printRequestAndPersisted() throws Exception {
         // --- Given: Request DTO 생성 ---
-        OrderRequestDto requestDto = OrderRequestDto.builder()
+        CreateOrderRequestDto requestDto = CreateOrderRequestDto.builder()
             .email("test@test.com")
             .addressdto(addressDto_Test)
             .items(test_Items)
@@ -114,7 +114,7 @@ class OrderMenuUseCaseTest {
         System.out.println("▶ Request JSON:\n" + reqJson);
 
         // --- When: 서비스 호출 ---
-        OrderResponseDto responseDto = orderMenuUseCase.execute(requestDto);
+        CreateOrderResponseDto responseDto = orderMenuUseCase.execute(requestDto);
 
         // --- Then: Orders 조회 & JSON 출력 ---
         Orders savedOrder = orderRepository.findById(responseDto.getOrderId())

@@ -1,12 +1,13 @@
 package easy.gc_coffee_api.usecase.order;
 
 
-import easy.gc_coffee_api.dto.OrderDateRangeDto;
+import easy.gc_coffee_api.dto.order.OrderDateRangeDto;
 import easy.gc_coffee_api.entity.Orders;
 import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
-import easy.gc_coffee_api.usecase.order.dto.OrderMenuData;
-import easy.gc_coffee_api.usecase.order.dto.OrderMenuDatas;
+import easy.gc_coffee_api.usecase.order.model.OrderDataRange;
+import easy.gc_coffee_api.usecase.order.model.OrderMenuData;
+import easy.gc_coffee_api.usecase.order.model.OrderMenuDatas;
 import jakarta.transaction.Transactional;
 import lombok.*;
 import org.springframework.stereotype.Service;

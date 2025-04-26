@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.usecase.order;
+package easy.gc_coffee_api.usecase.order.model;
 
 import easy.gc_coffee_api.entity.OrderMenu;
 
