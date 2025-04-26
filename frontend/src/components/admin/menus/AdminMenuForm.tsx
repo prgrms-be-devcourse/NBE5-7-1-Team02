@@ -114,11 +114,22 @@ export default function AdminMenuForm({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-            <h2 className="text-xl font-bold mb-2">📋 메뉴 등록</h2>
+        <form
+            onSubmit={handleSubmit}
+            className="p-8 bg-white rounded-lg shadow-md max-w-md mx-auto space-y-6"
+        >
+            {initialData ? (
+                <h2 className="text-2xl font-bold mb-4 text-center">
+                    📋 메뉴 수정
+                </h2>
+            ) : (
+                <h2 className="text-2xl font-bold mb-4 text-center">
+                    📋 메뉴 등록
+                </h2>
+            )}
 
             <input
-                className="w-full border p-2"
+                className="w-full border p-2 rounded"
                 type="text"
                 placeholder="메뉴명"
                 value={name}
@@ -127,7 +138,7 @@ export default function AdminMenuForm({
             />
 
             <input
-                className="w-full border p-2"
+                className="w-full border p-2 rounded"
                 type="number"
                 placeholder="가격"
                 value={price}
@@ -136,7 +147,7 @@ export default function AdminMenuForm({
             />
 
             <select
-                className="w-full border p-2"
+                className="w-full border p-2 rounded"
                 value={category}
                 onChange={(e) => setCategory(e.target.value as Category)}
                 required
@@ -149,27 +160,43 @@ export default function AdminMenuForm({
                 ))}
             </select>
 
-            <input
-                className="w-full border p-2"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-            />
+            <div className="space-y-2">
+                <label
+                    htmlFor="file-upload"
+                    className="w-full flex justify-center items-center px-4 py-2 bg-blue-600 text-white rounded cursor-pointer hover:bg-blue-700"
+                >
+                    이미지 선택
+                </label>
+                <input
+                    id="file-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                />
+            </div>
 
-            {uploading && <p className="text-sm text-gray-500">업로드 중...</p>}
+            {uploading && (
+                <p className="text-sm text-gray-500 text-center">
+                    업로드 중...
+                </p>
+            )}
 
             {imagePreviewUrl && (
-                <div className="mt-2">
+                <div className="mt-2 flex justify-center">
                     <img
                         src={imagePreviewUrl}
                         alt="미리보기"
-                        className="w-500"
+                        className="w-64 h-48 object-cover rounded"
                     />
                 </div>
             )}
 
-            <button type="submit" className="btn btn-dark w-full">
-                메뉴 등록
+            <button
+                type="submit"
+                className="w-full py-3 bg-blue-600 text-white rounded text-lg font-bold hover:bg-blue-900 transition cursor-pointer"
+            >
+                완료
             </button>
         </form>
     );

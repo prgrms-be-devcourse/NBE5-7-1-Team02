@@ -18,9 +18,13 @@ public class GetOrderUseCase {
     private final OrderRepository orderRepository;
     private final OrderMenuRepository orderMenuRepository;
 
-    public OrderResponseDto execute(Long id) {
+    public OrderResponseDto execute(Long id, String email) {
         Orders order = orderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException("주문을 찾을 수 없습니다.", 404));
+
+        if (!order.getEmail().equals(email)) {
+            throw new IllegalArgumentException("이메일이 일치하지 않습니다.");
+        }
 
         List<OrderMenuData> orderMenuDatas = orderMenuRepository.findAllByOrdersId(id);
 

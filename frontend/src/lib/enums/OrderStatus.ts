@@ -4,6 +4,6 @@ export enum OrderStatus {
 }
 
 export const OrderStatusLabels: Record<OrderStatus, string> = {
-    [OrderStatus.PENDING]: "대기중",
+    [OrderStatus.PENDING]: "배송대기중",
     [OrderStatus.SHIPPED]: "발송완료",
 };

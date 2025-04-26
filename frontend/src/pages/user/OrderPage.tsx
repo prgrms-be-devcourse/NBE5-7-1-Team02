@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Menu } from "@/lib/types/menu";
 import { getMenus } from "@/api/session/menu/getMenus";
 import CartAndFormSection from "../../components/user/orders/CartAndFormSection";
-import { MenuItem } from "../../lib/types";
+import { CartItem } from "../../lib/types";
 import MenuSection from "../../components/user/orders/MenuSection";
 import { createOrder } from "../../api/session/order/createOrder";
 
@@ -11,7 +11,7 @@ export default function OrderPage() {
     const navigate = useNavigate();
 
     const [menus, setMenus] = useState<Menu[]>([]);
-    const [cart, setCart] = useState<MenuItem[]>([]);
+    const [cart, setCart] = useState<CartItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -108,7 +108,7 @@ export default function OrderPage() {
 
             setCart([]);
 
-            navigate(`/order/success/${orderId}`);
+            navigate(`/orders/success/${orderId}`);
         } catch (err) {
             console.error(err);
 
@@ -131,7 +131,7 @@ export default function OrderPage() {
             <header className="bg-green-600 text-white py-4 px-35 shadow-md flex justify-between items-center">
                 <h1 className="text-2xl font-bold">☕ Grid & Coffee 주문</h1>
                 <button
-                    onClick={() => navigate("/order/lookup")}
+                    onClick={() => navigate("/orders/lookup")}
                     className="bg-white text-green-600 px-4 py-2 rounded hover:bg-gray-100"
                 >
                     내 주문 확인

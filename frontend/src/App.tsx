@@ -31,10 +31,10 @@ function App() {
                 {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/" element={<OrderPage />} />
                 <Route
-                    path="/order/success/:orderId"
+                    path="/orders/success/:orderId"
                     element={<OrderSuccessPage />}
                 />
-                <Route path="/order/lookup" element={<OrderLookupPage />} />
+                <Route path="/orders/lookup" element={<OrderLookupPage />} />
             </Routes>
         </BrowserRouter>
     );

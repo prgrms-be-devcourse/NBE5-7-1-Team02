@@ -1,9 +1,6 @@
 package easy.gc_coffee_api.controller;
 
-import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
-import easy.gc_coffee_api.dto.order.OrderDateRangeDto;
-import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
-import easy.gc_coffee_api.dto.order.OrderResponseDto;
+import easy.gc_coffee_api.dto.order.*;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
 import easy.gc_coffee_api.usecase.order.GetOrderUseCase;
 import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
@@ -35,7 +32,7 @@ public class OrderMenuController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long id) {
-    return ResponseEntity.ok(getOrderUseCase.execute(id));
+  public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long id, @RequestParam String email) {
+    return ResponseEntity.ok(getOrderUseCase.execute(id, email));
   }
 }

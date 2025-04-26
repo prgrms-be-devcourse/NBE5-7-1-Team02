@@ -49,11 +49,13 @@ export default function AdminMenuEditPage() {
                 imageId: form.thumbnailId,
             });
 
-            alert("수정 완료!");
+            alert("수정되었습니다.");
 
             navigate("/admin/");
         } catch (err) {
-            alert("수정 실패: " + err.message);
+            console.error(err);
+
+            alert("수정에 실패했습니다.");
         }
     };
 
@@ -62,8 +64,8 @@ export default function AdminMenuEditPage() {
     if (!menu) return null;
 
     return (
-        <div className="min-h-screen p-8 bg-white">
-            <h1 className="text-2xl font-bold mb-4">메뉴 수정</h1>
+        <div className="min-h-screen p-8 py-30 bg-gray-100">
+            {/* <h1 className="text-2xl font-bold mb-4">메뉴 수정</h1> */}
             <AdminMenuForm
                 onSubmit={handleSubmit}
                 initialData={{
