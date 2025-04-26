@@ -1,11 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { OrderPage, AdminMenuEdit } from "./pages";
+import {
+    OrderPage,
+    OrderLookupPage,
+    OrderSuccessPage,
+    AdminMenuEditPage,
+    AdminHomePage,
+    AdminMenuCreatePage,
+    LoginPage,
+} from "./pages";
 import FileUploadTestPage from "./pages/admin/FileUploadTestPage";
-import LoginPage from "./pages/admin/LoginPage";
-import AdminHomePage from "./pages/admin/AdminHomePage";
-import AdminMenuCreatePage from "./pages/admin/AdminMenuCreatePage";
-import OrderLookupPage from "./pages/user/OrderLookUpPage";
-import OrderSuccessPage from "./pages/user/OrderSuccesPage";
 
 function App() {
     return (
@@ -20,7 +23,7 @@ function App() {
                 />
                 <Route
                     path="/admin/menus/:id/edit"
-                    element={<AdminMenuEdit />}
+                    element={<AdminMenuEditPage />}
                 />
                 <Route path="/upload" element={<FileUploadTestPage />} />
 
