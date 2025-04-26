@@ -1,19 +1,13 @@
 package easy.gc_coffee_api.controller;
 
-import easy.gc_coffee_api.dto.UpdateMenuRequestDto;
+import easy.gc_coffee_api.dto.*;
 import easy.gc_coffee_api.exception.ThumbnailCreateException;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
-import easy.gc_coffee_api.usecase.menu.DeleteMenuUseCase;
-import easy.gc_coffee_api.usecase.menu.UpdateMenuUsecase;
+import easy.gc_coffee_api.usecase.menu.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import easy.gc_coffee_api.dto.CreateMenuRequestDto;
-import easy.gc_coffee_api.dto.CreateMenuResponseDto;
-import easy.gc_coffee_api.dto.MenusResponseDto;
 import easy.gc_coffee_api.exception.GCException;
-import easy.gc_coffee_api.usecase.menu.CreateMenuUsecase;
 import jakarta.persistence.EntityNotFoundException;
-import easy.gc_coffee_api.usecase.menu.GetMenusUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -24,14 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/menus")
 public class MenuController {
 
     private final CreateMenuUsecase createMenuUsecase;
     private final UpdateMenuUsecase updateMenuUsecase;
     private final GetMenusUseCase getMenusUseCase;
     private final DeleteMenuUseCase deleteMenuUseCase;
+    private final GetMenuUseCase getMenuUseCase;
 
-    @PostMapping("/menus")
+    @PostMapping
     public ResponseEntity<CreateMenuResponseDto> create(@RequestBody @Validated CreateMenuRequestDto requestDto) {
         try {
             Long id = createMenuUsecase.execute(
@@ -46,24 +42,30 @@ public class MenuController {
         }
     }
 
-    @PutMapping("/menus/{menuId}")
+    @PutMapping("/{menuId}")
     public ResponseEntity<String> updateMenu(@PathVariable Long menuId, @RequestBody @Validated UpdateMenuRequestDto requestDto) {
         updateMenuUsecase.execute(menuId, requestDto);
         return ResponseEntity.ok("수정 완료");
     }
 
 
-    @GetMapping("/menus")
+    @GetMapping
     public ResponseEntity<MenusResponseDto> getMenus() {
         MenusResponseDto responseDto = getMenusUseCase.execute();
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return ResponseEntity.ok(responseDto);
     }
 
-    @DeleteMapping("/menus/{menuId}")
-    public ResponseEntity<String> deleteMenu(@PathVariable Long menuId) {
+    @GetMapping("/{menuId}")
+    public ResponseEntity<MenuResponseDto> getMenu(@PathVariable Long menuId) {
+        MenuResponseDto responseDto = getMenuUseCase.execute(menuId);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @DeleteMapping("/{menuId}")
+    public ResponseEntity<Void> deleteMenu(@PathVariable Long menuId) {
         try {
             deleteMenuUseCase.execute(menuId);
-            return ResponseEntity.ok("삭제 완료");
+            return ResponseEntity.noContent().build();
         } catch (MenuNotFoundException e) {
             throw new GCException(e.getMessage(), e, 400);
         }
