@@ -4,7 +4,7 @@ import easy.gc_coffee_api.dto.OrderRequestDto;
 import easy.gc_coffee_api.dto.OrderResponseDto;
 import easy.gc_coffee_api.dto.OrderListResponseDto;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
-import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
+import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderMenuController {
 
-  private final OrderMenuUserCase orderMenuUserCase;
+  private final OrderMenuUseCase orderMenuUseCase;
   private final GetOrderListUsecase getOrderListUsecase;
 
   @PostMapping("/orders")
