@@ -1,8 +1,9 @@
-import { Menu } from "@/types/menu";
+import { Menu } from "@/lib/types/menu";
 import { fetchPost, fetchPut, fetchDelete, fetchGet } from ".";
 
 // 모든 메뉴 가져오기
-export const getMenus = () => fetchGet<Menu[]>("/menus");
+export const getMenus = ({ withAuth }: { withAuth: boolean }) =>
+    fetchGet<Menu[]>("/menus", withAuth);
 
 // 메뉴 생성
 export const createMenu = (data: {

@@ -1,4 +1,4 @@
-import { CartItem } from "@/types";
+import { CartItem } from "@/lib/types";
 import { fetchPost } from "./index";
 
 // 주문
@@ -7,4 +7,4 @@ export const createOrder = (data: {
     address: string;
     zipCode: string;
     items: CartItem[];
-}) => fetchPost("/orders", data);
+}) => fetchPost("/orders", data, false);

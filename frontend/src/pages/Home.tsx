@@ -12,10 +12,13 @@ export default function Home() {
                 </li>
             </ul>
 
-            <h2>임시 어드민</h2>
+            <h2>어드민</h2>
             <ul>
                 <li>
-                    <Link to="/admin/menus">메뉴 목록</Link>
+                    <Link to="/admin/login">로그인(임시)</Link>
+                </li>
+                <li>
+                    <Link to="/admin/">어드민 인덱스페이지</Link>
                 </li>
                 <li>
                     <Link to="/admin/menus/new">메뉴 추가</Link>
