@@ -62,7 +62,8 @@ public class SecurityConfig {
                                 "/orders",
                                 "/orders/**",
                                 "/menus",
-                                "/menus/**"
+                                "/menus/**",
+                                "/files/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 ).build();
