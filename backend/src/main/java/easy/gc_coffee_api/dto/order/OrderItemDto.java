@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.dto;
+package easy.gc_coffee_api.dto.order;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

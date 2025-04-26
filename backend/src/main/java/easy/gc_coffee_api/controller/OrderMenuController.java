@@ -1,36 +1,41 @@
 package easy.gc_coffee_api.controller;
 
-import easy.gc_coffee_api.dto.OrderRequestDto;
-import easy.gc_coffee_api.dto.OrderDateRangeDto;
-import easy.gc_coffee_api.dto.OrderResponseDto;
-import easy.gc_coffee_api.dto.OrderListResponseDto;
+import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
+import easy.gc_coffee_api.dto.order.OrderDateRangeDto;
+import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
+import easy.gc_coffee_api.dto.order.OrderResponseDto;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
+import easy.gc_coffee_api.usecase.order.GetOrderUseCase;
 import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderMenuController {
 
   private final OrderMenuUseCase orderMenuUseCase;
   private final GetOrderListUsecase getOrderListUsecase;
+  private final GetOrderUseCase getOrderUseCase;
 
-  @PostMapping("/orders")
-  public ResponseEntity<OrderResponseDto> post(@Valid @RequestBody OrderRequestDto order) {
+  @PostMapping
+  public ResponseEntity<CreateOrderResponseDto> post(@Valid @RequestBody CreateOrderRequestDto order) {
     return new ResponseEntity<>(orderMenuUseCase.execute(order), HttpStatus.CREATED);
   }
 
-  @GetMapping("/orders")
+  @GetMapping
   public ResponseEntity<List<OrderDateRangeDto>> getAllOrders() {
     return ResponseEntity.ok(getOrderListUsecase.execute());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long id) {
+    return ResponseEntity.ok(getOrderUseCase.execute(id));
   }
 }

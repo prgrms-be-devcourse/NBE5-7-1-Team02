@@ -1,6 +1,7 @@
 package easy.gc_coffee_api.usecase.order;
 
 import easy.gc_coffee_api.entity.Orders;
+import easy.gc_coffee_api.usecase.order.model.OrderDataRange;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

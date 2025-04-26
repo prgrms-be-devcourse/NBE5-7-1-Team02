@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.dto;
+package easy.gc_coffee_api.dto.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,5 +13,5 @@ import java.util.List;
 public class OrderDateRangeDto {
     private LocalDateTime from;
     private LocalDateTime to;
-    private List<OrderListResponseDto> orders;
+    private List<OrderResponseDto> orders;
 }

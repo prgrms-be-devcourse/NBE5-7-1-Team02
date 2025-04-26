@@ -2,9 +2,9 @@ package easy.gc_coffee_api.usecase.order;
 
 
 
-import easy.gc_coffee_api.dto.OrderItemDto;
-import easy.gc_coffee_api.dto.OrderRequestDto;
-import easy.gc_coffee_api.dto.OrderResponseDto;
+import easy.gc_coffee_api.dto.order.OrderItemDto;
+import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
+import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
 import easy.gc_coffee_api.entity.Orders;
@@ -12,7 +12,7 @@ import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
 import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
-import jakarta.persistence.EntityNotFoundException;
+import easy.gc_coffee_api.usecase.order.model.OrderMenus;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,16 +26,16 @@ public class OrderMenuUseCase {
   private final MenuRepository menuRepository;
   private final OrderMenuRepository orderMenuRepository;
 
-  public OrderResponseDto execute(OrderRequestDto dto) {
+  public CreateOrderResponseDto execute(CreateOrderRequestDto dto) {
     Orders savedOrder = saveOrders(dto);
 
     OrderMenus orderMenus = saveOrderMenus(dto, savedOrder);
     savedOrder.setTotalPrice(orderMenus.calcTotalPrice());
 
-    return OrderResponseDto.fromEntity(savedOrder);
+    return CreateOrderResponseDto.fromEntity(savedOrder);
   }
 
-  private Orders saveOrders(OrderRequestDto dto) {
+  private Orders saveOrders(CreateOrderRequestDto dto) {
     Orders order = Orders.builder()
         .email(dto.getEmail())
         .address(dto.getAddress())
@@ -44,7 +44,7 @@ public class OrderMenuUseCase {
     return orderRepository.save(order);
   }
 
-  private OrderMenus saveOrderMenus(OrderRequestDto dto, Orders savedOrder) {
+  private OrderMenus saveOrderMenus(CreateOrderRequestDto dto, Orders savedOrder) {
 
     OrderMenus orderMenus = new OrderMenus();
 

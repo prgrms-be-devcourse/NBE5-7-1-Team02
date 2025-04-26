@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.usecase.order.dto;
+package easy.gc_coffee_api.usecase.order.model;
 
 
 import java.util.List;

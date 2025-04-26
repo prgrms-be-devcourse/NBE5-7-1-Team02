@@ -57,7 +57,7 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/login", "/orders").permitAll()
+                        .requestMatchers("/admin/login", "/orders","/orders/**").permitAll()
                         .anyRequest().authenticated()
                 ).build();
     }

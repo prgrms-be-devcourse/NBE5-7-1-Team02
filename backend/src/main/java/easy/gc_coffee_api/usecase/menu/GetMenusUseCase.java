@@ -21,7 +21,7 @@ public class GetMenusUseCase {
                                 menu.getName(),
                                 menu.getPrice(),
                                 menu.getCategory(),
-                                menu.getFullPathUrl(),
+                                menu.getThumbnailUrl(),
                                 menu.getFileId()
                                 )
                         )
