@@ -45,7 +45,7 @@ public class MenuController {
     @PutMapping("/{menuId}")
     public ResponseEntity<String> updateMenu(@PathVariable Long menuId, @RequestBody @Validated UpdateMenuRequestDto requestDto) {
         updateMenuUsecase.execute(menuId, requestDto);
-        return ResponseEntity.ok("수정 완료");
+        return ResponseEntity.noContent().build();
     }
 
 

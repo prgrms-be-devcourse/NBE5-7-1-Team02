@@ -2,8 +2,10 @@ package easy.gc_coffee_api.controller;
 
 import easy.gc_coffee_api.dto.OrderRequestDto;
 import easy.gc_coffee_api.dto.OrderDateRangeDto;
+import easy.gc_coffee_api.dto.OrderResponseDto;
+import easy.gc_coffee_api.dto.OrderListResponseDto;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
-import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
+import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,12 +21,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderMenuController {
 
-  private final OrderMenuUserCase orderMenuUserCase;
+  private final OrderMenuUseCase orderMenuUseCase;
   private final GetOrderListUsecase getOrderListUsecase;
 
   @PostMapping("/orders")
-  public ResponseEntity<Long> post(@Valid @RequestBody OrderRequestDto order) {
-    return new ResponseEntity<>(orderMenuUserCase.execute(order), HttpStatus.CREATED);
+  public ResponseEntity<OrderResponseDto> post(@Valid @RequestBody OrderRequestDto order) {
+    return new ResponseEntity<>(orderMenuUseCase.execute(order), HttpStatus.CREATED);
   }
 
   @GetMapping("/orders")
