@@ -12,6 +12,6 @@ public interface OrderMenuRepository extends JpaRepository<OrderMenu,Long> {
 
   @Query("SELECT new easy.gc_coffee_api.usecase.order.dto.OrderMenuData(om,f)  " +
           "From OrderMenu om left join File f on om.menu.thumbnail.fileId = f.id " +
-          "where om.orders.id in :menuIds ")
-  List<OrderMenuData> findOrderMenusByOrderIds(List<Long>  menuIds);
+          "where om.orders.id in :orderIds ")
+  List<OrderMenuData> findOrderMenusByOrderIds(List<Long>  orderIds);
 }
