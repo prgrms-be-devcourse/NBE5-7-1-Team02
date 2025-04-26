@@ -8,7 +8,6 @@ import easy.gc_coffee_api.dto.OrderResponseDto;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
 import easy.gc_coffee_api.entity.Orders;
-import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
 import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
@@ -58,8 +57,8 @@ public class OrderMenuUseCase {
 
   private OrderMenu saveMenu(Orders savedOrder, OrderItemDto item) {
     Menu menu = menuRepository.findByIdAndDeletedAtIsNull(item.getMenuId())
-        .orElseThrow(() -> new MenuNotFoundException(
-            "존재하지 않는 메뉴 ID: " + item.getMenuId() , 400
+        .orElseThrow(() -> new EntityNotFoundException(
+            "존재하지 않는 메뉴 ID: " + item.getMenuId()
         ));
 
     OrderMenu orderMenu = OrderMenu.builder()
