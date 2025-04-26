@@ -59,25 +59,47 @@ export default function OrderLookupPage() {
                 )}
 
                 {order ? (
-                    <div className="space-y-4 text-left">
+                    <div className="space-y-2 text-left">
                         {" "}
-                        <h2 className="text-xl font-bold text-center">
+                        <h1 className="text-2xl font-bold mb-6 text-center">
                             주문 상세
-                        </h2>
-                        <p>주문번호: {order.id}</p>
-                        <p>이메일: {order.email}</p>
-                        <p>
-                            배송지: {order.address} ({order.zipCode})
-                        </p>
-                        <p>상태: {OrderStatusLabels[order.status]}</p>
+                        </h1>
+                        <div className="space-y-2 text-left">
+                            <p>
+                                <span className="font-bold">주문번호:</span>{" "}
+                                {order.id}
+                            </p>
+                            <p>
+                                <span className="font-bold">이메일:</span>{" "}
+                                {order.email}
+                            </p>
+                            <p>
+                                <span className="font-bold">주소:</span>{" "}
+                                {order.address} ({order.zipCode})
+                            </p>
+                            <p>
+                                <span className="font-bold">상태:</span>{" "}
+                                {OrderStatusLabels[order.status]}
+                            </p>
+                        </div>
                         <h3 className="text-lg font-semibold mt-4 mb-2">
                             주문한 메뉴
                         </h3>
                         <ul className="space-y-1">
                             {order.menus.map((menu) => (
-                                <li key={menu.name}>
-                                    {menu.name} x {menu.quantity}개 (
-                                    {menu.price.toLocaleString()}원)
+                                <li
+                                    key={menu.id}
+                                    className="flex justify-between"
+                                >
+                                    <div>
+                                        {menu.name} x {menu.quantity}
+                                    </div>
+                                    <div>
+                                        {(
+                                            menu.price * menu.quantity
+                                        ).toLocaleString()}
+                                        원
+                                    </div>
                                 </li>
                             ))}
                         </ul>

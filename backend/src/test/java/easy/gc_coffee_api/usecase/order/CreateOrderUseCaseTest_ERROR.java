@@ -30,11 +30,11 @@ import easy.gc_coffee_api.repository.OrderRepository;
 import org.springframework.test.util.ReflectionTestUtils;
 
 @SpringBootTest
-class OrderMenuUseCaseTest_ERROR {
+class CreateOrderUseCaseTest_ERROR {
 
   private static Validator validator;
 
-  @Autowired private OrderMenuUseCase service;
+  @Autowired private CreateOrderUseCase service;
   @Autowired private FileRepository       fileRepo;
   @Autowired private MenuRepository       menuRepo;
   @Autowired private OrderRepository      orderRepo;

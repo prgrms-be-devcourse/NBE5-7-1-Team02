@@ -12,7 +12,7 @@ import easy.gc_coffee_api.dto.order.OrderItemDto;
 import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
 import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
 import easy.gc_coffee_api.exception.GCException;
-import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
+import easy.gc_coffee_api.usecase.order.CreateOrderUseCase;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -35,7 +35,7 @@ class OrderMenuControllerTest {
   private ObjectMapper objectMapper;
 
   @MockBean
-  private OrderMenuUseCase orderMenuUseCase;
+  private CreateOrderUseCase createOrderUseCase;
 
 
 
@@ -43,7 +43,7 @@ class OrderMenuControllerTest {
   @DisplayName("POST /orders - 성공: 201 Created, OrderResponseDto 반환")
   void postOrderSuccess() throws Exception {
     // Long → OrderResponseDto 를 반환하도록 수정
-    given(orderMenuUseCase.execute(any(CreateOrderRequestDto.class)))
+    given(createOrderUseCase.execute(any(CreateOrderRequestDto.class)))
         .willReturn(new CreateOrderResponseDto(42L)
         );
 
@@ -127,7 +127,7 @@ class OrderMenuControllerTest {
   @Test
   @DisplayName("존재하지 않는 메뉴 ID: 404 Not Found")
   void menuNotFound() throws Exception {
-    given(orderMenuUseCase.execute(any(CreateOrderRequestDto.class)))
+    given(createOrderUseCase.execute(any(CreateOrderRequestDto.class)))
         .willAnswer(invocation -> {
           // GCException(String message, Throwable cause, Integer code) 생성자 사용
           throw new GCException(
