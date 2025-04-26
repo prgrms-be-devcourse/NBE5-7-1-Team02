@@ -1,6 +1,7 @@
 package easy.gc_coffee_api.controller;
 
 import easy.gc_coffee_api.dto.OrderRequestDto;
+import easy.gc_coffee_api.dto.OrderResponseDto;
 import easy.gc_coffee_api.dto.OrderListResponseDto;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
 import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
@@ -23,8 +24,8 @@ public class OrderMenuController {
   private final GetOrderListUsecase getOrderListUsecase;
 
   @PostMapping("/orders")
-  public ResponseEntity<Long> post(@Valid @RequestBody OrderRequestDto order) {
-    return new ResponseEntity<>(orderMenuUserCase.execute(order), HttpStatus.CREATED);
+  public ResponseEntity<OrderResponseDto> post(@Valid @RequestBody OrderRequestDto order) {
+    return new ResponseEntity<>(orderMenuUseCase.execute(order), HttpStatus.CREATED);
   }
 
   @GetMapping("/orders")
