@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { uploadFile } from "../api/file";
+import { uploadFile } from "../../api/jwt/file";
 
 export default function FileUploadTestPage() {
     const [file, setFile] = useState<File | null>(null);
@@ -18,11 +18,11 @@ export default function FileUploadTestPage() {
         if (!file) return;
         try {
             const res = await uploadFile(file);
-            const url = `http://localhost:8080/files/${res.url}`;
+            const url = `http://localhost:8080/files/${res.key}`;
 
             setUploadedUrl(url);
 
-            alert(`업로드 성공: 이미지 URL = ${res.url}`);
+            alert(`업로드 성공: 이미지 URL = ${url}`);
         } catch (err) {
             alert("업로드 실패");
 

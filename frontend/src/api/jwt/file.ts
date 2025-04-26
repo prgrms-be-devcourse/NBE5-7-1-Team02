@@ -1,4 +1,4 @@
-import { fetchPostWithForm } from "./index";
+import { fetchPostWithForm } from ".";
 
 // 파일 업로드
 export const uploadFile = (file: File) => {
@@ -6,5 +6,5 @@ export const uploadFile = (file: File) => {
 
     form.append("file", file);
 
-    return fetchPostWithForm<{ id: number; url: string }>("/files", form);
+    return fetchPostWithForm<{ id: number; key: string }>("/files", form);
 };
