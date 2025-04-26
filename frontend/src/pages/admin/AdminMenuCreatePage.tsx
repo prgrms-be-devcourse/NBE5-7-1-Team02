@@ -27,8 +27,7 @@ export default function AdminMenuCreatePage() {
     return loading ? (
         <Loading />
     ) : (
-        <div className="min-h-screen p-8 bg-white">
-            <h1 className="text-2xl font-bold mb-4">새 메뉴 등록</h1>
+        <div className="min-h-screen p-8 py-30 bg-gray-100">
             <AdminMenuForm onSubmit={handleSubmit} />
         </div>
     );
