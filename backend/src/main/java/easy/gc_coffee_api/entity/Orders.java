@@ -15,6 +15,8 @@ public class Orders extends BaseDateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     @Embedded
     private Address address;
     @Setter
@@ -28,6 +30,7 @@ public class Orders extends BaseDateEntity {
         this.email = email;
         this.address = address;
         this.totalPrice = totalPrice;
+        this.status = OrderStatus.PENDING;
     }
 
     @Builder
