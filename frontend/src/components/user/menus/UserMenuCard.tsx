@@ -1,6 +1,6 @@
 import { Menu } from "@/lib/types/menu";
 import { CategoryLabels } from "@/lib/enums/Category";
-import { extractFilename } from "../../util/extractFilename";
+// import { extractFilename } from "../../util/extractFilename";
 
 const BASE = import.meta.env.VITE_API_URL;
 
@@ -10,9 +10,10 @@ interface Props {
 }
 
 export default function UserMenuCard({ menu, onAddToCart }: Props) {
-    const thumbnailKey = menu.thumbnailUrl
-        ? extractFilename(menu.thumbnailUrl)
-        : "default.jpg";
+    const thumbnailKey = menu.thumbnailUrl ? menu.thumbnailUrl : "default.jpg";
+
+    console.log(thumbnailKey);
+    console.log(`${BASE}/files/${thumbnailKey}`);
 
     return (
         <div className="flex items-center bg-white p-4 rounded shadow hover:shadow-md transition">

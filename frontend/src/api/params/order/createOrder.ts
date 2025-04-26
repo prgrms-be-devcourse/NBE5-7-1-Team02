@@ -1,4 +1,4 @@
-import { CartItem } from "@/lib/types/cartItem";
+import { MenuItem } from "@/lib/types/menuItem";
 
 export interface CreateOrderRequest {
     email: string;
@@ -6,7 +6,7 @@ export interface CreateOrderRequest {
         address: string;
         zipCode: string;
     };
-    items: CartItem[];
+    items: MenuItem[];
 }
 
 export interface CreateOrderResponse {
@@ -16,5 +16,5 @@ export interface CreateOrderResponse {
         address: string;
         zipCode: string;
     };
-    items: CartItem[];
+    items: MenuItem[];
 }

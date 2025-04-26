@@ -1,6 +1,6 @@
 import { Menu } from "@/lib/types/menu";
 import { CategoryLabels } from "@/lib/enums/Category";
-import { extractFilename } from "../../util/extractFilename";
+// import { extractFilename } from "../../util/extractFilename";
 
 const BASE = import.meta.env.VITE_API_URL;
 
@@ -11,20 +11,12 @@ interface Props {
 }
 
 export default function AdminMenuCard({ menu, onEdit, onDelete }: Props) {
-    const thumbnailKey = menu.thumbnailUrl
-        ? extractFilename(menu.thumbnailUrl)
-        : "default.jpg";
-
-    console.log(thumbnailKey);
+    const thumbnailKey = menu.thumbnailUrl ? menu.thumbnailUrl : "default.jpg";
 
     return (
         <div className="bg-white p-4 rounded shadow hover:shadow-md transition">
             <img
-                src={
-                    menu.thumbnailUrl
-                        ? `${BASE}/files/${thumbnailKey}`
-                        : `${BASE}/files/default.jpg`
-                }
+                src={`${BASE}/files/${thumbnailKey}`}
                 alt={menu.name}
                 className="w-full aspect-[4/3] object-cover object-center rounded mb-2"
             />
