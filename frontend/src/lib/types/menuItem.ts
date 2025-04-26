@@ -1,4 +1,4 @@
-export interface CartItem {
+export interface MenuItem {
     menuId: number;
     name: string;
     price: number;

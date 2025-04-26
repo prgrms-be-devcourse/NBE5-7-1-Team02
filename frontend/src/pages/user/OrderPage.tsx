@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Menu } from "@/lib/types/menu";
 import { getMenus } from "@/api/session/menu/getMenus";
 import CartAndFormSection from "../../components/user/orders/CartAndFormSection";
-import { CartItem } from "../../lib/types";
+import { MenuItem } from "../../lib/types";
 import MenuSection from "../../components/user/orders/MenuSection";
 import { createOrder } from "../../api/session/order/createOrder";
 
@@ -11,13 +11,16 @@ export default function OrderPage() {
     const navigate = useNavigate();
 
     const [menus, setMenus] = useState<Menu[]>([]);
-    const [cart, setCart] = useState<CartItem[]>([]);
+    const [cart, setCart] = useState<MenuItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchMenus = async () => {
             try {
                 const fetchedMenus = await getMenus();
+
+                console.log("fetchMenus", fetchedMenus);
+
                 setMenus(fetchedMenus);
             } catch (error) {
                 console.error(error);
@@ -110,6 +113,8 @@ export default function OrderPage() {
             console.error(err);
 
             alert("주문에 실패했습니다.");
+
+            window.location.reload();
         }
     };
 
