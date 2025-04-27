@@ -38,4 +38,8 @@ public class Orders extends BaseDateEntity {
     public Orders(String email, Address address, Integer totalPrice) {
         this(null, email, address, totalPrice);
     }
+
+    public void ship(){
+        this.status = OrderStatus.SHIPPED;
+    }
 }
