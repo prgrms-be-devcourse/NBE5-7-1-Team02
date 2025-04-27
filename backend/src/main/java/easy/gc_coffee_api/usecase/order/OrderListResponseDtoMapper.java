@@ -2,7 +2,7 @@ package easy.gc_coffee_api.usecase.order;
 
 import easy.gc_coffee_api.dto.order.OrderDateRangeDto;
 import easy.gc_coffee_api.dto.order.OrderResponseDto;
-import easy.gc_coffee_api.dto.order.common.OrderMenuModel;
+import easy.gc_coffee_api.usecase.order.model.OrderMenuModel;
 import easy.gc_coffee_api.entity.Orders;
 import easy.gc_coffee_api.usecase.order.model.OrderDataRange;
 import easy.gc_coffee_api.usecase.order.model.OrderMenuData;

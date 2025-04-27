@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MenuItem } from "@/lib/types";
+import { CartItem } from "@/lib/types";
 
 interface OrderFormData {
     email: string;
@@ -8,7 +8,7 @@ interface OrderFormData {
 }
 
 interface Props {
-    cart: MenuItem[];
+    cart: CartItem[];
     onAdd: (menuId: number) => void;
     onRemove: (menuId: number) => void;
     onSubmit: (form: OrderFormData) => void;

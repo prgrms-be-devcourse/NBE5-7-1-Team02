@@ -31,10 +31,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-class OrderMenuUseCaseTest {
+class CreateOrderUseCaseTest {
 
     @Autowired
-    private OrderMenuUseCase orderMenuUseCase;
+    private CreateOrderUseCase createOrderUseCase;
     @Autowired
     private OrderRepository       orderRepository;
     @Autowired
@@ -114,7 +114,7 @@ class OrderMenuUseCaseTest {
         System.out.println("▶ Request JSON:\n" + reqJson);
 
         // --- When: 서비스 호출 ---
-        CreateOrderResponseDto responseDto = orderMenuUseCase.execute(requestDto);
+        CreateOrderResponseDto responseDto = createOrderUseCase.execute(requestDto);
 
         // --- Then: Orders 조회 & JSON 출력 ---
         Orders savedOrder = orderRepository.findById(responseDto.getOrderId())
