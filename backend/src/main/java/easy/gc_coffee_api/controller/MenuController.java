@@ -5,11 +5,11 @@ import easy.gc_coffee_api.exception.ThumbnailCreateException;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.usecase.menu.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import easy.gc_coffee_api.exception.GCException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +28,7 @@ public class MenuController {
     private final GetMenuUseCase getMenuUseCase;
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CreateMenuResponseDto> create(@RequestBody @Validated CreateMenuRequestDto requestDto) {
         try {
             Long id = createMenuUsecase.execute(
@@ -43,6 +44,7 @@ public class MenuController {
     }
 
     @PutMapping("/{menuId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> updateMenu(@PathVariable Long menuId, @RequestBody @Validated UpdateMenuRequestDto requestDto) {
         updateMenuUsecase.execute(menuId, requestDto);
         return ResponseEntity.noContent().build();
@@ -62,6 +64,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/{menuId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> deleteMenu(@PathVariable Long menuId) {
         try {
             deleteMenuUseCase.execute(menuId);

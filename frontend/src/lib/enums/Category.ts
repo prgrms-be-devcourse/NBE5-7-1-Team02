@@ -4,6 +4,6 @@ export enum Category {
 }
 
 export const CategoryLabels: Record<Category, string> = {
-    [Category.COFFEE_BEAN]: "커피빈",
+    [Category.COFFEE_BEAN]: "원두",
     [Category.DRINK]: "음료",
 };

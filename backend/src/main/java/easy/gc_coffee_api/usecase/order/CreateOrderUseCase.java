@@ -4,7 +4,9 @@ package easy.gc_coffee_api.usecase.order;
 
 import easy.gc_coffee_api.dto.order.OrderItemDto;
 import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
-import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
+import easy.gc_coffee_api.dto.order.OrderResponseDto;
+import easy.gc_coffee_api.usecase.order.model.OrderMenuData;
+import easy.gc_coffee_api.usecase.order.model.OrderMenuModel;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
 import easy.gc_coffee_api.entity.Orders;
@@ -17,22 +19,37 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class OrderMenuUseCase {
-
+public class CreateOrderUseCase {
   private final OrderRepository orderRepository;
   private final MenuRepository menuRepository;
   private final OrderMenuRepository orderMenuRepository;
 
-  public CreateOrderResponseDto execute(CreateOrderRequestDto dto) {
+  public OrderResponseDto execute(CreateOrderRequestDto dto) {
     Orders savedOrder = saveOrders(dto);
 
     OrderMenus orderMenus = saveOrderMenus(dto, savedOrder);
+
     savedOrder.setTotalPrice(orderMenus.calcTotalPrice());
 
-    return CreateOrderResponseDto.fromEntity(savedOrder);
+    List<OrderMenuData> orderMenuDatas = orderMenuRepository.findAllByOrdersId(savedOrder.getId());
+
+    List<OrderMenuModel> orderMenuModels = mapToOrderMenuModels(orderMenuDatas);
+
+    return new OrderResponseDto(
+            savedOrder.getId(),
+            savedOrder.getEmail(),
+            savedOrder.getAddress().getAddress(),
+            savedOrder.getAddress().getZipCode(),
+            savedOrder.getStatus(),
+            savedOrder.getCreatedAt(),
+            savedOrder.getTotalPrice(),
+            orderMenuModels
+    );
   }
 
   private Orders saveOrders(CreateOrderRequestDto dto) {
@@ -50,6 +67,7 @@ public class OrderMenuUseCase {
 
     for (OrderItemDto item : dto.getItems()) {
       OrderMenu orderMenu = saveMenu(savedOrder, item);
+
       orderMenus.add(orderMenu);
     }
 
@@ -71,6 +89,19 @@ public class OrderMenuUseCase {
         .build();
 
     orderMenuRepository.save(orderMenu);
+
     return orderMenu;
+  }
+
+  private List<OrderMenuModel> mapToOrderMenuModels(List<OrderMenuData> orderMenus) {
+    return orderMenus.stream()
+            .map(menu -> new OrderMenuModel(
+                    menu.getMenuId(),
+                    menu.getMenuName(),
+                    menu.getPrice(),
+                    menu.getQuantity(),
+                    menu.getThumbnailUrl()
+            ))
+            .toList();
   }
 }

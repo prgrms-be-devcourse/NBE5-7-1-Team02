@@ -1,10 +1,11 @@
 package easy.gc_coffee_api.dto.order;
 
-import easy.gc_coffee_api.dto.order.common.OrderMenuModel;
+import easy.gc_coffee_api.usecase.order.model.OrderMenuModel;
 import easy.gc_coffee_api.entity.common.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,6 +16,7 @@ public class OrderResponseDto {
     private String address;
     private String zipCode;
     private OrderStatus status;
+    private LocalDateTime createdAt;
     private Integer totalPrice;
     private List<OrderMenuModel> menus;
 }

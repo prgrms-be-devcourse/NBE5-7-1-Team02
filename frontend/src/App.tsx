@@ -30,11 +30,8 @@ function App() {
                 {/* 유저 */}
                 {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/" element={<OrderPage />} />
-                <Route
-                    path="/order/success/:orderId"
-                    element={<OrderSuccessPage />}
-                />
-                <Route path="/order/lookup" element={<OrderLookupPage />} />
+                <Route path="/orders/success" element={<OrderSuccessPage />} />
+                <Route path="/orders/lookup" element={<OrderLookupPage />} />
             </Routes>
         </BrowserRouter>
     );

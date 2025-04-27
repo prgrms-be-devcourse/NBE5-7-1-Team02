@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.dto.order.common;
+package easy.gc_coffee_api.usecase.order.model;
 
 
 import lombok.AllArgsConstructor;

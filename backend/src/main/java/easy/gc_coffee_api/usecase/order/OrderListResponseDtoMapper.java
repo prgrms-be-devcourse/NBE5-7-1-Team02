@@ -2,7 +2,7 @@ package easy.gc_coffee_api.usecase.order;
 
 import easy.gc_coffee_api.dto.order.OrderDateRangeDto;
 import easy.gc_coffee_api.dto.order.OrderResponseDto;
-import easy.gc_coffee_api.dto.order.common.OrderMenuModel;
+import easy.gc_coffee_api.usecase.order.model.OrderMenuModel;
 import easy.gc_coffee_api.entity.Orders;
 import easy.gc_coffee_api.usecase.order.model.OrderDataRange;
 import easy.gc_coffee_api.usecase.order.model.OrderMenuData;
@@ -33,7 +33,15 @@ public class OrderListResponseDtoMapper {
             List<OrderMenuData> orderMenuData = orderMenuDatas.get(order.getId());
             List<OrderMenuModel> orderMenuDtos = toOrderMenus(orderMenuData);
 
-            OrderResponseDto orderListResponseDto = new OrderResponseDto(order.getId(), order.getEmail(), order.getAddress().getAddress(), order.getAddress().getZipCode(), order.getStatus(), order.getTotalPrice(), orderMenuDtos);
+            OrderResponseDto orderListResponseDto = new OrderResponseDto(
+                    order.getId(),
+                    order.getEmail(),
+                    order.getAddress().getAddress(),
+                    order.getAddress().getZipCode(),
+                    order.getStatus(),
+                    order.getCreatedAt(),
+                    order.getTotalPrice(),
+                    orderMenuDtos);
             result.add(orderListResponseDto);
         }
 
