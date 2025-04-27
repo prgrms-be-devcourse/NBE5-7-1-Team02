@@ -46,6 +46,7 @@ public class CreateOrderUseCase {
             savedOrder.getAddress().getAddress(),
             savedOrder.getAddress().getZipCode(),
             savedOrder.getStatus(),
+            savedOrder.getCreatedAt(),
             savedOrder.getTotalPrice(),
             orderMenuModels
     );
