@@ -14,4 +14,5 @@ export interface GetOrderResponse {
     status: OrderStatus;
     totalPrice: number;
     menus: OrderMenu[];
+    createdAt: Date;
 }

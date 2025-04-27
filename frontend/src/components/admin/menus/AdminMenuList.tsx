@@ -13,7 +13,7 @@ export default function AdminMenuList({
     onEdit,
 }: MenuListProps) {
     return (
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-100">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-30">
             {menus.map((menu) => (
                 <AdminMenuCard
                     key={menu.id}
