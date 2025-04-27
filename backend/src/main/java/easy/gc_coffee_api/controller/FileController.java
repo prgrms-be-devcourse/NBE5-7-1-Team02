@@ -6,6 +6,7 @@ import easy.gc_coffee_api.usecase.file.UploadFileUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ public class FileController {
     private final UploadFileUseCase uploadFileUseCase;
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UploadFileResponseDto> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             UploadFileResponseDto responseDto = uploadFileUseCase.execute(file);
