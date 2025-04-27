@@ -1,6 +1,7 @@
 package easy.gc_coffee_api.entity;
 
 import easy.gc_coffee_api.entity.common.BaseDateEntity;
+import easy.gc_coffee_api.entity.common.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

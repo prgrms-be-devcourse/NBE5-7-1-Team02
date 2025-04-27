@@ -8,10 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import easy.gc_coffee_api.dto.AddressDto;
-import easy.gc_coffee_api.dto.OrderItemDto;
-import easy.gc_coffee_api.dto.OrderRequestDto;
+import easy.gc_coffee_api.dto.order.OrderItemDto;
+import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
+import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
 import easy.gc_coffee_api.exception.GCException;
-import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
+import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -34,14 +35,19 @@ class OrderMenuControllerTest {
   private ObjectMapper objectMapper;
 
   @MockBean
-  private OrderMenuUserCase orderMenuUserCase;
+  private OrderMenuUseCase orderMenuUseCase;
+
+
 
   @Test
-  @DisplayName("POST /post - 성공: 200 OK, ID 반환")
+  @DisplayName("POST /orders - 성공: 201 Created, OrderResponseDto 반환")
   void postOrderSuccess() throws Exception {
-    given(orderMenuUserCase.execute(any(OrderRequestDto.class))).willReturn(42L);
+    // Long → OrderResponseDto 를 반환하도록 수정
+    given(orderMenuUseCase.execute(any(CreateOrderRequestDto.class)))
+        .willReturn(new CreateOrderResponseDto(42L)
+        );
 
-    OrderRequestDto dto = OrderRequestDto.builder()
+    CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
         .email("user@example.com")
         .addressdto(new AddressDto("서울시 강남구", "12345"))
         .items(List.of(new OrderItemDto(1L, 2)))
@@ -52,7 +58,8 @@ class OrderMenuControllerTest {
             .content(objectMapper.writeValueAsString(dto)))
         .andDo(print())
         .andExpect(status().isCreated())
-        .andExpect(content().string("42"));
+        // content() 검증도 JSON 형태로 바꿔야 합니다
+        .andExpect(content().json("{\"orderId\":42}"));
   }
 
   @Nested
@@ -62,7 +69,7 @@ class OrderMenuControllerTest {
     @Test
     @DisplayName("이메일 형식 오류 (빈 문자열 또는 잘못된 형식)")
     void invalidEmail() throws Exception {
-      OrderRequestDto dto = OrderRequestDto.builder()
+      CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
           .email("동해물")  // invalid
           .addressdto(new AddressDto("유효한 주소", "12345"))
           .items(List.of(new OrderItemDto(1L, 1)))
@@ -81,7 +88,7 @@ class OrderMenuControllerTest {
     @Test
     @DisplayName("숫자 아닌 우편번호")
     void invalidZipCode() throws Exception {
-      OrderRequestDto dto = OrderRequestDto.builder()
+      CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
           .email("user@example.com")
           .addressdto(new AddressDto("유효한 주소", "ABCDE"))
           .items(List.of(new OrderItemDto(1L, 1)))
@@ -100,7 +107,7 @@ class OrderMenuControllerTest {
     @Test
     @DisplayName("빈 아이템 리스트")
     void emptyItems() throws Exception {
-      OrderRequestDto dto = OrderRequestDto.builder()
+      CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
           .email("user@example.com")
           .addressdto(new AddressDto("유효한 주소", "12345"))
           .items(List.of())
@@ -120,10 +127,17 @@ class OrderMenuControllerTest {
   @Test
   @DisplayName("존재하지 않는 메뉴 ID: 404 Not Found")
   void menuNotFound() throws Exception {
-    given(orderMenuUserCase.execute(any()))
-        .willThrow(new GCException("존재하지 않는 메뉴 ID: 9999", 404));
+    given(orderMenuUseCase.execute(any(CreateOrderRequestDto.class)))
+        .willAnswer(invocation -> {
+          // GCException(String message, Throwable cause, Integer code) 생성자 사용
+          throw new GCException(
+              "존재하지 않는 메뉴 ID: 9999",
+              new RuntimeException("cause"),
+              404
+          );
+        });
 
-    OrderRequestDto dto = OrderRequestDto.builder()
+    CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
         .email("user@example.com")
         .addressdto(new AddressDto("서울시 강남구", "12345"))
         .items(List.of(new OrderItemDto(9999L, 1)))

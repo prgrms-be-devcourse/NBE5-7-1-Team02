@@ -1,10 +1,12 @@
 package easy.gc_coffee_api.controller;
 
-import easy.gc_coffee_api.dto.OrderRequestDto;
-import easy.gc_coffee_api.dto.OrderListResponseDto;
-import easy.gc_coffee_api.exception.GCException;
-import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
+import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
+import easy.gc_coffee_api.dto.order.OrderDateRangeDto;
+import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
+import easy.gc_coffee_api.dto.order.OrderResponseDto;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
+import easy.gc_coffee_api.usecase.order.GetOrderUseCase;
+import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
 import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
 import easy.gc_coffee_api.usecase.order.ShipOrderUseCase;
 import easy.gc_coffee_api.usecase.order.ShipOrdersUseCase;
@@ -19,22 +21,29 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderMenuController {
 
-  private final OrderMenuUserCase orderMenuUserCase;
+  private final OrderMenuUseCase orderMenuUseCase;
   private final GetOrderListUsecase getOrderListUsecase;
   private final ShipOrdersUseCase shipOrdersUseCase;
   private final ShipOrderUseCase shipOrderUseCase;
+  private final GetOrderUseCase getOrderUseCase;
 
-  @PostMapping("/orders")
-  public ResponseEntity<Long> post(@Valid @RequestBody OrderRequestDto order) {
-    return new ResponseEntity<>(orderMenuUserCase.execute(order), HttpStatus.CREATED);
+  @PostMapping
+  public ResponseEntity<CreateOrderResponseDto> post(@Valid @RequestBody CreateOrderRequestDto order) {
+    return new ResponseEntity<>(orderMenuUseCase.execute(order), HttpStatus.CREATED);
   }
 
-  @GetMapping("/orders")
-  public ResponseEntity<List<OrderListResponseDto>> getAllOrders() {
+  @GetMapping
+  public ResponseEntity<List<OrderDateRangeDto>> getAllOrders() {
     return ResponseEntity.ok(getOrderListUsecase.execute());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long id) {
+    return ResponseEntity.ok(getOrderUseCase.execute(id));
   }
 
   @PatchMapping("/orders/ship")
