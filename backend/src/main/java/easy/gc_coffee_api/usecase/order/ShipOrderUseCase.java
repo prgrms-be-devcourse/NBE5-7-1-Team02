@@ -1,6 +1,6 @@
 package easy.gc_coffee_api.usecase.order;
 
-import easy.gc_coffee_api.entity.OrderStatus;
+
 import easy.gc_coffee_api.entity.Orders;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.OrderRepository;
