@@ -33,7 +33,15 @@ public class OrderListResponseDtoMapper {
             List<OrderMenuData> orderMenuData = orderMenuDatas.get(order.getId());
             List<OrderMenuModel> orderMenuDtos = toOrderMenus(orderMenuData);
 
-            OrderResponseDto orderListResponseDto = new OrderResponseDto(order.getId(), order.getEmail(), order.getAddress().getAddress(), order.getAddress().getZipCode(), order.getStatus(), order.getTotalPrice(), orderMenuDtos);
+            OrderResponseDto orderListResponseDto = new OrderResponseDto(
+                    order.getId(),
+                    order.getEmail(),
+                    order.getAddress().getAddress(),
+                    order.getAddress().getZipCode(),
+                    order.getStatus(),
+                    order.getCreatedAt(),
+                    order.getTotalPrice(),
+                    orderMenuDtos);
             result.add(orderListResponseDto);
         }
 

@@ -36,6 +36,7 @@ public class GetOrderUseCase {
                 order.getAddress().getAddress(), // TODO Order 엔터티 Address flat 시켜도 될듯
                 order.getAddress().getZipCode(),
                 order.getStatus(),
+                order.getCreatedAt(),
                 order.getTotalPrice(),
                 orderMenus
         );
