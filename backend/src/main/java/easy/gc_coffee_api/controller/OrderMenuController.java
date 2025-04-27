@@ -7,7 +7,6 @@ import easy.gc_coffee_api.dto.order.OrderResponseDto;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
 import easy.gc_coffee_api.usecase.order.GetOrderUseCase;
 import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
-import easy.gc_coffee_api.usecase.order.OrderMenuUserCase;
 import easy.gc_coffee_api.usecase.order.ShipOrderUseCase;
 import easy.gc_coffee_api.usecase.order.ShipOrdersUseCase;
 import jakarta.validation.Valid;
@@ -46,7 +45,7 @@ public class OrderMenuController {
     return ResponseEntity.ok(getOrderUseCase.execute(id));
   }
 
-  @PatchMapping("/orders/ship")
+  @PatchMapping("/ship")
   public ResponseEntity<Map<String, Boolean>> ship(@RequestBody List<Long> ids) {
     shipOrdersUseCase.execute(ids);
     Map<String, Boolean> response = new HashMap<>();
@@ -55,7 +54,7 @@ public class OrderMenuController {
   }
 
 
-  @PatchMapping("/orders/{orderId}/ship")
+  @PatchMapping("/{orderId}/ship")
   public ResponseEntity<Map<String, Boolean>> ship(@PathVariable Long orderId) {
     shipOrderUseCase.execute(orderId);
     Map<String, Boolean> response = new HashMap<>();
