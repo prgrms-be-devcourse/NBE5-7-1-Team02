@@ -46,8 +46,10 @@ public class OrderMenuController {
   }
 
   @PatchMapping("/ship")
-  public ResponseEntity<Map<String, Boolean>> ship(@RequestBody List<Long> ids) {
+  public ResponseEntity<Map<String, Boolean>> ship(@RequestBody Map<String, List<Long>> request) {
+    List<Long> ids = request.get("ids");
     shipOrdersUseCase.execute(ids);
+
     Map<String, Boolean> response = new HashMap<>();
     response.put("result", true);
     return ResponseEntity.ok(response);
