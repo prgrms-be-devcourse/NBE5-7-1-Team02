@@ -19,10 +19,7 @@ public class ShipOrdersUseCase {
     private final JdbcTemplate jdbcTemplate;
     private final OrderRepository orderRepository;
 
-    public void execute(List<Long> ids) {
-        ids.forEach(id -> {
-            orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("주문이 존재하지 않습니다. 주문 ID:" +id,404 ));
-        });
+    public void execute(List<Long> ids) throws SQLException {
         jdbcTemplate.batchUpdate(
                 "UPDATE orders SET status = 'SHIPPED' WHERE id = ?", new BatchPreparedStatementSetter() {
                     @Override
