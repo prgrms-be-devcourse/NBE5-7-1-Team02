@@ -19,7 +19,7 @@ public class ShipOrdersUseCase {
     private final JdbcTemplate jdbcTemplate;
     private final OrderRepository orderRepository;
 
-    public void execute(List<Long> ids) throws SQLException {
+    public void execute(List<Long> ids) {
         jdbcTemplate.batchUpdate(
                 "UPDATE orders SET status = 'SHIPPED' WHERE id = ?", new BatchPreparedStatementSetter() {
                     @Override
