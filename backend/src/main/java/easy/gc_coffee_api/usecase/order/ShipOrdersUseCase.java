@@ -1,8 +1,6 @@
 package easy.gc_coffee_api.usecase.order;
 
 
-import easy.gc_coffee_api.exception.order.OrderNotFoundException;
-import easy.gc_coffee_api.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
