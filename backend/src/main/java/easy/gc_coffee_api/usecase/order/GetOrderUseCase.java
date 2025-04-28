@@ -48,8 +48,7 @@ public class GetOrderUseCase {
                         menu.getMenuId(),
                         menu.getMenuName(),
                         menu.getPrice(),
-                        menu.getQuantity(),
-                        menu.getThumbnailUrl()
+                        menu.getQuantity()
                 ))
                 .toList();
     }

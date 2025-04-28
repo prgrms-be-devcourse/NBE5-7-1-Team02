@@ -28,25 +28,25 @@ public class SecurityConfig {
                 .formLogin(
                         form -> {
                             form.usernameParameter("id")
-                                .passwordParameter("password")
-                                .successHandler((request, response, authentication) -> {
-                                    response.setStatus(HttpServletResponse.SC_OK);
-                                })
-                                .failureHandler((request, response, exception) -> {
-                                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                                })
-                                .loginProcessingUrl("/admin/login")
-                                .permitAll();
+                                    .passwordParameter("password")
+                                    .successHandler((request, response, authentication) -> {
+                                        response.setStatus(HttpServletResponse.SC_OK);
+                                    })
+                                    .failureHandler((request, response, exception) -> {
+                                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                                    })
+                                    .loginProcessingUrl("/admin/login")
+                                    .permitAll();
                         }
                 )
                 .logout(logout ->
                         logout.logoutUrl("/admin/logout")
-                            .logoutSuccessHandler((request, response, authentication) -> {
-                                response.setStatus(HttpServletResponse.SC_OK);
-                            })
-                            .clearAuthentication(true)
-                            .invalidateHttpSession(true)
-                            .deleteCookies("JSESSIONID")
+                                .logoutSuccessHandler((request, response, authentication) -> {
+                                    response.setStatus(HttpServletResponse.SC_OK);
+                                })
+                                .clearAuthentication(true)
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
                 )
                 .sessionManagement(session ->
                         session.maximumSessions(1)

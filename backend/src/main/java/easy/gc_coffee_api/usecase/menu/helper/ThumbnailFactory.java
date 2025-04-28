@@ -14,18 +14,18 @@ public class ThumbnailFactory {
     private final FileRepository fileRepository;
 
     public Thumbnail create(Long thumbnailId) {
-        if(thumbnailId == null){
+        if (thumbnailId == null) {
             return new Thumbnail();
         }
         try {
             File file = getFile(thumbnailId);
-            return new Thumbnail(file.getId(),file.getMimetype());
-        }catch (IllegalArgumentException e){
+            return new Thumbnail(file.getId(), file.getMimetype());
+        } catch (IllegalArgumentException e) {
             throw new ThumbnailCreateException("image type이 아닙니다.");
         }
     }
 
     private File getFile(Long thumbnailId) throws ThumbnailCreateException {
-        return fileRepository.findById(thumbnailId).orElseThrow(()->new ThumbnailCreateException("thumbnail id로 파일을 찾을 수 없습니다."));
+        return fileRepository.findById(thumbnailId).orElseThrow(() -> new ThumbnailCreateException("thumbnail id로 파일을 찾을 수 없습니다."));
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CreateMenuUsecase{
+public class CreateMenuUseCase {
 
     private final MenuSaver menuSaver;
     private final ThumbnailFactory thumnailFatory;

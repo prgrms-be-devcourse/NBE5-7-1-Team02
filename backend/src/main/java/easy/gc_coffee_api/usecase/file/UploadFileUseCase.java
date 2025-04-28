@@ -33,7 +33,7 @@ public class UploadFileUseCase {
         String originalFilename = file.getOriginalFilename();
         String extension = getExtension(originalFilename); // 확장자
 
-        if(extension.isEmpty()) {
+        if (extension.isEmpty()) {
             throw new IllegalArgumentException("확장자가 없는 파일로 요청했습니다.");
         }
 
@@ -49,7 +49,7 @@ public class UploadFileUseCase {
 
         // DB에 저장
         File savedFile = fileRepository.save(
-            new File(mimeType, newFileName)
+                new File(mimeType, newFileName)
         );
 
         return new UploadFileResponseDto(savedFile.getId(), savedFile.getKey());

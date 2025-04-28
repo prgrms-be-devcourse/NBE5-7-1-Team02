@@ -30,7 +30,7 @@ public class MenuReader {
     }
 
     private MenuData updateFullPath(MenuData menu) {
-        if(menu.hasThumbnail()){
+        if (menu.hasThumbnail()) {
             menu.setFullPathUrl(fileUrlTranslator.execute(menu.getThumbnailUrl()));
         }
         return menu;

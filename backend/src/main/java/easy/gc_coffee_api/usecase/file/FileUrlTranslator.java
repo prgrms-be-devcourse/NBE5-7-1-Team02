@@ -8,7 +8,7 @@ public class FileUrlTranslator {
 
     private String prefix;
 
-    public FileUrlTranslator(@Value("${file.storage_path}")String prefix) {
+    public FileUrlTranslator(@Value("${file.storage_path}") String prefix) {
         this.prefix = prefix;
     }
 

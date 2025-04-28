@@ -16,18 +16,18 @@ import lombok.Setter;
 @Builder
 public class AddressDto {
 
-  @NotBlank(message = "주소를 입력하세요")
-  private String address;
+    @NotBlank(message = "주소를 입력하세요")
+    private String address;
 
-  @NotBlank(message = "우편번호는 필수입니다.")
-  @Pattern(
-      regexp = "^[0-9]+$",
-      message = "우편번호는 숫자만 입력 가능합니다."
-  )
-  private String zipCode;
+    @NotBlank(message = "우편번호는 필수입니다.")
+    @Pattern(
+            regexp = "^[0-9]+$",
+            message = "우편번호는 숫자만 입력 가능합니다."
+    )
+    private String zipCode;
 
 
-  public Address toAddress() {
-    return new Address(address, zipCode);
-  }
+    public Address toAddress() {
+        return new Address(address, zipCode);
+    }
 }

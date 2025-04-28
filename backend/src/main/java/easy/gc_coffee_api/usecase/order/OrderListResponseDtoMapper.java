@@ -55,8 +55,7 @@ public class OrderListResponseDtoMapper {
                     orderMenu.getMenuId(),
                     orderMenu.getMenuName(),
                     orderMenu.getPrice(),
-                    orderMenu.getQuantity(),
-                    orderMenu.getThumbnailUrl()
+                    orderMenu.getQuantity()
             );
             orderMenuDtos.add(orderMenuResponseDto);
         }

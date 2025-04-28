@@ -15,7 +15,7 @@ public class GetMenusUseCase {
     public MenusResponseDto execute() {
         MenuDatas menus = menuReader.readAllNotDelete();
         return new MenusResponseDto(menus
-                .transform((menu)->
+                .transform((menu) ->
                         new MenuResponseDto(
                                 menu.getId(),
                                 menu.getName(),
@@ -23,8 +23,8 @@ public class GetMenusUseCase {
                                 menu.getCategory(),
                                 menu.getThumbnailUrl(),
                                 menu.getFileId()
-                                )
                         )
+                )
         );
     }
 }

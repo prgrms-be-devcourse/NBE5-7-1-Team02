@@ -24,7 +24,8 @@ public class File extends BaseDateEntity {
         this.mimetype = mimetype;
         this.key = key;
     }
+
     public File(String mimetype, String key) {
-        this(null,mimetype,key);
+        this(null, mimetype, key);
     }
 }

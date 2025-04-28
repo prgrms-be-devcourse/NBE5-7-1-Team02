@@ -1,7 +1,6 @@
 package easy.gc_coffee_api.usecase.order.model;
 
 
-import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.OrderMenu;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,11 +13,9 @@ public class OrderMenuData {
     private String menuName;
     private Integer price;
     private Integer quantity;
-    private String thumbnailUrl;
 
-
-    public OrderMenuData(OrderMenu orderMenu, File file) {
-        this(orderMenu.orderId(), orderMenu.getMenu().getId(), orderMenu.getName(), orderMenu.getPrice(), orderMenu.getQuantity(), getThumbnailUrl(file));
+    public OrderMenuData(OrderMenu orderMenu) {
+        this(orderMenu.orderId(), orderMenu.getMenu().getId(), orderMenu.getName(), orderMenu.getPrice(), orderMenu.getQuantity());
     }
 
     private static String getThumbnailUrl(File file) {

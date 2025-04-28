@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface MenuRepository extends JpaRepository<Menu,Long> {
+public interface MenuRepository extends JpaRepository<Menu, Long> {
 
     @Query("SELECT new easy.gc_coffee_api.usecase.menu.dto.MenuData(m, f)" +
             " FROM Menu m LEFT JOIN File f ON m.thumbnail.fileId = f.id" +

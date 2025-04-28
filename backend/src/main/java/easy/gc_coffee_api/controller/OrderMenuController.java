@@ -22,45 +22,45 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OrderMenuController {
 
-  private final CreateOrderUseCase createOrderUseCase;
-  private final GetOrderListUsecase getOrderListUsecase;
-  private final ShipOrdersUseCase shipOrdersUseCase;
-  private final ShipOrderUseCase shipOrderUseCase;
-  private final GetOrderUseCase getOrderUseCase;
+    private final CreateOrderUseCase createOrderUseCase;
+    private final GetOrderListUseCase getOrderListUsecase;
+    private final ShipOrdersUseCase shipOrdersUseCase;
+    private final ShipOrderUseCase shipOrderUseCase;
+    private final GetOrderUseCase getOrderUseCase;
 
-  @PostMapping
-  public ResponseEntity<OrderResponseDto> post(@Valid @RequestBody CreateOrderRequestDto order) {
-    return new ResponseEntity<>(createOrderUseCase.execute(order), HttpStatus.CREATED);
-  }
+    @PostMapping
+    public ResponseEntity<OrderResponseDto> post(@Valid @RequestBody CreateOrderRequestDto order) {
+        return new ResponseEntity<>(createOrderUseCase.execute(order), HttpStatus.CREATED);
+    }
 
-  @GetMapping
-  @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<List<OrderDateRangeDto>> getAllOrders() {
-    return ResponseEntity.ok(getOrderListUsecase.execute());
-  }
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<OrderDateRangeDto>> getAllOrders() {
+        return ResponseEntity.ok(getOrderListUsecase.execute());
+    }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long id, @RequestParam String email) {
-    return ResponseEntity.ok(getOrderUseCase.execute(id, email));
-  }
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long id, @RequestParam String email) {
+        return ResponseEntity.ok(getOrderUseCase.execute(id, email));
+    }
 
-  @PatchMapping("/ship")
-  public ResponseEntity<Map<String, Boolean>> ship(@RequestBody Map<String, List<Long>> request) {
-    List<Long> ids = request.get("ids");
-    shipOrdersUseCase.execute(ids);
+    @PatchMapping("/ship")
+    public ResponseEntity<Map<String, Boolean>> ship(@RequestBody Map<String, List<Long>> request) {
+        List<Long> ids = request.get("ids");
+        shipOrdersUseCase.execute(ids);
 
-    Map<String, Boolean> response = new HashMap<>();
-    response.put("result", true);
-    return ResponseEntity.ok(response);
-  }
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("result", true);
+        return ResponseEntity.ok(response);
+    }
 
 
-  @PatchMapping("/{orderId}/ship")
-  public ResponseEntity<Map<String, Boolean>> ship(@PathVariable Long orderId) {
-    shipOrderUseCase.execute(orderId);
-    Map<String, Boolean> response = new HashMap<>();
-    response.put("result", true);
-    return ResponseEntity.ok(response);
-  }
+    @PatchMapping("/{orderId}/ship")
+    public ResponseEntity<Map<String, Boolean>> ship(@PathVariable Long orderId) {
+        shipOrderUseCase.execute(orderId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("result", true);
+        return ResponseEntity.ok(response);
+    }
 
 }

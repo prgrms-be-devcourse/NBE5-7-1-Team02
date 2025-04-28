@@ -9,11 +9,11 @@ public class OrderMenuDatas {
 
     private final Map<Long, List<OrderMenuData>> datas;
 
-    public  OrderMenuDatas(List<OrderMenuData> datas) {
+    public OrderMenuDatas(List<OrderMenuData> datas) {
         this.datas = datas.stream().collect(Collectors.groupingBy(OrderMenuData::getOrderId));
     }
 
-    public List<OrderMenuData> get(Long id){
-        return datas.getOrDefault(id,List.of());
+    public List<OrderMenuData> get(Long id) {
+        return datas.getOrDefault(id, List.of());
     }
 }

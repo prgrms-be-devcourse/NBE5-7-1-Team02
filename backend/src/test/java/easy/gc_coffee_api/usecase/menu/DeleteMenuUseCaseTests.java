@@ -60,9 +60,9 @@ class DeleteMenuUseCaseTests {
         Long menuId = 1L;
         when(menuRepository.findByIdAndDeletedAtIsNull(eq(menuId))).thenReturn(Optional.empty());
         // when / then
-        assertThatThrownBy(()->deleteMenuUseCase.execute(menuId)).isInstanceOf(MenuNotFoundException.class);
+        assertThatThrownBy(() -> deleteMenuUseCase.execute(menuId)).isInstanceOf(MenuNotFoundException.class);
     }
-    
+
     @Test
     @DisplayName("메뉴 삭제 (파일이 없는 경우)")
     void deleteMenuWhenFileNotExistTest() throws Exception {

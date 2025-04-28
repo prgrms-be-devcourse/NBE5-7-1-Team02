@@ -8,7 +8,7 @@ import java.util.List;
 public class OrderMenus {
     private List<OrderMenu> orderMenus = new ArrayList<>();
 
-    public void add(OrderMenu orderMenu){
+    public void add(OrderMenu orderMenu) {
         orderMenus.add(orderMenu);
     }
 

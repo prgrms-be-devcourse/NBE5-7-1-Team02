@@ -18,7 +18,7 @@ public class FileRemover {
     private final FileRepository fileRepository;
 
     @Transactional
-    public void remove(Long id) throws FileNotFoundException,NullPointerException {
+    public void remove(Long id) throws FileNotFoundException, NullPointerException {
         File file = fileRepository
                 .findByIdAndDeletedAtIsNull(Objects.requireNonNull(id))
                 .orElseThrow(() -> new FileNotFoundException("해당 파일이 존재하지 않습니다.", 400));

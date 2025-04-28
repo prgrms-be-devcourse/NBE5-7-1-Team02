@@ -29,7 +29,7 @@ public class OrderMenu extends BaseDateEntity {
     private Orders orders;
 
     @Builder
-    public OrderMenu(String name, Integer price, Integer quantity,Menu menu, Orders orders) {
+    public OrderMenu(String name, Integer price, Integer quantity, Menu menu, Orders orders) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -37,7 +37,7 @@ public class OrderMenu extends BaseDateEntity {
         this.orders = orders;
     }
 
-    public Long orderId(){
+    public Long orderId() {
         return orders.getId();
     }
 

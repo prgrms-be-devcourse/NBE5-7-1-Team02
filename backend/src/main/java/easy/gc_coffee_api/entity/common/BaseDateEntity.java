@@ -19,7 +19,7 @@ public class BaseDateEntity {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-    
+
     @Getter
     private LocalDateTime deletedAt;
 
