@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.dto;
+package easy.gc_coffee_api.dto.menu;
 
 import easy.gc_coffee_api.entity.common.Category;
 import lombok.AccessLevel;

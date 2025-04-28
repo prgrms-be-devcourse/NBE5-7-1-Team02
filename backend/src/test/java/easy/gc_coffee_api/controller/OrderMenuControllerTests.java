@@ -1,32 +1,36 @@
 package easy.gc_coffee_api.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import easy.gc_coffee_api.dto.AddressDto;
-import easy.gc_coffee_api.dto.order.OrderItemDto;
 import easy.gc_coffee_api.dto.order.CreateOrderRequestDto;
-import easy.gc_coffee_api.dto.order.CreateOrderResponseDto;
+import easy.gc_coffee_api.dto.order.OrderItemDto;
+import easy.gc_coffee_api.dto.order.OrderResponseDto;
+import easy.gc_coffee_api.entity.common.OrderStatus;
 import easy.gc_coffee_api.exception.GCException;
 import easy.gc_coffee_api.usecase.order.CreateOrderUseCase;
-import java.util.List;
+import easy.gc_coffee_api.usecase.order.model.OrderMenuModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
-class OrderMenuControllerTest {
+class OrderMenuControllerTests {
 
   @Autowired
   private MockMvc mockMvc;
@@ -34,7 +38,7 @@ class OrderMenuControllerTest {
   @Autowired
   private ObjectMapper objectMapper;
 
-  @MockBean
+  @MockitoBean
   private CreateOrderUseCase createOrderUseCase;
 
 
@@ -42,14 +46,17 @@ class OrderMenuControllerTest {
   @Test
   @DisplayName("POST /orders - 성공: 201 Created, OrderResponseDto 반환")
   void postOrderSuccess() throws Exception {
+    String email = "user@example.com";
+    AddressDto address = new AddressDto("서울시 강남구", "12345");
+    OrderMenuModel orderItem = new OrderMenuModel(1L, "test", 500, 2);
+    OrderResponseDto orderResponseDto = new OrderResponseDto(42L, email,address.getAddress(),address.getZipCode(), OrderStatus.PENDING, LocalDateTime.now(),1000,List.of(orderItem));
     // Long → OrderResponseDto 를 반환하도록 수정
     given(createOrderUseCase.execute(any(CreateOrderRequestDto.class)))
-        .willReturn(new CreateOrderResponseDto(42L)
-        );
+        .willReturn(orderResponseDto);
 
     CreateOrderRequestDto dto = CreateOrderRequestDto.builder()
-        .email("user@example.com")
-        .addressdto(new AddressDto("서울시 강남구", "12345"))
+        .email(email)
+        .addressdto(address)
         .items(List.of(new OrderItemDto(1L, 2)))
         .build();
 
@@ -59,7 +66,7 @@ class OrderMenuControllerTest {
         .andDo(print())
         .andExpect(status().isCreated())
         // content() 검증도 JSON 형태로 바꿔야 합니다
-        .andExpect(content().json("{\"orderId\":42}"));
+        .andExpect(content().json("{\"id\":42}"));
   }
 
   @Nested

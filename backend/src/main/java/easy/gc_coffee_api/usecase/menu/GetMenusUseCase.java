@@ -1,7 +1,7 @@
 package easy.gc_coffee_api.usecase.menu;
 
-import easy.gc_coffee_api.dto.MenuResponseDto;
-import easy.gc_coffee_api.dto.MenusResponseDto;
+import easy.gc_coffee_api.dto.menu.MenuResponseDto;
+import easy.gc_coffee_api.dto.menu.MenusResponseDto;
 import easy.gc_coffee_api.usecase.menu.dto.MenuDatas;
 import easy.gc_coffee_api.usecase.menu.helper.MenuReader;
 import lombok.RequiredArgsConstructor;

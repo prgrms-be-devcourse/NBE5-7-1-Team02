@@ -1,6 +1,6 @@
 package easy.gc_coffee_api.usecase.menu;
 
-import easy.gc_coffee_api.dto.MenuResponseDto;
+import easy.gc_coffee_api.dto.menu.MenuResponseDto;
 import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.common.Category;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;

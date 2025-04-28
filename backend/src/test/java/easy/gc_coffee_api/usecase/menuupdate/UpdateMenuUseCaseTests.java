@@ -1,6 +1,6 @@
 package easy.gc_coffee_api.usecase.menuupdate;
 
-import easy.gc_coffee_api.dto.UpdateMenuRequestDto;
+import easy.gc_coffee_api.dto.menu.UpdateMenuRequestDto;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
@@ -9,7 +9,7 @@ import easy.gc_coffee_api.exception.menu.InvalidMenuNameException;
 import easy.gc_coffee_api.exception.menu.InvalidMenuPriceException;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
-import easy.gc_coffee_api.usecase.menu.UpdateMenuUsecase;
+import easy.gc_coffee_api.usecase.menu.UpdateMenuUseCase;
 import easy.gc_coffee_api.usecase.menu.helper.ThumbnailFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,9 +26,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UpdateMenuUsecaseTest {
+public class UpdateMenuUseCaseTests {
 
-    private UpdateMenuUsecase usecase;
+    private UpdateMenuUseCase usecase;
 
     @Mock
     private MenuRepository repository;
@@ -38,7 +38,7 @@ public class UpdateMenuUsecaseTest {
 
     @BeforeEach
     public void setUp(){
-        usecase = new UpdateMenuUsecase(repository,thumnailFatory);
+        usecase = new UpdateMenuUseCase(repository,thumnailFatory);
     }
 
     @Test

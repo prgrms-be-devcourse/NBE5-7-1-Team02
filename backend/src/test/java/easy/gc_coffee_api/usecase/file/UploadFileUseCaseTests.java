@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UploadFileUseCaseTest {
+public class UploadFileUseCaseTests {
     @Mock
     private FileRepository fileRepository;
 

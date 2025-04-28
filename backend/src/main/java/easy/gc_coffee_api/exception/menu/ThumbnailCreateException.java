@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.exception;
+package easy.gc_coffee_api.exception.menu;
 
 public class ThumbnailCreateException extends RuntimeException{
     public ThumbnailCreateException(String message) {

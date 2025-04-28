@@ -1,4 +1,4 @@
-package easy.gc_coffee_api.dto;
+package easy.gc_coffee_api.dto.menu;
 
 import easy.gc_coffee_api.entity.common.Category;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,11 +10,11 @@ import lombok.Data;
 @Data
 public class CreateMenuRequestDto {
 
-    @NotBlank(message = "menuName은 빈값이 아니여야합니다")
+    @NotBlank(message = "이름을 입력해주세요.")
     private String menuName;
-    @NotBlank(message = "category는 빈값이 아니여야합니다.")
+    @NotBlank(message = "카테고리를 입력해주세요.")
     private String category;
-    @NotNull(message = "price는 필 수 입니다.")
+    @NotNull(message = "가격을 입력해주세요.")
     @Min(value = 0,message = "가격은 0이상이여야 합니다.")
     private Integer price;
     private Long thumbnailId;

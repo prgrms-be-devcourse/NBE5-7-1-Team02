@@ -3,9 +3,9 @@ package easy.gc_coffee_api.entity;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class ThumbnailTest {
+class ThumbnailTests {
 
     @Test
     void 이미지_타입아닐시_예외(){

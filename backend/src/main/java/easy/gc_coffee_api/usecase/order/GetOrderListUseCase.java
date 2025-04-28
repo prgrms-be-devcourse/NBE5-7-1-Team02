@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class GetOrderListUsecase {
+public class GetOrderListUseCase {
 
     private final OrderRepository repository;
     private final OrderMenuRepository orderMenuRepository;

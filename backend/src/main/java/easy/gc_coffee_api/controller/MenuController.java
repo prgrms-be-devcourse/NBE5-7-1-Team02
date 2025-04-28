@@ -1,7 +1,7 @@
 package easy.gc_coffee_api.controller;
 
-import easy.gc_coffee_api.dto.*;
-import easy.gc_coffee_api.exception.ThumbnailCreateException;
+import easy.gc_coffee_api.dto.menu.*;
+import easy.gc_coffee_api.exception.menu.ThumbnailCreateException;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.usecase.menu.*;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/menus")
 public class MenuController {
 
-    private final CreateMenuUsecase createMenuUsecase;
-    private final UpdateMenuUsecase updateMenuUsecase;
+    private final CreateMenuUseCase createMenuUsecase;
+    private final UpdateMenuUseCase updateMenuUsecase;
     private final GetMenusUseCase getMenusUseCase;
     private final DeleteMenuUseCase deleteMenuUseCase;
     private final GetMenuUseCase getMenuUseCase;

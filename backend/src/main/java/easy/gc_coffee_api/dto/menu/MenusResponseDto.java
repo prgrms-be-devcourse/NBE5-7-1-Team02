@@ -1,7 +1,8 @@
-package easy.gc_coffee_api.dto;
+package easy.gc_coffee_api.dto.menu;
 
-import easy.gc_coffee_api.entity.common.Category;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;

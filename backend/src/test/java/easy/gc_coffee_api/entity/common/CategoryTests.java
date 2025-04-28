@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class CategoryTest {
+class CategoryTests {
 
     @ParameterizedTest
     @ValueSource(strings = {"COFFEE_BEAN","coffee_bean","coffeeBean","coffeebean"})

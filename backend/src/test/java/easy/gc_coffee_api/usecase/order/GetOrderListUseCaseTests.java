@@ -2,19 +2,15 @@ package easy.gc_coffee_api.usecase.order;
 
 import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
-import easy.gc_coffee_api.usecase.file.FileUrlTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-
 @ExtendWith(MockitoExtension.class)
-class GetOrderListUsecaseTest {
+class GetOrderListUseCaseTests {
 
-    private GetOrderListUsecase getOrderListUsecase;
+    private GetOrderListUseCase getOrderListUsecase;
     @Mock
     private OrderRepository repository;
     @Mock
@@ -23,11 +19,11 @@ class GetOrderListUsecaseTest {
     private OrderDateRangeRule rule;
 
     private final String PREFIX = "/usecase/order";
-    OrderListResponseDtoMapper orderListResponseDtoMapper = new OrderListResponseDtoMapper(new FileUrlTranslator(PREFIX));
+    OrderListResponseDtoMapper orderListResponseDtoMapper = new OrderListResponseDtoMapper();
 
     @BeforeEach
     void setUp() {
-        getOrderListUsecase = new GetOrderListUsecase(repository, orderMenuRepository, orderListResponseDtoMapper, rule);
+        getOrderListUsecase = new GetOrderListUseCase(repository, orderMenuRepository, orderListResponseDtoMapper, rule);
     }
 
 //    @Test

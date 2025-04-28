@@ -2,7 +2,7 @@ package easy.gc_coffee_api.usecase.menu.helper;
 
 import easy.gc_coffee_api.entity.File;
 import easy.gc_coffee_api.entity.Thumbnail;
-import easy.gc_coffee_api.exception.ThumbnailCreateException;
+import easy.gc_coffee_api.exception.menu.ThumbnailCreateException;
 import easy.gc_coffee_api.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

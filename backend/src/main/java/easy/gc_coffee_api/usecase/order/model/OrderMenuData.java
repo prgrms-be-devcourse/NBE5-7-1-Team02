@@ -18,14 +18,4 @@ public class OrderMenuData {
         this(orderMenu.orderId(), orderMenu.getMenu().getId(), orderMenu.getName(), orderMenu.getPrice(), orderMenu.getQuantity());
     }
 
-    private static String getThumbnailUrl(File file) {
-        if (file != null) {
-            return file.getKey();
-        }
-        return null;
-    }
-
-    public boolean hasThumbnailUrl() {
-        return thumbnailUrl != null;
-    }
 }

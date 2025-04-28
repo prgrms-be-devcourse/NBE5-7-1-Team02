@@ -17,21 +17,21 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class FileRemoverTest {
+public class FileRemoverTests {
 
     @Mock
     private FileRepository fileRepository;
     private FileRemover fileRemover;
 
     @BeforeEach
-    public void initFileRemover(){
+    public void initFileRemover() {
         fileRemover = new FileRemover(fileRepository);
     }
 
     @Test
-    void 파일삭제(){
+    void 파일삭제() {
         Long fileId = 1L;
-        File file = new File(fileId,"image/jpeg","test/url");
+        File file = new File(fileId, "image/jpeg", "test/url");
         when(fileRepository.findByIdAndDeletedAtIsNull(eq(fileId))).thenReturn(Optional.of(file));
 
         fileRemover.remove(fileId);
@@ -40,13 +40,13 @@ public class FileRemoverTest {
     }
 
     @Test
-    void 없는_파일_삭제(){
+    void 없는_파일_삭제() {
         Long fileId = 2L;
-        assertThatThrownBy(()->fileRemover.remove(fileId)).isInstanceOf(FileNotFoundException.class);
+        assertThatThrownBy(() -> fileRemover.remove(fileId)).isInstanceOf(FileNotFoundException.class);
     }
 
     @Test
-    void 값에_null입력(){
-        assertThatThrownBy(()->fileRemover.remove(null)).isInstanceOf(NullPointerException.class);
+    void 값에_null입력() {
+        assertThatThrownBy(() -> fileRemover.remove(null)).isInstanceOf(NullPointerException.class);
     }
 }

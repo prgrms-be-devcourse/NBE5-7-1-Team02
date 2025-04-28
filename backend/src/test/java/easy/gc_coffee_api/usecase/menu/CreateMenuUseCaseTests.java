@@ -16,18 +16,18 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CreateMenuUsecaseTest {
+public class CreateMenuUseCaseTests {
 
     @Mock
     private MenuSaver menuSaver;
     @Mock
     private ThumbnailFactory thumbnailFactory;
 
-    private CreateMenuUsecase createMenuUsecase;
+    private CreateMenuUseCase createMenuUsecase;
 
     @BeforeEach
     void setUp() {
-        createMenuUsecase =  new CreateMenuUsecase(menuSaver, thumbnailFactory);
+        createMenuUsecase = new CreateMenuUseCase(menuSaver, thumbnailFactory);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class CreateMenuUsecaseTest {
 
         Thumbnail thumbnail = new Thumbnail(2L, "image/jpeg");
         when(thumbnailFactory.create(eq(fileId))).thenReturn(thumbnail);
-        when(menuSaver.save(eq(menuName),eq(category),eq(price),eq(thumbnail))).thenReturn(new Menu(entityId, menuName, price, category, thumbnail));
+        when(menuSaver.save(eq(menuName), eq(category), eq(price), eq(thumbnail))).thenReturn(new Menu(entityId, menuName, price, category, thumbnail));
 
         Long id = createMenuUsecase.execute(menuName, category, price, fileId);
 

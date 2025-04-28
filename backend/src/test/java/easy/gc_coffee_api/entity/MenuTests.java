@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MenuTest {
+class MenuTests {
 
     @Test
     void 썸네일이_존재하는_메뉴() {

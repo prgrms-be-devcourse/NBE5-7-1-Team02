@@ -1,7 +1,7 @@
 package easy.gc_coffee_api.usecase.menu;
 
 
-import easy.gc_coffee_api.dto.UpdateMenuRequestDto;
+import easy.gc_coffee_api.dto.menu.UpdateMenuRequestDto;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.Thumbnail;
 import easy.gc_coffee_api.entity.common.Category;
@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
-public class UpdateMenuUsecase {
+public class UpdateMenuUseCase {
 
     private final MenuRepository menuRepository;
     private final ThumbnailFactory thumbnailFactory;

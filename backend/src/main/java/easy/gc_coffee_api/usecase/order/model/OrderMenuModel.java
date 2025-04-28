@@ -11,5 +11,4 @@ public class OrderMenuModel {
     private String name;
     private Integer price;
     private Integer quantity;
-    private String thumbnailUrl;
 }

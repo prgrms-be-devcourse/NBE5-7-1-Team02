@@ -1,7 +1,7 @@
 package easy.gc_coffee_api.controller;
 
 import easy.gc_coffee_api.dto.order.*;
-import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
+import easy.gc_coffee_api.usecase.order.GetOrderListUseCase;
 import easy.gc_coffee_api.usecase.order.GetOrderUseCase;
 import easy.gc_coffee_api.usecase.order.ShipOrderUseCase;
 import easy.gc_coffee_api.usecase.order.ShipOrdersUseCase;
