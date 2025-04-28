@@ -7,7 +7,6 @@ import easy.gc_coffee_api.dto.order.OrderResponseDto;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
 import easy.gc_coffee_api.entity.Orders;
-import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.mail.OrderMailMessage;
 import easy.gc_coffee_api.repository.MenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
@@ -48,7 +47,7 @@ public class CreateOrderUseCase {
 
         List<Menu> menus = menuRepository.findMenuByMenuIds(menuIds);
 
-        Map<Long,List<Menu>> menuGroup = menus.stream().collect(Collectors.groupingBy(Menu::getId));
+        Map<Long, List<Menu>> menuGroup = menus.stream().collect(Collectors.groupingBy(Menu::getId));
 
         List<OrderMenu> orderMenus = new ArrayList<>();
         for (OrderItemDto orderItemDto : orderItemDtos) {
@@ -73,8 +72,7 @@ public class CreateOrderUseCase {
 
         List<OrderMenuModel> orderMenuModels = mapToOrderMenuModels(orderMenus);
 
-        eventPublisher.publishEvent(new OrderMailMessage(savedOrder.getEmail(), savedOrder.getId()));
-        return new OrderResponseDto(
+        OrderResponseDto orderResponseDto = new OrderResponseDto(
                 savedOrder.getId(),
                 savedOrder.getEmail(),
                 savedOrder.getAddress().getAddress(),
@@ -84,6 +82,9 @@ public class CreateOrderUseCase {
                 savedOrder.getTotalPrice(),
                 orderMenuModels
         );
+        eventPublisher.publishEvent(new OrderMailMessage(savedOrder.getEmail(),orderResponseDto));
+        return orderResponseDto;
+
     }
 
     private Orders saveOrders(CreateOrderRequestDto dto) {
@@ -134,7 +135,7 @@ public class CreateOrderUseCase {
         });
     }
 
-    private int calcTotalPrice(List<OrderMenu> orderMenus){
+    private int calcTotalPrice(List<OrderMenu> orderMenus) {
         return orderMenus.stream().mapToInt(OrderMenu::calculatePrice).sum();
     }
 }

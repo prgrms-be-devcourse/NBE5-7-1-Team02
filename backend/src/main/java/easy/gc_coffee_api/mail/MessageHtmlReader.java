@@ -1,14 +1,11 @@
 package easy.gc_coffee_api.mail;
 
-import easy.gc_coffee_api.entity.Orders;
+import easy.gc_coffee_api.dto.order.OrderResponseDto;
 import easy.gc_coffee_api.entity.common.OrderStatus;
-import easy.gc_coffee_api.usecase.order.model.OrderMenuData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -16,21 +13,21 @@ public class MessageHtmlReader {
 
     private final TemplateEngine templateEngine;
 
-    public String getMailBodyMessage(Orders orders, List<OrderMenuData> orderMenus) {
-        Context context = createModel(orders, orderMenus);
+    public String getMailBodyMessage(OrderResponseDto orderResponseDto) {
+        Context context = createModel(orderResponseDto);
         return templateEngine.process("mailbody", context);
     }
 
-    private static Context createModel(Orders orders, List<OrderMenuData> orderMenus) {
+    private Context createModel(OrderResponseDto orderResponseDto) {
         Context context = new Context();
-        context.setVariable("orderId", orders.getId());
-        context.setVariable("email", orders.getEmail());
-        context.setVariable("creatAt", orders.getCreatedAt());
-        context.setVariable("address", orders.getAddress().getAddress());
-        context.setVariable("zipcode", orders.getAddress().getZipCode());
-        context.setVariable("status", orders.getStatus() == OrderStatus.PENDING ? "배송대기중" : "발송완료");
-        context.setVariable("total_price", orders.getTotalPrice());
-        context.setVariable("ordermenus", orderMenus);
+        context.setVariable("orderId", orderResponseDto.getId());
+        context.setVariable("email", orderResponseDto.getEmail());
+        context.setVariable("creatAt", orderResponseDto.getCreatedAt());
+        context.setVariable("address", orderResponseDto.getAddress());
+        context.setVariable("zipcode", orderResponseDto.getZipCode());
+        context.setVariable("status", orderResponseDto.getStatus() == OrderStatus.PENDING ? "배송대기중" : "발송완료");
+        context.setVariable("total_price", orderResponseDto.getTotalPrice());
+        context.setVariable("ordermenus", orderResponseDto.getMenus());
         return context;
     }
 }

@@ -35,7 +35,7 @@
         <ul style="list-style: none; padding: 0; margin: 0;">
             <li style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 0.5rem;" th:each="ordermenu : ${ordermenus}">
                 <div>
-                    <span th:text="${ordermenu.menuName}"></span> x <span th:text="${ordermenu.quantity}"></span>
+                    <span th:text="${ordermenu.name}"></span> x <span th:text="${ordermenu.quantity}"></span>
                 </div>
                 <div>
                     <span th:text="${ordermenu.price * ordermenu.quantity}"></span> 원

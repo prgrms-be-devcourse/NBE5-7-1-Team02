@@ -1,13 +1,14 @@
 package easy.gc_coffee_api.mail;
 
-import lombok.AllArgsConstructor;
+import easy.gc_coffee_api.dto.order.OrderResponseDto;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public class OrderMailMessage {
 
     private final String to;
-    private final Long orderId;
+    private final OrderResponseDto orderResponseDto;
 
 }
