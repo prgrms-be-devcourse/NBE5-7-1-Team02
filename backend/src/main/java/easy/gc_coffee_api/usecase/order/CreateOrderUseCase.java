@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 public class CreateOrderUseCase {
     private final OrderRepository orderRepository;
     private final MenuRepository menuRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -72,7 +73,7 @@ public class CreateOrderUseCase {
 
         List<OrderMenuModel> orderMenuModels = mapToOrderMenuModels(orderMenus);
 
-        applicationEventPublisher.publishEvent(new OrderMailMessage(savedOrder.getEmail(), savedOrder.getId()));
+        eventPublisher.publishEvent(new OrderMailMessage(savedOrder.getEmail(), savedOrder.getId()));
         return new OrderResponseDto(
                 savedOrder.getId(),
                 savedOrder.getEmail(),
@@ -134,6 +135,6 @@ public class CreateOrderUseCase {
     }
 
     private int calcTotalPrice(List<OrderMenu> orderMenus){
-        return orderMenus.stream().mapToInt(orderMenu-> orderMenu.calculatePrice()).sum();
+        return orderMenus.stream().mapToInt(OrderMenu::calculatePrice).sum();
     }
 }
