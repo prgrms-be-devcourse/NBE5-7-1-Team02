@@ -27,10 +27,12 @@ export default function AdminHomePage() {
     const fetchMenus = async () => {
         try {
             const menus = await getMenus();
+            const orders = await getOrders();
 
             console.log(menus);
 
             setMenus(menus);
+            setOrdersData(orders);
         } catch (err) {
             setError(err.message || "에러가 발생했습니다.");
         } finally {
@@ -113,6 +115,26 @@ export default function AdminHomePage() {
         }
     };
 
+    function isToday(date: Date | string) {
+        const today = new Date();
+        const d = typeof date === "string" ? new Date(date) : date;
+        return (
+            d.getFullYear() === today.getFullYear() &&
+            d.getMonth() === today.getMonth() &&
+            d.getDate() === today.getDate()
+        );
+    }
+
+    const todayOrders = ordersData
+        .flatMap((dateRange) => dateRange.orders)
+        .filter((order) => isToday(order.createdAt));
+
+    const todayOrderCount = todayOrders.length;
+    const todaySalesTotal = todayOrders.reduce(
+        (sum, order) => sum + order.totalPrice,
+        0
+    );
+
     useEffect(() => {
         setLoading(true);
 
@@ -129,7 +151,9 @@ export default function AdminHomePage() {
         <div className="min-h-screen bg-gray-50">
             {/* 상단 헤더 */}
             <header className="bg-green-600 text-white p-4 flex justify-between items-center shadow-md">
-                <h1 className="text-2xl font-bold">☕ Grid & Circle 관리자</h1>
+                <h1 className="text-2xl font-bold">
+                    ☕ Grid & Circle 관리 대시보드
+                </h1>
                 <button
                     onClick={handleLogout}
                     className="bg-white text-green-600 px-4 py-2 rounded hover:bg-gray-100"
@@ -160,6 +184,34 @@ export default function AdminHomePage() {
                 >
                     주문 관리
                 </button>
+            </div>
+
+            {/* 대시보드 통계 */}
+            <div className="flex justify-center gap-12 py-6 bg-gray-50 text-center">
+                <div>
+                    <h4 className="text-lg font-semibold text-gray-700">
+                        메뉴 수
+                    </h4>
+                    <p className="text-2xl font-bold text-green-600">
+                        {menus.length}
+                    </p>
+                </div>
+                <div>
+                    <h4 className="text-lg font-semibold text-gray-700">
+                        오늘 주문 건수
+                    </h4>
+                    <p className="text-2xl font-bold text-green-600">
+                        {todayOrderCount}
+                    </p>
+                </div>
+                <div>
+                    <h4 className="text-lg font-semibold text-gray-700">
+                        오늘 매출 합계
+                    </h4>
+                    <p className="text-2xl font-bold text-green-600">
+                        {todaySalesTotal.toLocaleString()}원
+                    </p>
+                </div>
             </div>
 
             {/* 메인 컨텐츠 */}
