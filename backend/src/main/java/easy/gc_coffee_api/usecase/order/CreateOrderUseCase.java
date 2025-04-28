@@ -10,17 +10,23 @@ import easy.gc_coffee_api.entity.Orders;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.mail.OrderMailMessage;
 import easy.gc_coffee_api.repository.MenuRepository;
-import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
-import easy.gc_coffee_api.usecase.order.model.OrderMenuData;
 import easy.gc_coffee_api.usecase.order.model.OrderMenuModel;
-import easy.gc_coffee_api.usecase.order.model.OrderMenus;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,19 +34,43 @@ import java.util.List;
 public class CreateOrderUseCase {
     private final OrderRepository orderRepository;
     private final MenuRepository menuRepository;
-    private final OrderMenuRepository orderMenuRepository;
-    private final ApplicationEventPublisher applicationEventPublisher;
+
+    private final JdbcTemplate jdbcTemplate;
+
 
     public OrderResponseDto execute(CreateOrderRequestDto dto) {
+        List<OrderItemDto> orderItemDtos = dto.getItems(); // quantity
+
+        List<Long> menuIds = orderItemDtos.stream().map(OrderItemDto::getMenuId).toList();
+
         Orders savedOrder = saveOrders(dto);
 
-        OrderMenus orderMenus = saveOrderMenus(dto, savedOrder);
+        List<Menu> menus = menuRepository.findMenuByMenuIds(menuIds);
 
-        savedOrder.setTotalPrice(orderMenus.calcTotalPrice());
+        Map<Long,List<Menu>> menuGroup = menus.stream().collect(Collectors.groupingBy(Menu::getId));
 
-        List<OrderMenuData> orderMenuDatas = orderMenuRepository.findAllByOrdersId(savedOrder.getId());
+        List<OrderMenu> orderMenus = new ArrayList<>();
+        for (OrderItemDto orderItemDto : orderItemDtos) {
+            Menu menu = menuGroup.get(orderItemDto.getMenuId()).getFirst();
+            OrderMenu orderMenu = OrderMenu.builder()
+                    .orders(savedOrder)
+                    .price(menu.getPrice())
+                    .menu(menu)
+                    .name(menu.getName())
+                    .quantity(orderItemDto.getQuantity())
+                    .build();
 
-        List<OrderMenuModel> orderMenuModels = mapToOrderMenuModels(orderMenuDatas);
+
+            orderMenus.add(orderMenu);
+        }
+
+
+        // OrderMenuDatas 엔터티 리스트가 필요
+        saveOrderMenus(orderMenus);
+
+        savedOrder.setTotalPrice(calcTotalPrice(orderMenus));
+
+        List<OrderMenuModel> orderMenuModels = mapToOrderMenuModels(orderMenus);
 
         applicationEventPublisher.publishEvent(new OrderMailMessage(savedOrder.getEmail(), savedOrder.getId()));
         return new OrderResponseDto(
@@ -64,46 +94,46 @@ public class CreateOrderUseCase {
         return orderRepository.save(order);
     }
 
-    private OrderMenus saveOrderMenus(CreateOrderRequestDto dto, Orders savedOrder) {
-
-        OrderMenus orderMenus = new OrderMenus();
-
-        for (OrderItemDto item : dto.getItems()) {
-            OrderMenu orderMenu = saveMenu(savedOrder, item);
-
-            orderMenus.add(orderMenu);
-        }
-
-        return orderMenus;
-    }
-
-    private OrderMenu saveMenu(Orders savedOrder, OrderItemDto item) {
-        Menu menu = menuRepository.findByIdAndDeletedAtIsNull(item.getMenuId())
-                .orElseThrow(() -> new MenuNotFoundException(
-                        "존재하지 않는 메뉴 ID: " + item.getMenuId(), 404
-                ));
-
-        OrderMenu orderMenu = OrderMenu.builder()
-                .name(menu.getName())
-                .price(menu.getPrice())
-                .quantity(item.getQuantity())
-                .menu(menu)
-                .orders(savedOrder)
-                .build();
-
-        orderMenuRepository.save(orderMenu);
-
-        return orderMenu;
-    }
-
-    private List<OrderMenuModel> mapToOrderMenuModels(List<OrderMenuData> orderMenus) {
+    private List<OrderMenuModel> mapToOrderMenuModels(List<OrderMenu> orderMenus) {
         return orderMenus.stream()
                 .map(menu -> new OrderMenuModel(
-                        menu.getMenuId(),
-                        menu.getMenuName(),
+                        menu.getMenu().getId(),
+                        menu.getName(),
                         menu.getPrice(),
                         menu.getQuantity()
                 ))
                 .toList();
+    }
+
+    private void saveOrderMenus(List<OrderMenu> orderMenus) {
+        String sql = """
+                INSERT INTO order_menu (order_id, menu_id, name, price, quantity, created_at, updated_at)
+                VALUES (?,?,?,?,?,?,?)
+                """;
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                OrderMenu orderMenu = orderMenus.get(i);
+
+                ps.setLong(1, orderMenu.getOrders().getId());
+                ps.setLong(2, orderMenu.getMenu().getId());
+                ps.setString(3, orderMenu.getMenu().getName());
+                ps.setLong(4, orderMenu.getPrice());
+                ps.setLong(5, orderMenu.getQuantity());
+                ps.setTimestamp(6, Timestamp.valueOf(localDateTime));
+                ps.setTimestamp(7, Timestamp.valueOf(localDateTime));
+            }
+
+            @Override
+            public int getBatchSize() {
+                return orderMenus.size();
+            }
+        });
+    }
+
+    private int calcTotalPrice(List<OrderMenu> orderMenus){
+        return orderMenus.stream().mapToInt(orderMenu-> orderMenu.calculatePrice()).sum();
     }
 }

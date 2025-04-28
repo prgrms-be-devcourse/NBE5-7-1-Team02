@@ -21,4 +21,14 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     Optional<MenuData> findOneNotDeleted(Long menuId);
 
     Optional<Menu> findByIdAndDeletedAtIsNull(Long menuId);
+
+    @Query("SELECT new easy.gc_coffee_api.usecase.menu.dto.MenuData(m, f)" +
+            " From Menu m LEFT JOIN File f ON m.thumbnail.fileId = f.id " +
+            "where m.deletedAt is null and m.id in :menuIds ")
+    List<MenuData> findMenuDatasByMenuIds(List<Long> menuIds);
+
+    @Query("SELECT m" +
+            " From Menu m " +
+            "where m.deletedAt is null and m.id in :menuIds ")
+    List<Menu> findMenuByMenuIds(List<Long> menuIds);
 }
