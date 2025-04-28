@@ -9,7 +9,7 @@ import easy.gc_coffee_api.usecase.order.model.OrderDataRange;
 import easy.gc_coffee_api.usecase.order.model.OrderMenuData;
 import easy.gc_coffee_api.usecase.order.model.OrderMenuDatas;
 import jakarta.transaction.Transactional;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

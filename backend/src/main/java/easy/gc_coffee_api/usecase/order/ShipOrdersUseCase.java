@@ -17,7 +17,6 @@ import java.util.List;
 public class ShipOrdersUseCase {
 
     private final JdbcTemplate jdbcTemplate;
-    private final OrderRepository orderRepository;
 
     public void execute(List<Long> ids) {
         jdbcTemplate.batchUpdate(

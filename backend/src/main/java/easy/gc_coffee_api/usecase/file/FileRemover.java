@@ -1,10 +1,10 @@
 package easy.gc_coffee_api.usecase.file;
 
+import easy.gc_coffee_api.entity.File;
+import easy.gc_coffee_api.exception.file.FileNotFoundException;
 import easy.gc_coffee_api.repository.FileRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import easy.gc_coffee_api.entity.File;
-import easy.gc_coffee_api.exception.file.FileNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

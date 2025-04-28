@@ -2,7 +2,10 @@ package easy.gc_coffee_api.entity;
 
 import easy.gc_coffee_api.entity.common.BaseDateEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter

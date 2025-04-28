@@ -3,10 +3,10 @@ package easy.gc_coffee_api.entity;
 import easy.gc_coffee_api.util.TypeChecker;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.*;
 
 @Embeddable
 @NoArgsConstructor
