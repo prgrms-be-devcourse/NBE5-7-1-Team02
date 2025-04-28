@@ -66,6 +66,17 @@ export async function fetchPut<T>(url: string, body: unknown): Promise<T> {
     return await handleResponse<T>(res);
 }
 
+export async function fetchPatch<T>(url: string, body?: unknown): Promise<T> {
+    const res = await fetch(`${BASE}${url}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: body ? JSON.stringify(body) : undefined,
+    });
+
+    return await handleResponse<T>(res);
+}
+
 export async function fetchDelete<T>(url: string): Promise<T> {
     const res = await fetch(`${BASE}${url}`, {
         method: "DELETE",

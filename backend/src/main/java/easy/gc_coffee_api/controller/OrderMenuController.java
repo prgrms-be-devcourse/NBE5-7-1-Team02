@@ -3,7 +3,6 @@ package easy.gc_coffee_api.controller;
 import easy.gc_coffee_api.dto.order.*;
 import easy.gc_coffee_api.usecase.order.GetOrderListUsecase;
 import easy.gc_coffee_api.usecase.order.GetOrderUseCase;
-import easy.gc_coffee_api.usecase.order.OrderMenuUseCase;
 import easy.gc_coffee_api.usecase.order.ShipOrderUseCase;
 import easy.gc_coffee_api.usecase.order.ShipOrdersUseCase;
 import easy.gc_coffee_api.usecase.order.CreateOrderUseCase;

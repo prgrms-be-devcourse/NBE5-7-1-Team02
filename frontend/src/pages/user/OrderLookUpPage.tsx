@@ -70,6 +70,12 @@ export default function OrderLookupPage() {
                                 {order.id}
                             </p>
                             <p>
+                                <span className="font-bold">주문일시:</span>{" "}
+                                {new Date(order.createdAt).toLocaleString(
+                                    "ko-KR"
+                                )}
+                            </p>
+                            <p>
                                 <span className="font-bold">이메일:</span>{" "}
                                 {order.email}
                             </p>

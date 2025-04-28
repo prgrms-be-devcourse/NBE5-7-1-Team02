@@ -10,6 +10,8 @@ import Loading from "../../components/common/Loading";
 import AdminOrderList from "../../components/admin/orders/AdminOrderList";
 import { getOrders } from "../../api/session/order/getOrders";
 import { GetOrdersResponse } from "../../api/params/order/getOrders";
+import { shipOrder } from "../../api/session/order/shipOrder";
+import { shipOrders } from "../../api/session/order/shipOrders";
 
 export default function AdminHomePage() {
     const { loading: sessionLoading } = useSessionGuard();
@@ -81,12 +83,34 @@ export default function AdminHomePage() {
         }
     };
 
-    const handleShipOrder = async (orderId: number) => {
-        // TODO 배송 완료 API 호출때려야한다..
+    // 단건 배송 처리
+    const handleShip = async (orderId: number) => {
+        try {
+            await shipOrder(orderId);
 
-        console.log("배송 완료:", orderId);
+            alert("배송 완료 처리되었습니다.");
 
-        alert(`배송 완료`);
+            fetchOrders();
+        } catch (err) {
+            console.error(err);
+
+            alert("배송 처리 실패");
+        }
+    };
+
+    // 복수 배송 처리
+    const handleBulkShip = async (orderIds: number[]) => {
+        try {
+            await shipOrders({ ids: orderIds });
+
+            alert("일괄 배송 완료되었습니다.");
+
+            fetchOrders();
+        } catch (err) {
+            console.error(err);
+
+            alert("일괄 배송 처리 실패");
+        }
     };
 
     useEffect(() => {
@@ -142,7 +166,7 @@ export default function AdminHomePage() {
             <main className="p-8">
                 {tab === "menu" && (
                     <div>
-                        <div className="flex justify-between items-center mb-6 px-102">
+                        <div className="flex justify-between items-center mb-6 px-32">
                             <h2 className="text-2xl font-bold">메뉴 관리</h2>
                             <button
                                 onClick={handleCreate}
@@ -165,13 +189,14 @@ export default function AdminHomePage() {
 
                 {tab === "order" && (
                     <div>
-                        <h2 className="text-2xl font-bold mb-6 px-102">
+                        <h2 className="text-2xl font-bold mb-6 px-32">
                             주문 관리
                         </h2>
                         {error && <p className="text-red-500">{error}</p>}
                         <AdminOrderList
                             ordersData={ordersData}
-                            onShip={handleShipOrder}
+                            onShip={handleShip}
+                            onBulkShip={handleBulkShip}
                         />
                     </div>
                 )}
