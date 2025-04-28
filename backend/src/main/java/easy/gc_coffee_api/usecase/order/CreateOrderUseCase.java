@@ -8,6 +8,7 @@ import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
 import easy.gc_coffee_api.entity.Orders;
 import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
+import easy.gc_coffee_api.mail.OrderMailMessage;
 import easy.gc_coffee_api.repository.MenuRepository;
 import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
@@ -16,6 +17,7 @@ import easy.gc_coffee_api.usecase.order.model.OrderMenuModel;
 import easy.gc_coffee_api.usecase.order.model.OrderMenus;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,7 @@ public class CreateOrderUseCase {
     private final OrderRepository orderRepository;
     private final MenuRepository menuRepository;
     private final OrderMenuRepository orderMenuRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public OrderResponseDto execute(CreateOrderRequestDto dto) {
         Orders savedOrder = saveOrders(dto);
@@ -39,6 +42,7 @@ public class CreateOrderUseCase {
 
         List<OrderMenuModel> orderMenuModels = mapToOrderMenuModels(orderMenuDatas);
 
+        applicationEventPublisher.publishEvent(new OrderMailMessage(savedOrder.getEmail(), savedOrder.getId()));
         return new OrderResponseDto(
                 savedOrder.getId(),
                 savedOrder.getEmail(),
