@@ -9,6 +9,6 @@ import lombok.Getter;
 public class OrderMenuModel {
     private Long id;
     private String name;
-    private Integer price;
+    private int price;
     private Integer quantity;
 }
