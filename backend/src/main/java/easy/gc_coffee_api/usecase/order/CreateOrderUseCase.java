@@ -7,9 +7,7 @@ import easy.gc_coffee_api.dto.order.OrderResponseDto;
 import easy.gc_coffee_api.entity.Menu;
 import easy.gc_coffee_api.entity.OrderMenu;
 import easy.gc_coffee_api.entity.Orders;
-import easy.gc_coffee_api.exception.menu.MenuNotFoundException;
 import easy.gc_coffee_api.repository.MenuRepository;
-import easy.gc_coffee_api.repository.OrderMenuRepository;
 import easy.gc_coffee_api.repository.OrderRepository;
 import easy.gc_coffee_api.usecase.order.model.OrderMenuModel;
 import jakarta.transaction.Transactional;
@@ -33,7 +31,6 @@ import java.util.stream.Collectors;
 public class CreateOrderUseCase {
     private final OrderRepository orderRepository;
     private final MenuRepository menuRepository;
-    private final OrderMenuRepository orderMenuRepository;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -49,23 +46,6 @@ public class CreateOrderUseCase {
 
         Map<Long,List<Menu>> menuGroup = menus.stream().collect(Collectors.groupingBy(Menu::getId));
 
-        /**
-         *     private Long orderId;
-         *     private Long menuId;
-         *     private String menuName;
-         *     private Integer price;
-         *     private Integer quantity;
-         */
-//        List<OrderMenuData> orderMenuDatas = menus.stream().map(e->{
-//            return new OrderMenuData(
-//                    savedOrder.getId(),
-//                    e.getId(),
-//                    e.getName(),
-//                    e.getPrice(),
-//                    e.
-//
-//            )
-//        })
         List<OrderMenu> orderMenus = new ArrayList<>();
         for (OrderItemDto orderItemDto : orderItemDtos) {
             Menu menu = menuGroup.get(orderItemDto.getMenuId()).getFirst();
@@ -85,12 +65,7 @@ public class CreateOrderUseCase {
         // OrderMenuDatas 엔터티 리스트가 필요
         saveOrderMenus(orderMenus);
 
-
-//        OrderMenus orderMenus = saveOrderMenus(dto, savedOrder);
-
         savedOrder.setTotalPrice(calcTotalPrice(orderMenus));
-
-//        List<OrderMenuData> orderMenuDatas = orderMenuRepository.findAllByOrdersId(savedOrder.getId());
 
         List<OrderMenuModel> orderMenuModels = mapToOrderMenuModels(orderMenus);
 
@@ -115,45 +90,6 @@ public class CreateOrderUseCase {
         return orderRepository.save(order);
     }
 
-//    private OrderMenuData saveOrderMenuData(CreateOrderRequestDto dto) {
-//            return
-//    }
-//
-//    private OrderMenus saveOrderMenus(CreateOrderRequestDto dto, Orders savedOrder) {
-//
-//        OrderMenus orderMenus = new OrderMenus();
-//
-//        for (OrderItemDto item : dto.getItems()) {
-//            OrderMenu orderMenu = saveMenu(savedOrder, item);
-//
-//            orderMenus.add(orderMenu);
-//        }
-//
-//        return orderMenus;
-//    }
-
-    private OrderMenu saveMenu(Orders savedOrder, OrderItemDto item) {
-
-        //select -> menu의 모든 값을 Long 을 받아와서 인메모리에서 적용
-        Menu menu = menuRepository.findByIdAndDeletedAtIsNull(item.getMenuId())
-                .orElseThrow(() -> new MenuNotFoundException(
-                        "존재하지 않는 메뉴 ID: " + item.getMenuId(), 404
-                ));
-
-        OrderMenu orderMenu = OrderMenu.builder()
-                .name(menu.getName())
-                .price(menu.getPrice())
-                .quantity(item.getQuantity())
-                .menu(menu)
-                .orders(savedOrder)
-                .build();
-
-        //insert
-//        orderMenuRepository.save(orderMenu);
-
-        return orderMenu;
-    }
-
     private List<OrderMenuModel> mapToOrderMenuModels(List<OrderMenu> orderMenus) {
         return orderMenus.stream()
                 .map(menu -> new OrderMenuModel(
@@ -164,11 +100,11 @@ public class CreateOrderUseCase {
                 ))
                 .toList();
     }
-    //CreateOrderRequestDto dto
+
     private void saveOrderMenus(List<OrderMenu> orderMenus) {
         String sql = """
-                INSERT INTO order_menus (order_id, menu_id, name, price, quantity, created_at, updated_at)
-                VALUES (?,?,?,?,?,?,?,?)
+                INSERT INTO order_menu (order_id, menu_id, name, price, quantity, created_at, updated_at)
+                VALUES (?,?,?,?,?,?,?)
                 """;
 
         LocalDateTime localDateTime = LocalDateTime.now();
