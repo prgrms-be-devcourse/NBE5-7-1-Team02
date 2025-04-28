@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="background-color: #f3f4f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: Arial, sans-serif;">
+<div style="background-color: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center;">
+    <h1 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center;">🎉 주문이 완료되었습니다!</h1>
+
+    <div style="margin-bottom: 1.5rem; text-align: left;">
+        <p style="margin: 0.5rem 0;">
+            <span style="font-weight: bold;">주문번호:</span> <span th:text="${orderId}"></span>
+        </p>
+        <p style="margin: 0.5rem 0;">
+            <span style="font-weight: bold;">주문일시:</span>
+            <span th:text="${#temporals.format(creatAt, 'yyyy. M. d. a h:mm:ss')}"></span>
+        </p>
+        <p style="margin: 0.5rem 0;">
+            <span style="font-weight: bold;">이메일:</span>
+            <span th:text="${email}"></span>
+        </p>
+        <p style="margin: 0.5rem 0;">
+            <span style="font-weight: bold;">주소:</span>
+            <span th:text="${address}"></span>(<span th:text="${zipcode}"></span>)
+        </p>
+        <p style="margin: 0.5rem 0;">
+            <span style="font-weight: bold;">상태:</span>
+            <span th:text="${status}"></span>
+        </p>
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+        <h2 style="font-size: 1.125rem; font-weight: bold; margin-bottom: 0.5rem;">주문한 메뉴</h2>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 0.5rem;" th:each="ordermenu : ${ordermenus}">
+                <div>
+                    <span th:text="${ordermenu.name}"></span> x <span th:text="${ordermenu.quantity}"></span>
+                </div>
+                <div>
+                    <span th:text="${ordermenu.price * ordermenu.quantity}"></span> 원
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div style="margin-top: 1rem; font-weight: bold; text-align: right;">
+        총 합계: <span th:text="${total_price}"></span> 원
+    </div>
+</div>
+</body>
+</html>
