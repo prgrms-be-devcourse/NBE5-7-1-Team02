@@ -5,7 +5,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.Arrays;
 
 public enum Category {
-    COFFEE_BEAN;
+    COFFEE_BEAN, DRINK, DESSERT;
 
     public static Category findByName(String name) {
         return Arrays.stream(values())
